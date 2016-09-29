@@ -30,11 +30,22 @@ class Receiver(object):
         self._do_quit = False
     # end def
 
+    def __receiver_logging_wrapper(self):
+        try:
+            self._receiver()
+        except Exception:
+            logger.exception("Receiver failed.")
+        # end try
+    # end def
+
     def _receiver(self):
         from env import NODE_HOST_PREFIX, THIS_NODE, NODE_PORT
         from errno import ECONNREFUSED
 
         node_host = NODE_HOST_PREFIX + str(THIS_NODE)
+        if NODE_HOST_PREFIX == "localhost":
+            node_host = "localhost"
+        # end if
 
         while not self._do_quit:  # retry connection
             self.s = socket.socket(socket.AF_INET,  # Internet
@@ -62,6 +73,7 @@ class Receiver(object):
                         if len(answer) == 0:
                             self.s.close()
                             raise ConnectionError("Remote end closed.")
+                        logger.debug("received byte: {}".format(answer))
                         break
                     except socket.error as err:
                         if self._do_quit:
@@ -142,9 +154,11 @@ class Receiver(object):
         When started, messages will be queued.
         :return:
         """
-        self._receiver_thread = threading.Thread(name="Receiver (pytg)", target=self._receiver, args=())
+        self._receiver_thread = threading.Thread(name="Receiver", target=self.__receiver_logging_wrapper, args=())
         self._receiver_thread.daemon = True  # exit if script reaches end.
         self._receiver_thread.start()
+        logger.success("Started Receiver Thread.")
+    # end def
 
     def stop(self):
         """

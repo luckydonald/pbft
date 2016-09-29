@@ -24,7 +24,7 @@ except ImportError:
     logger.warning("Debug disabled.")
 # end def
 
-pydevd.settrace('192.168.188.20', port=49872, stdoutToServer=True, stderrToServer=True)
+pydevd.settrace('192.168.188.20', port=49872, stdoutToServer=True, stderrToServer=True, suspend=False)
 
 # init
 # sensor_value = 0.4 # vp
@@ -54,7 +54,7 @@ class BFT_ARM():
     # end def
 
     def MsgCollect(self):
-        received_message = todo.get_message()
+        received_message = self.get_specific_message_type(InitMessage, LeaderChangeMessage)
         if isinstance(received_message, InitMessage):
             self.value_store[received_message.node] = received_message
         elif isinstance(received_message, LeaderChangeMessage):
@@ -158,9 +158,11 @@ class BFT_ARM():
 # end class
 
 if __name__ == '__main__':
+    logging.add_colored_handler(level=logging.DEBUG)
     foo = BFT_ARM()
     foo.task_normal_case()
     while True:
         sleep(1)
+        logger.info("idle...")
     # end while
 # end if

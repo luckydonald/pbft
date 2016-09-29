@@ -7,14 +7,14 @@ logger = logging.getLogger(__name__)
 
 def flatten_list(args):
     if isinstance(args, tuple):
-        classes_or_types = list(args)
+        args = list(args)
     elif not isinstance(args, list):
-        classes_or_types = [args]
+        args = [args]
     # end if
     assert isinstance(args, list)
     new_args = []
     for arg in args:
-        if isinstance(new_args, (list,tuple)):
+        if isinstance(arg, (list,tuple)):
             new_args.extend(arg)
         else:
             new_args.append(arg)

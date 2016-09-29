@@ -29,12 +29,20 @@ def broadcast(message):
             continue  # skip ourself
         # end if
         node_host = NODE_HOST_PREFIX + str(node)
+        if NODE_HOST_PREFIX == "localhost":
+            node_host = "localhost"
+        # end if
         # msg = MSG_FORMAT.format(length=len(message), msg=message)
         msg = "ANSWER " + str(len(message)) + "\n" + message
-        logger.info("Sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=message))
-
+        logger.info("Sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
+        msg = bytes(msg, "utf-8")
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:  # UDP
-            sock.sendto(bytes(message, "utf-8"), (node_host, NODE_PORT))
+            bytes_total_sent = 0
+            while bytes_total_sent < len(msg):
+                bytes_sent = sock.sendto(msg[bytes_total_sent:], (node_host, NODE_PORT))
+                logger.debug("sent {} byte(s) [{}:{}]".format(bytes_sent, bytes_total_sent, bytes_total_sent + bytes_sent))
+                bytes_total_sent += bytes_sent
+            # end while
         # end with
     # end for
 # end def
