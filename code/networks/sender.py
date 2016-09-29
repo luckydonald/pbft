@@ -38,19 +38,19 @@ def broadcast(message):
         # msg = MSG_FORMAT.format(length=len(message), msg=message)
         message += "\n"
         msg = "ANSWER " + str(len(message)) + "\n" + message
-        logger.info("Prepared sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
+        logger.debug("Prepared sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
         msg = bytes(msg, "utf-8")
         sent = False
         while not sent:
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:  # UDP SOCK_DGRAM
-                    logger.info("Sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
+                    logger.debug("Sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
                     sock.connect((node_host, NODE_PORT))
                     sock.sendall(msg)
                     sent = True
                 # end with
-            except OSError:
-                logger.exception("Send failed.")
+            except OSError as e:
+                logger.error("Sending to {host}:{port} failed: {e}".format(e=e, host=node_host, port=NODE_PORT))
                 sleep(1)
             # end try
         # end while

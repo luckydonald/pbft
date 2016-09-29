@@ -99,8 +99,10 @@ class BFT_ARM():
                 self.value_store[init_msg.node] = init_msg
                 # todo
             # end
-            proposal = median(self.value_store.values())
-            send_message(ProposeMessage(self.sequence_no, THIS_NODE, self.current_leader, proposal, self.value_store))
+            proposal = median([x.value for x in self.value_store.values()])
+            send_message(ProposeMessage(
+                self.sequence_no, THIS_NODE, self.current_leader, proposal, list(self.value_store.values())
+            ))
             logger.critical("1.1 PROPOSAL>")
         # end if
         logger.critical("3.0 >PROPOSAL")
@@ -151,35 +153,44 @@ class BFT_ARM():
         # TODO: optimieren, indem man leader abfrage nach oben schiebt?
         # if not msg.leader == self.current_leader:
         #     return False
-        s = list()
+        values = list()
+        known_nodes = list()
+
         if not isinstance(msg, ProposeMessage):
             raise AttributeError("msg is not ProposeMessage type, but {type}:\n{val}".format(type=type(msg), val=msg))
         for init_msg in msg.value_store:
-            assert isinstance(init_msg, InitMessage)
-            s.append(init_msg.value)
-        return msg.leader == self.current_leader and median(s) == msg.proposal
+            assert isinstance(init_msg, InitMessage)  # right message type
+            assert init_msg.node not in known_nodes  # no duplicates
+            values.append(init_msg.value)  # store the value
+            known_nodes.append(init_msg.node)  # remember this node
+        # end for
+        return msg.leader == self.current_leader and median(values) == msg.proposal
     # end def
 
     def get_specific_message_type(self, *classes_or_types, sequence_number=None):
         msg = None
         classes_or_types = flatten_list(classes_or_types)
+        classes_or_types = tuple(classes_or_types)
 
-        while msg is None:
+        while True:  # todo: something better
             msg = self.rec.pop_message()
-            if isinstance(msg, *classes_or_types):
-                logger.warning("Allowed Message:\n{}".format(msg))
-                return msg
+            if isinstance(msg, classes_or_types):
+                logger.success("Got Message: {}".format(msg))
+                break
             elif sequence_number is not None and msg.sequence_no != sequence_number:
-                logger.warning("Discarded Message (wrong sequence number):\n{}".format(msg))
+                logger.warning("Discarded Message (wrong sequence number): {}".format(msg))
+                msg = None
             else:
-                logger.warning("Discarded Message (wrong type):\n{}".format(msg))
+                logger.warning("Discarded Message (wrong type): {}".format(msg))
+                msg = None
             # end if
         # end while
+        return msg
     # end def
 # end class
 
 if __name__ == '__main__':
-    logging.add_colored_handler(level=logging.DEBUG)
+    logging.add_colored_handler(level=logging.INFO)
     foo = BFT_ARM()
     foo.task_normal_case()
     while True:

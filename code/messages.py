@@ -35,7 +35,7 @@ class Message(object):
         # end def
         return Message(**{
             "type": data["type"],
-            "sequence_no": data["equence_no"],
+            "sequence_no": data["sequence_no"],
         })
     # end def
 
@@ -45,6 +45,12 @@ class Message(object):
             "sequence_no": self.sequence_no,
         }
     # end def
+
+    def __str__(self):
+        return "{class_name}({values})".format(
+            class_name=self.__class__.__name__,
+            values=", ".join(["{key}={value!r}".format(key=k, value=v) for k, v in self.to_dict().items()])
+        )
 # end class
 
 
@@ -107,18 +113,33 @@ class ProposeMessage(Message):
         self.node = node
         self.leader = leader
         self.proposal = proposal
+        assert isinstance(value_store, list)
         self.value_store = value_store
 
     @staticmethod
     def from_dict(data):
+        value_store = []
+        for v in data.get("value_store", []):
+            msg = InitMessage.from_dict(v)
+            # value_store[msg.node] = msg
+            value_store.append(msg)
+        # end for
         kwargs = {
             "sequence_no": data["sequence_no"],
             "node": data.get("node"),
             "leader": data.get("leader"),
             "proposal": data.get("proposal"),
-            "value_store": data.get("value_store"),
+            "value_store": value_store
         }
         return ProposeMessage(**kwargs)
+    # end def
+
+    def sort_by_nodes(self):
+        store = {}
+        for msg in self.value_store:
+            store[msg.node] = msg
+        # end for
+        return store
     # end def
 
     def to_dict(self):
@@ -126,7 +147,7 @@ class ProposeMessage(Message):
         data["node"] = self.node
         data["leader"] = self.leader
         data["proposal"] = self.proposal
-        data["value_store"] = self.value_store
+        data["value_store"] = [x.to_dict() if hasattr(x, "to_dict") else x for x in self.value_store]
         return data
     # end def
 # end class
