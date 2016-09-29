@@ -82,43 +82,50 @@ class BFT_ARM():
 
     def task_normal_case(self):
         value = todo.get_sensor_value()  # vp
+        logger.critical("0 INIT>")
         send_message(InitMessage(self.sequence_no, THIS_NODE, value))
         # TODO: Wo bekommt das die seq no her?
         if THIS_NODE == self.current_leader:
+            logger.critical("1.0 (leader)")
             # CURRENT LEADER
             if self.sequence_no is None:
                 self.sequence_no = 0
             else:
                 self.sequence_no = (self.sequence_no + 1) % 256
-            while not (len(self.value_store) > TOTAL_NODES - POSSIBLE_FAILURES):
-                # wait until |INIT_Store| > n ≠ t
-                logger.success("")
+            while not (len(self.value_store) >= (TOTAL_NODES - POSSIBLE_FAILURES)):
+                # wait until |INIT_Store| > n - t
+                logger.success("INITs: {} > {}".format(len(self.value_store), (TOTAL_NODES - POSSIBLE_FAILURES)))
                 init_msg = self.get_specific_message_type(InitMessage)
                 self.value_store[init_msg.node] = init_msg
                 # todo
             # end
-            # broadcast(ÈPROPOSE, cid, p, proposal, INIT_StoreÍ‡p )
             proposal = median(self.value_store.values())
             send_message(ProposeMessage(self.sequence_no, THIS_NODE, self.current_leader, proposal, self.value_store))
+            logger.critical("1.1 PROPOSAL>")
         # end if
+        logger.critical("3.0 >PROPOSAL")
         prop_message = self.get_specific_message_type(ProposeMessage)
         if self.verify_proposal(prop_message):
             send_message(PrevoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
+            logger.critical("3.1 PROPOSAL>")
         # if exist v:|<PREVOTE,cid,·,„,vÍ‡·|>(n+t)
 
         # hier auch, weil timeout uns notfalls rettet.
         prevote_buffer = dict()  # dict with P inside
         vote_buffer = dict()  # just decide
+        logger.critical("4.0 >(PRE)VOTE")
         while not self.should_timeout:
             msg = self.get_specific_message_type(PrevoteMessage, VoteMessage)
             if isinstance(msg, PrevoteMessage):
                 value, is_enough = self.buffer_incomming(msg, prevote_buffer)
                 if is_enough:
                     send_message(VoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
-                # end def
+                    logger.critical("4.1 PRE-VOTE>")
+                    # end def
             elif isinstance(msg, VoteMessage):
                 value, is_enough = self.buffer_incomming(msg, vote_buffer)
                 if is_enough:
+                    logger.critical("4.2 VOTE>")
                     return value
                 # end if
             # end if
@@ -145,7 +152,8 @@ class BFT_ARM():
         # if not msg.leader == self.current_leader:
         #     return False
         s = list()
-        assert isinstance(msg, ProposeMessage)
+        if not isinstance(msg, ProposeMessage):
+            raise AttributeError("msg is not ProposeMessage type, but {type}:\n{val}".format(type=type(msg), val=msg))
         for init_msg in msg.value_store:
             assert isinstance(init_msg, InitMessage)
             s.append(init_msg.value)
