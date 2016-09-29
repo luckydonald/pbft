@@ -78,7 +78,6 @@ class BFT_ARM():
                 self.sequence_no = 0
             else:
                 self.sequence_no = (self.sequence_no + 1) % 256
-
             while not (len(self.value_store) > TOTAL_NODES - POSSIBLE_FAILURES):
                 # wait until |INIT_Store| > n ≠ t
                 init_msg = self.get_specific_message_type(InitMessage)

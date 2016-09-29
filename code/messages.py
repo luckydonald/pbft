@@ -25,7 +25,7 @@ class Message(object):
             return LeaderChangeMessage.from_dict(data)
         # end def
         if type == PROPOSE:
-            return PrevoteMessage.from_dict(data)
+            return ProposeMessage.from_dict(data)
         # end def
         if type == PREVOTE:
             return PrevoteMessage.from_dict(data)

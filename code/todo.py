@@ -45,6 +45,7 @@ def broadcast(message):
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:  # UDP SOCK_DGRAM
                     sock.connect((node_host, NODE_PORT))
                     sock.sendall(msg)
+                    sent = True
                 # end with
             except OSError:
                 logger.exception("Send failed.")

@@ -51,6 +51,7 @@ class Receiver(object):
             self.s = socket.socket(socket.AF_INET,  # Internet
                                    socket.SOCK_STREAM)  # TCP
             try:
+                self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 self.s.bind((node_host, NODE_PORT))
                 self.s.listen(5)
                 client, info = self.s.accept()
@@ -67,7 +68,7 @@ class Receiver(object):
             buffer = _EMPTY_RAW_BYTE
             answer = _EMPTY_RAW_BYTE
             completed = -1  # -1 = answer size yet unknown, >0 = got remaining answer size
-            while not self._do_quit:  # read loop
+            while (not self._do_quit) and self.s:  # read loop
                 while 1:  # retry if CTRL+C'd
                     try:
                         self.s.setblocking(True)
@@ -75,21 +76,25 @@ class Receiver(object):
                         # recv() returns an empty string if the remote end is closed
                         if len(answer) == 0:
                             self.s.close()
-                            raise ConnectionError("Remote end closed.")
-                        logger.debug("received byte: {}".format(answer))
+                            self.s = None
+                            logger.warning("Remote end closed.")
+                        # logger.debug("received byte: {}".format(answer))
                         break
                     except socket.error as err:
                         if self._do_quit:
                             self.s.close()
-                            return
+                            self.s = None
                         from errno import EINTR
                         if err.errno != EINTR:  # interrupted system call
                             raise
                         else:
                             logger.exception("Uncatched exception in reading answer from cli.")
                             self.s.close()
+                            self.s = None
                             break  # to the retry connection look again.
                 # end while: ctrl+c protection
+                if not self.s:   # check if socket is still open
+                    break
                 if completed == 0:
                     logger.debug("Hit end.")
                     if answer != _LINE_BREAK:
@@ -181,11 +186,19 @@ class Receiver(object):
             # self._new_messages.release()
         # end if
 
-    def pop_message(self):
+    from luckydonaldUtils.functions import caller
+
+    @caller
+    def pop_message(self, call=None):
         """
         Get a message.
         :return:
         """
+        "" if call is None else call
+        True if whatever else False
+
+        self.pop_message(call= "" if call is None else call)
+        logger.debug("called from {call}".format(call=call))
         self._new_messages.acquire()  # waits until at least 1 message is in the queue.
         with self._queue_access:
             message = self._queue.popleft()  # pop oldest item
