@@ -1,0 +1,10 @@
+version: '2'
+services:
+  node:
+    extends:
+      file: docker-compose.node.yml
+      service: node
+    entrypoint: ["/bin/bash"]
+    environment:
+      NODE_ID: 1
+      NODE_HOST_PREFIX: teamproject16_node_
