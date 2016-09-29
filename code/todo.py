@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from time import sleep
+
 from luckydonaldUtils.logger import logging
 
 from env import NODE_PORT
@@ -8,7 +10,7 @@ import socket
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
 
-MSG_FORMAT = "ANSWER {length}\n{msg}"
+MSG_FORMAT = "ANSWER {length}\n{msg}\n"
 
 
 def send_message(msg):
@@ -33,17 +35,22 @@ def broadcast(message):
             node_host = "localhost"
         # end if
         # msg = MSG_FORMAT.format(length=len(message), msg=message)
+        message = message + "\n"
         msg = "ANSWER " + str(len(message)) + "\n" + message
         logger.info("Sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
         msg = bytes(msg, "utf-8")
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:  # UDP
-            bytes_total_sent = 0
-            while bytes_total_sent < len(msg):
-                bytes_sent = sock.sendto(msg[bytes_total_sent:], (node_host, NODE_PORT))
-                logger.debug("sent {} byte(s) [{}:{}]".format(bytes_sent, bytes_total_sent, bytes_total_sent + bytes_sent))
-                bytes_total_sent += bytes_sent
-            # end while
-        # end with
+        sent = False
+        while not sent:
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:  # UDP SOCK_DGRAM
+                    sock.connect((node_host, NODE_PORT))
+                    sock.sendall(msg)
+                # end with
+            except OSError:
+                logger.exception("Send failed.")
+                sleep(1)
+            # end try
+        # end while
     # end for
 # end def
 

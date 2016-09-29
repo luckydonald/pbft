@@ -58,6 +58,7 @@ class InitMessage(Message):
     @staticmethod
     def from_dict(data):
         kwargs = {
+            "sequence_no": data["sequence_no"],
             "node": data["node"],
             "value": data["value"],
         }
@@ -111,6 +112,7 @@ class ProposeMessage(Message):
     @staticmethod
     def from_dict(data):
         kwargs = {
+            "sequence_no": data["sequence_no"],
             "node": data.get("node"),
             "leader": data.get("leader"),
             "proposal": data.get("proposal"),
@@ -140,6 +142,7 @@ class PrevoteMessage(Message):
     @staticmethod
     def from_dict(data):
         kwargs = {
+            "sequence_no": data["sequence_no"],
             "node": data["node"],
             "leader": data["leader"],
             "value": data["value"],
@@ -169,6 +172,7 @@ class VoteMessage(Message):
     @staticmethod
     def from_dict(data):
         kwargs = {
+            "sequence_no": data["sequence_no"],
             "node": data["node"],
             "leader": data["leader"],
             "value": data["value"],

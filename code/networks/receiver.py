@@ -46,12 +46,15 @@ class Receiver(object):
         if NODE_HOST_PREFIX == "localhost":
             node_host = "localhost"
         # end if
-
+        logger.info("Starting receiver on {host}:{port}".format(host=node_host, port=NODE_PORT))
         while not self._do_quit:  # retry connection
             self.s = socket.socket(socket.AF_INET,  # Internet
-                                   socket.SOCK_DGRAM)  # UDP
+                                   socket.SOCK_STREAM)  # TCP
             try:
                 self.s.bind((node_host, NODE_PORT))
+                self.s.listen(5)
+                client, info = self.s.accept()
+                self.client = client
             except socket.error as error:
                 self.s.close()
                 if error.errno == ECONNREFUSED and not self._do_quit:
@@ -68,7 +71,7 @@ class Receiver(object):
                 while 1:  # retry if CTRL+C'd
                     try:
                         self.s.setblocking(True)
-                        answer = self.s.recv(1)
+                        answer = self.client.recv(1)
                         # recv() returns an empty string if the remote end is closed
                         if len(answer) == 0:
                             self.s.close()
