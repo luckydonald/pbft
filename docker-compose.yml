@@ -1,10 +1,37 @@
 version: '2'
 services:
-  node:
+  node-0:
     extends:
       file: docker-compose.node.yml
       service: node
-    entrypoint: ["/bin/bash"]
+    environment:
+      NODE_ID: 0
+
+  node-1:
+    extends:
+      file: docker-compose.node.yml
+      service: node
     environment:
       NODE_ID: 1
-      NODE_HOST_PREFIX: teamproject16_node_
+
+  node-2:
+    extends:
+      file: docker-compose.node.yml
+      service: node
+    environment:
+      NODE_ID: 2
+
+  node-3:
+    extends:
+      file: docker-compose.node.yml
+      service: node
+    # entrypoint: ["/bin/bash"]
+    # volumes:
+    #  - ./code/:/code/:ro
+    # cmd:
+    environment:
+      NODE_ID: 3
+      NODE_DEBUG: "False"
+      #  docker run -ti --entrypoint /bin/bash 9b6a81855c06
+       # d-c run --entrypoint /bin/bash node-3
+      # NODE_ID=3 NODE_TOTAL=4 POSSIBLE_FAILURES=1 NODE_HOST=teamproject16_node-{i}_1 NODE_PORT=4458 python main.py

@@ -2,14 +2,15 @@ version: '2'
 services:
   node:
     build: .
-    volumes:
-      - ./:/code:ro
+    # volumes:
+    #   - ./:/code:ro
     environment:
       NODE_ID:
       NODE_TOTAL: 4
       POSSIBLE_FAILURES: 1
-      NODE_HOST_PREFIX: teamproject16_node_1
+      NODE_HOST: teamproject16_node-{i}_1
       NODE_PORT: 4458
+      NODE_DEBUG: 0
     # restart: "unless-stopped"
     # stdin_open: true
 

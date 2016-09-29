@@ -1,30 +1,42 @@
 # -*- coding: utf-8 -*-
-from time import sleep
 
+# built in modules
+import sys
+from time import sleep
+from statistics import median
+
+# dependency modules
 from luckydonaldUtils.logger import logging
 
-import todo
-from env import THIS_NODE, TOTAL_NODES, POSSIBLE_FAILURES
-from functions import flatten_list, logger
-from messages import InitMessage, LeaderChangeMessage, ProposeMessage, PrevoteMessage, VoteMessage
-
-# from todo import get_message, send_message, get_sensor_value, timeout
+# own modules
+from networks.sender import send_message
 from networks.receiver import Receiver
+from functions import flatten_list
+from messages import InitMessage, LeaderChangeMessage, ProposeMessage, PrevoteMessage, VoteMessage
+from env import THIS_NODE, TOTAL_NODES, POSSIBLE_FAILURES, DEBUG
+import todo
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
-from statistics import median
 
-import sys
-sys.path.append("libs/pycharm-debug-py3k.egg")
-try:
-    import pydevd
-except ImportError:
-    sys.path.remove("libs/pycharm-debug-py3k.egg")
-    logger.warning("Debug disabled.")
-# end def
+if DEBUG:
+    sys.path.append("libs/pycharm-debug-py3k.egg")
+    try:
+        import pydevd
+    except ImportError:
+        sys.path.remove("libs/pycharm-debug-py3k.egg")
+        logger.warning("Debug disabled.")
+    # end def
+    try:
+        pydevd.settrace('192.168.188.20', port=49872, stdoutToServer=True, stderrToServer=True, suspend=False)
+        logger.success("Debugger connected.")
+    except Exception:
+        logger.warning("No debugger.")
+    # end try
+else:
+    logger.debug("Debugger disabled via $NODE_DEBUG.")
+# end if
 
-pydevd.settrace('192.168.188.20', port=49872, stdoutToServer=True, stderrToServer=True, suspend=False)
 
 # init
 # sensor_value = 0.4 # vp
@@ -70,7 +82,7 @@ class BFT_ARM():
 
     def task_normal_case(self):
         value = todo.get_sensor_value()  # vp
-        todo.send_message(InitMessage(self.sequence_no, THIS_NODE, value))
+        send_message(InitMessage(self.sequence_no, THIS_NODE, value))
         # TODO: Wo bekommt das die seq no her?
         if THIS_NODE == self.current_leader:
             # CURRENT LEADER
@@ -80,17 +92,18 @@ class BFT_ARM():
                 self.sequence_no = (self.sequence_no + 1) % 256
             while not (len(self.value_store) > TOTAL_NODES - POSSIBLE_FAILURES):
                 # wait until |INIT_Store| > n ≠ t
+                logger.success("")
                 init_msg = self.get_specific_message_type(InitMessage)
                 self.value_store[init_msg.node] = init_msg
                 # todo
             # end
             # broadcast(ÈPROPOSE, cid, p, proposal, INIT_StoreÍ‡p )
             proposal = median(self.value_store.values())
-            todo.send_message(ProposeMessage(self.sequence_no, THIS_NODE, self.current_leader, proposal, self.value_store))
+            send_message(ProposeMessage(self.sequence_no, THIS_NODE, self.current_leader, proposal, self.value_store))
         # end if
         prop_message = self.get_specific_message_type(ProposeMessage)
         if self.verify_proposal(prop_message):
-            todo.send_message(PrevoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
+            send_message(PrevoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
         # if exist v:|<PREVOTE,cid,·,„,vÍ‡·|>(n+t)
 
         # hier auch, weil timeout uns notfalls rettet.
@@ -101,7 +114,7 @@ class BFT_ARM():
             if isinstance(msg, PrevoteMessage):
                 value, is_enough = self.buffer_incomming(msg, prevote_buffer)
                 if is_enough:
-                    todo.send_message(VoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
+                    send_message(VoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
                 # end def
             elif isinstance(msg, VoteMessage):
                 value, is_enough = self.buffer_incomming(msg, vote_buffer)
@@ -146,6 +159,7 @@ class BFT_ARM():
         while msg is None:
             msg = self.rec.pop_message()
             if isinstance(msg, *classes_or_types):
+                logger.warning("Allowed Message:\n{}".format(msg))
                 return msg
             elif sequence_number is not None and msg.sequence_no != sequence_number:
                 logger.warning("Discarded Message (wrong sequence number):\n{}".format(msg))

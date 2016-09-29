@@ -18,4 +18,4 @@ ADD ./code /code/
 
 # defaults for running it
 ENTRYPOINT ["python"]
-# CMD ["main.py"]
+CMD ["main.py"]

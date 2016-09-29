@@ -39,11 +39,11 @@ class Receiver(object):
     # end def
 
     def _receiver(self):
-        from env import NODE_HOST_PREFIX, THIS_NODE, NODE_PORT
+        from env import NODE_HOST, THIS_NODE, NODE_PORT
         from errno import ECONNREFUSED
 
-        node_host = NODE_HOST_PREFIX + str(THIS_NODE)
-        if NODE_HOST_PREFIX == "localhost":
+        node_host = NODE_HOST.format(i=THIS_NODE)
+        if NODE_HOST == "localhost":
             node_host = "localhost"
         # end if
         logger.info("Starting receiver on {host}:{port}".format(host=node_host, port=NODE_PORT))
@@ -188,17 +188,11 @@ class Receiver(object):
 
     from luckydonaldUtils.functions import caller
 
-    @caller
     def pop_message(self, call=None):
         """
         Get a message.
         :return:
         """
-        "" if call is None else call
-        True if whatever else False
-
-        self.pop_message(call= "" if call is None else call)
-        logger.debug("called from {call}".format(call=call))
         self._new_messages.acquire()  # waits until at least 1 message is in the queue.
         with self._queue_access:
             message = self._queue.popleft()  # pop oldest item
