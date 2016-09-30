@@ -24,20 +24,13 @@ def send_message(msg):
 
 
 def broadcast(message):
-    from env import NODE_HOST
-    from env import TOTAL_NODES
-    from env import THIS_NODE
-    for node in range(TOTAL_NODES):
-        if node == THIS_NODE:
-            continue  # skip ourself
-        # end if
-        node_host = NODE_HOST.format(i=node)
-        if NODE_HOST == "localhost":
-            node_host = "localhost"
-        # end if
-        # msg = MSG_FORMAT.format(length=len(message), msg=message)
-        message += "\n"
-        msg = "ANSWER " + str(len(message)) + "\n" + message
+    from dockerus import ServiceInfos
+    hosts = ServiceInfos().other_hostnames
+    # msg = MSG_FORMAT.format(length=len(message), msg=message)
+    message += "\n"
+    msg = "ANSWER " + str(len(message)) + "\n" + message
+
+    for node_host in hosts:
         logger.debug("Prepared sending to {host}:{port}:\n{msg}".format(host=node_host, port=NODE_PORT, msg=msg))
         msg = bytes(msg, "utf-8")
         sent = False

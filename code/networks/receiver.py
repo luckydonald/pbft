@@ -6,11 +6,11 @@ from collections import deque
 from DictObject import DictObject
 from luckydonaldUtils.logger import logging
 from luckydonaldUtils.encoding import to_binary as b
-from luckydonaldUtils.encoding import to_unicode as u
 from luckydonaldUtils.encoding import to_native as n
 import socket
 
 from messages import Message
+from dockerus import ServiceInfos
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -39,20 +39,16 @@ class Receiver(object):
     # end def
 
     def _receiver(self):
-        from env import NODE_HOST, THIS_NODE, NODE_PORT
+        from env import NODE_PORT
         from errno import ECONNREFUSED
 
-        node_host = NODE_HOST.format(i=THIS_NODE)
-        if NODE_HOST == "localhost":
-            node_host = "localhost"
-        # end if
-        logger.info("Starting receiver on {host}:{port}".format(host=node_host, port=NODE_PORT))
+        logger.info("Starting receiver on {host}:{port}".format(host="0.0.0.0", port=NODE_PORT))
         while not self._do_quit:  # retry connection
             self.s = socket.socket(socket.AF_INET,  # Internet
                                    socket.SOCK_STREAM)  # TCP
             try:
                 self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                self.s.bind((node_host, NODE_PORT))
+                self.s.bind((ServiceInfos().hostname, NODE_PORT))
                 self.s.listen(5)
                 client, info = self.s.accept()
                 self.client = client

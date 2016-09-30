@@ -2,10 +2,13 @@
 
 # built in modules
 import sys
+from datetime import timedelta
 from time import sleep
 from statistics import median
 
 # dependency modules
+# from luckydonaldUtils.functions import cached
+from dockerus import cached
 from luckydonaldUtils.logger import logging
 
 # own modules
@@ -13,7 +16,7 @@ from networks.sender import send_message
 from networks.receiver import Receiver
 from functions import flatten_list
 from messages import InitMessage, LeaderChangeMessage, ProposeMessage, PrevoteMessage, VoteMessage
-from env import THIS_NODE, TOTAL_NODES, POSSIBLE_FAILURES, DEBUG
+from env import DEBUG
 import todo
 
 __author__ = 'luckydonald'
@@ -37,10 +40,9 @@ else:
     logger.debug("Debugger disabled via $NODE_DEBUG.")
 # end if
 
-
 # init
 # sensor_value = 0.4 # vp
-# THIS_NODE = 0  # p
+# self.node_number = 0  # p
 # TOTAL_NODES = 4 # n
 # POSSIBLE_FAILURES = 1 # t
 # value_store = {}  # INIT_Store
@@ -48,10 +50,6 @@ else:
 # sequence_no = None # cid
 P = {}
 LC = {}  # leader change
-
-
-
-
 
 
 class BFT_ARM():
@@ -83,32 +81,34 @@ class BFT_ARM():
     def task_normal_case(self):
         value = todo.get_sensor_value()  # vp
         logger.critical("0 INIT>")
-        send_message(InitMessage(self.sequence_no, THIS_NODE, value))
+        send_message(InitMessage(self.sequence_no, self.node_number, value))
         # TODO: Wo bekommt das die seq no her?
-        if THIS_NODE == self.current_leader:
+        if self.node_number == self.current_leader:
             logger.critical("1.0 (leader)")
             # CURRENT LEADER
             if self.sequence_no is None:
                 self.sequence_no = 0
             else:
                 self.sequence_no = (self.sequence_no + 1) % 256
-            while not (len(self.value_store) >= (TOTAL_NODES - POSSIBLE_FAILURES)):
+            while not (len(self.value_store) >= (self.nodes_total - self.nodes_faulty)):
                 # wait until |INIT_Store| > n - t
-                logger.success("INITs: {} > {}".format(len(self.value_store), (TOTAL_NODES - POSSIBLE_FAILURES)))
+                logger.success("INITs: {} > {}".format(len(self.value_store), (self.nodes_total - self.nodes_faulty)))
                 init_msg = self.get_specific_message_type(InitMessage)
+                assert isinstance(init_msg, InitMessage)
                 self.value_store[init_msg.node] = init_msg
                 # todo
             # end
             proposal = median([x.value for x in self.value_store.values()])
             send_message(ProposeMessage(
-                self.sequence_no, THIS_NODE, self.current_leader, proposal, list(self.value_store.values())
+                self.sequence_no, self.node_number, self.current_leader, proposal, list(self.value_store.values())
             ))
             logger.critical("1.1 PROPOSAL>")
         # end if
         logger.critical("3.0 >PROPOSAL")
         prop_message = self.get_specific_message_type(ProposeMessage)
+        assert isinstance(prop_message, ProposeMessage)
         if self.verify_proposal(prop_message):
-            send_message(PrevoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
+            send_message(PrevoteMessage(self.sequence_no, self.node_number, self.current_leader, value))
             logger.critical("3.1 PROPOSAL>")
         # if exist v:|<PREVOTE,cid,·,„,vÍ‡·|>(n+t)
 
@@ -121,7 +121,7 @@ class BFT_ARM():
             if isinstance(msg, PrevoteMessage):
                 value, is_enough = self.buffer_incomming(msg, prevote_buffer)
                 if is_enough:
-                    send_message(VoteMessage(self.sequence_no, THIS_NODE, self.current_leader, value))
+                    send_message(VoteMessage(self.sequence_no, self.node_number, self.current_leader, value))
                     logger.critical("4.1 PRE-VOTE>")
                     # end def
             elif isinstance(msg, VoteMessage):
@@ -140,7 +140,7 @@ class BFT_ARM():
         # end if
         assert isinstance(buffer[msg.value], list)
         buffer[msg.value].append(msg)
-        return msg.value, len(buffer[msg.value]) > (TOTAL_NODES + POSSIBLE_FAILURES) / 2
+        return msg.value, len(buffer[msg.value]) > (self.nodes_total + self.nodes_faulty) / 2
     # end def
 
     def verify_proposal(self, msg):
@@ -187,6 +187,27 @@ class BFT_ARM():
         # end while
         return msg
     # end def
+
+    @property
+    @cached(max_age=timedelta(seconds=60))
+    def nodes_total(self):
+        from dockerus import ServiceInfos
+        return len(ServiceInfos().other_hostnames)
+    # end def
+
+    @property
+    @cached(max_age=timedelta(seconds=60))
+    def nodes_faulty(self):
+        return (self.nodes_total - 1)/3
+    # end def
+
+    @property
+    def node_number(self):
+        from dockerus import ServiceInfos
+        return ServiceInfos().number
+    # end def
+
+
 # end class
 
 if __name__ == '__main__':
