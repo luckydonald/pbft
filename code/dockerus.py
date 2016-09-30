@@ -128,12 +128,11 @@ class ServiceInfos(object, metaclass=Singleton):
     @property
     @cached(max_age=CACHING_TIME)
     def number(self):
-        return self.me.Labels[self.LABEL_COMPOSE_CONTAINER_NUMBER]
+        return int(self.me.Labels[self.LABEL_COMPOSE_CONTAINER_NUMBER])
     # end def
 
-    @property
     @cached(max_age=CACHING_TIME)
-    def containers(self):
+    def containers(self, exclude_self=False):
         """
         Gets metadata for all containers in this scale grouping.
 
@@ -144,7 +143,10 @@ class ServiceInfos(object, metaclass=Singleton):
             '{0}={1}'.format(self.LABEL_COMPOSE_SERVICE, self.service),
             # '{0}={1}'.format(LABEL_ONE_OFF, "True" if one_off else "False")
         ]
-        return DictObject.objectify(self.cli.containers(filters={'label': filters}))
+        return DictObject.objectify([
+            c for c in self.cli.containers(filters={'label': filters})
+            if not (exclude_self and c['Id'][:12] == self.hostname_env[:12])
+        ])
     # end def
 
     @property
@@ -158,7 +160,6 @@ class ServiceInfos(object, metaclass=Singleton):
         )
     # end def
 
-    @property
     @cached(max_age=CACHING_TIME)
     def other_hostnames(self, exclude_self=False):
         return [
@@ -166,7 +167,16 @@ class ServiceInfos(object, metaclass=Singleton):
                 project=c.Labels[self.LABEL_COMPOSE_PROJECT],
                 service=c.Labels[self.LABEL_COMPOSE_SERVICE],
                 i=c.Labels[self.LABEL_COMPOSE_CONTAINER_NUMBER]
-            ) for c in self.containers if not (exclude_self and c['Id'][:12] == self.hostname_env[:12])
+            ) for c in self.containers(exclude_self=exclude_self)
+
+        ]
+    # end def
+
+    @cached(max_age=CACHING_TIME)
+    def other_numbers(self, exclude_self=False):
+        return [
+            c.Labels[self.LABEL_COMPOSE_CONTAINER_NUMBER]
+            for c in self.containers(exclude_self=exclude_self)
         ]
     # end def
 # end class

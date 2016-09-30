@@ -27,7 +27,7 @@ def broadcast(message):
     from dockerus import ServiceInfos
     if not isinstance(message, str):
         raise TypeError("Parameter `message` is not type `str` but {type}: {msg}".format(type=type(message), msg=message))
-    hosts = ServiceInfos().other_hostnames
+    hosts = ServiceInfos().other_hostnames()
     # msg = MSG_FORMAT.format(length=len(message), msg=message)
     message += "\n"
     msg = "ANSWER " + str(len(message)) + "\n" + message

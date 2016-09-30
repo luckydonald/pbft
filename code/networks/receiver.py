@@ -42,7 +42,7 @@ class Receiver(object):
         from env import NODE_PORT
         from errno import ECONNREFUSED
 
-        logger.info("Starting receiver on {host}:{port}".format(host="0.0.0.0", port=NODE_PORT))
+        logger.info("Starting receiver on {host}:{port}".format(host=ServiceInfos().hostname, port=NODE_PORT))
         while not self._do_quit:  # retry connection
             self.s = socket.socket(socket.AF_INET,  # Internet
                                    socket.SOCK_STREAM)  # TCP
