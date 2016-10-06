@@ -15,13 +15,13 @@ from .message_queue import MessageQueueReceiver
 from .networks.sender import send_message
 from .functions import flatten_list
 from .messages import InitMessage, LeaderChangeMessage, ProposeMessage, PrevoteMessage, VoteMessage
-from .env import DEBUG
+from .env import DEBUGGER
 from . import todo
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
 
-if DEBUG:
+if DEBUGGER:
     sys.path.append("libs/pycharm-debug-py3k.egg")
     try:
         import pydevd
@@ -36,7 +36,7 @@ if DEBUG:
         logger.warning("No debugger.")
     # end try
 else:
-    logger.debug("Debugger disabled via $NODE_DEBUG.")
+    logger.debug("Debugger disabled via $NODE_DEBUGGER.")
 # end if
 
 # init
@@ -97,7 +97,6 @@ class BFT_ARM():
         value = todo.get_sensor_value()  # vp
         logger.critical("Step 0 INIT>")
         send_message(InitMessage(self.sequence_no, self.node_number, value))
-        # TODO: Wo bekommt das die seq no her?
         logger.info("I'm node [{self!r}], [{leader!r}] is leader, {filler}.".format(
             leader=self.current_leader, self=self.node_number,
             filler="it's a me" if self.node_number == self.current_leader else "not me"
@@ -145,13 +144,12 @@ class BFT_ARM():
                 logger.critical("Step 3.B >VOTE")
                 value, is_enough = self.buffer_incomming(msg, vote_buffer)
                 if is_enough:
-                    logger.critical("Step 4 (commit)")
-                    logger.success("Value is {val}".format(val=value))
+                    logger.critical("Step 4 (commit {value})".format(value=value))
                     return value
                 # end if
             # end if
         # end while
-        logger.critical("Step 4 End.")
+        logger.warning("Hit end unexpectedly.")
     # end def run
 
     def new_sequence(self):
@@ -161,6 +159,7 @@ class BFT_ARM():
             self.sequence_no = (self.sequence_no + 1) % 256
         # end if
         logger.info("Sequence: {i}".format(i=self.sequence_no))
+        return self.sequence_no
     # end def
 
     def buffer_incomming(self, msg, buffer):
@@ -234,5 +233,9 @@ class BFT_ARM():
     def node_number(self):
         from .dockerus import ServiceInfos
         return ServiceInfos().number
+    # end def
+
+    def get_receiver(self):
+        return self.rec
     # end def
 # end class

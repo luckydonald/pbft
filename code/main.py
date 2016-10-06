@@ -8,26 +8,36 @@ from algo.main import BFT_ARM
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
 
-if __name__ == '__main__':
-    logging.add_colored_handler(logger_name=__name__, level=logging.INFO)
-    logging.add_colored_handler(logger_name="algo", level=logging.INFO)
-    for file in "main,todo,messages".split(","):
-        logging.add_colored_handler(logger_name="algo." + file, level=logging.DEBUG)
-    # end def
-    old_sequence = None
-    receiver = None
-    foo = BFT_ARM(sequence_number=old_sequence)
-    foo.new_sequence()
+do_quit = False
+
+def main():
+    algo = BFT_ARM()
+    sequence = algo.new_sequence()
+    receiver = algo.get_receiver()
+
     logger.info("Sleeping 2 seconds to give other nodes the time to get the receiver ready.")
     sleep(2)
-    foo.task_normal_case()
-    receiver = foo.rec
-    old_sequence = foo.sequence_no
-    while True:
-        logger.info("Starting new Round.")
-        foo = BFT_ARM(sequence_number=old_sequence, receiver=receiver)
-        foo.new_sequence()
-        foo.task_normal_case()
-        old_sequence = foo.sequence_no
+
+    while not do_quit:
+        logger.debug("Starting new Round.")
+        algo = BFT_ARM(sequence_number=sequence, receiver=receiver)
+        sequence = algo.new_sequence()
+        algo.task_normal_case()
     # end while
-# end if
+    logger.info("Exiting.")
+# end def
+
+
+def setup_logging():
+    logging.add_colored_handler(logger_name=None, level=logging.WARNING)  # root logger -> WARNING
+    logging.add_colored_handler(logger_name=__name__, level=logging.DEBUG)  # this file -> DEBUG
+    logging.add_colored_handler(logger_name="algo", level=logging.INFO)  # all algo files -> INFO
+    for file in "main,todo,messages".split(","):
+        logging.add_colored_handler(logger_name="algo." + file, level=logging.DEBUG)  # specific algo files -> DEBUG
+    # end for
+# end def
+
+if __name__ == '__main__':  # if this is the executed file
+    setup_logging()
+    main()
+# end if main()

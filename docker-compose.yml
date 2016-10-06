@@ -7,7 +7,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      NODE_DEBUG: "False"
+      NODE_DEBUGGER: "False"
 
     # entrypoint: ["/bin/bash"]
 

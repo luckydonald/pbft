@@ -3,10 +3,6 @@ services:
   node:
     build: .
     environment:
-      NODE_ID:
-      NODE_TOTAL: 4
-      POSSIBLE_FAILURES: 1
+      DOCKER_CACHING_TIME: 5
       NODE_PORT: 4458
-    # restart: "unless-stopped"
-    # stdin_open: true
-
+      NODE_DEBUGGER: 0
