@@ -10,10 +10,12 @@ logger = logging.getLogger(__name__)
 
 do_quit = False
 
+
 def main():
     algo = BFT_ARM()
     sequence = algo.new_sequence()
     receiver = algo.get_receiver()
+    setup_cleanup(algo)
 
     logger.info("Sleeping 2 seconds to give other nodes the time to get the receiver ready.")
     sleep(2)
@@ -25,6 +27,21 @@ def main():
         algo.task_normal_case()
     # end while
     logger.info("Exiting.")
+# end def
+
+
+def setup_cleanup(algo):
+    import signal
+    import sys
+    assert isinstance(algo, BFT_ARM)
+
+    def signal_handler(signal, frame):
+        print('You pressed Ctrl+C!')
+        assert isinstance(algo, BFT_ARM)
+        algo.stop()
+        sys.exit(0)
+    # end def
+    signal.signal(signal.SIGINT, signal_handler)
 # end def
 
 

@@ -151,6 +151,14 @@ class BFT_ARM():
         logger.warning("Hit end unexpectedly.")
     # end def run
 
+    def stop(self):
+        logger.info("Requested to stop.")
+        self.should_timeout = True
+        assert isinstance(self.rec, MessageQueueReceiver)
+        self.rec.stop()
+        self.rec = None
+    # end def
+
     def new_sequence(self):
         if self.sequence_no is None:
             self.sequence_no = 0

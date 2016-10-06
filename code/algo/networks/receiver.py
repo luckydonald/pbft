@@ -55,6 +55,7 @@ class Receiver(object):
                 logger.debug("Socket Set up.")
                 while not self._do_quit and self.s:
                     self.client, address = self.s.accept()
+
                     buffer = _EMPTY_RAW_BYTE
                     answer = _EMPTY_RAW_BYTE
                     completed = -1  # -1 = answer size yet unknown, >0 = got remaining answer size
@@ -189,6 +190,10 @@ class Receiver(object):
         You should not try to start() it again afterwards.
         """
         self._do_quit = True
+        if self.client:
+            self.s.settimeout(0)
+        if self.client:
+            self.client.close()
         if self.s:
             self.s.settimeout(0)
         if self.s:
@@ -197,7 +202,6 @@ class Receiver(object):
             logger.debug("receiver thread existing: {}".format(self._receiver_thread.isAlive()))
         else:
             logger.debug("receiver thread existing: Not created.")
-            # self._new_messages.release()
         # end if
 
     def pop_message(self):
