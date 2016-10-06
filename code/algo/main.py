@@ -55,12 +55,27 @@ class BFT_ARM():
     sequence_no = None
     should_timeout = False
 
-    def __init__(self, old_sequence=None):
+    def __init__(self, sequence_number=None, receiver=None):
+        """
+        Starts a new sequence.
+        You can provide a sequence number to use as `sequence_number`
+        and a (started) MessageQueueReceiver `receiver`, too.
+
+        :param sequence_number: the sequence number to use. Is stored as `self.sequence_no`
+        :param receiver: Reuse a existing :class:`MessageQueueReceiver`,
+                         allowing to keep the messages, and minimizing the socket port problems
+
+        """
         self.value_store = {}  # INIT_Store
         self.current_leader = 1  # ø
-        self.rec = MessageQueueReceiver()
-        self.rec.start()
-        self.sequence_no = old_sequence
+        if receiver:
+            assert isinstance(receiver, MessageQueueReceiver)
+            self.rec = receiver
+        else:
+            self.rec = MessageQueueReceiver()
+            self.rec.start()
+        # end if
+        self.sequence_no = sequence_number
     # end def
 
     def MsgCollect(self):
@@ -118,17 +133,19 @@ class BFT_ARM():
         logger.critical("Step 3.0 >(PRE)VOTE")
         while not self.should_timeout:
             if self.rec.prevote_queue.has_message():
+                logger.critical("Step 3.A >PREVOTE")
                 msg = self.rec.prevote_queue.pop_message()
                 value, is_enough = self.buffer_incomming(msg, prevote_buffer)
                 if is_enough:
                     send_message(VoteMessage(self.sequence_no, self.node_number, self.current_leader, value))
-                    logger.critical("Step 3.1 PRE-VOTE>")
+                    logger.critical("Step 3.A VOTE>")
                     # end def
             elif self.rec.vote_queue.has_message():
                 msg = self.rec.vote_queue.pop_message()
+                logger.critical("Step 3.B >VOTE")
                 value, is_enough = self.buffer_incomming(msg, vote_buffer)
                 if is_enough:
-                    logger.critical("Step 3.2 VOTE>")
+                    logger.critical("Step 4 (commit)")
                     logger.success("Value is {val}".format(val=value))
                     return value
                 # end if
