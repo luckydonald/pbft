@@ -37,6 +37,8 @@ def setup_cleanup(algo):
 
     def signal_handler(signal, frame):
         print('You pressed Ctrl+C!')
+        global do_quit
+        do_quit = True
         assert isinstance(algo, BFT_ARM)
         algo.stop()
         sys.exit(0)
