@@ -217,9 +217,6 @@ class BFT_ARM():
         # end while
         return msg
     # end def
-    
-    def get_message(self):
-        
 
     @property
     @cached(max_age=timedelta(seconds=60))

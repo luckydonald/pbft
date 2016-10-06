@@ -50,7 +50,9 @@ class LockedQueue(object):
         while msg is None:
             msg = self.pop_message()
             if msg.sequence_no != sequence_number:
-                logger.warning("Discarded Message (wrong sequence number): {}".format(msg))
+                logger.warning("Discarded Message, wrong sequence number ({a} instead of {b}): {msg}".format(
+                    a=msg.sequence_no, b=sequence_number, msg=msg
+                ))
                 msg = None
             # end if
         # end while
