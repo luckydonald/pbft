@@ -28,13 +28,15 @@ class Receiver(object):
 
     def __init__(self):
         self._do_quit = False
+        self.s = None  # socket
+        self.client = None
     # end def
 
     def __receiver_logging_wrapper(self):
         try:
             self._receiver()
         except Exception:
-            logger.exception("Receiver failed.")
+            logger.exception("Receiver failed. Exited.")
         # end try
     # end def
 
@@ -49,11 +51,10 @@ class Receiver(object):
             try:
                 self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 self.s.bind((ServiceInfos().hostname, NODE_PORT))
-                self.s.listen(1)
+                self.s.listen(5)
                 logger.debug("Socket Set up.")
                 while not self._do_quit and self.s:
-                    client, address = self.s.accept()
-                    self.client = client
+                    self.client, address = self.s.accept()
                     buffer = _EMPTY_RAW_BYTE
                     answer = _EMPTY_RAW_BYTE
                     completed = -1  # -1 = answer size yet unknown, >0 = got remaining answer size
@@ -64,8 +65,8 @@ class Receiver(object):
                                 answer = self.client.recv(1)
                                 # recv() returns an empty string if the remote end is closed
                                 if len(answer) == 0:
+                                    logger.debug("Remote end closed.")
                                     self.reset_client()
-                                    logger.warning("Remote end closed.")
                                 # end if
                                 # logger.debug("received byte: {}".format(answer))
                                 break
@@ -95,7 +96,9 @@ class Receiver(object):
                                 logger.debug("skipping second linebreak.")
                                 completed = -1
                                 continue
-                            logger.debug("Received Message: %s", buffer)
+                            logger.debug(
+                                "Received Message from {client}: {buffer}".format(client=address, buffer=buffer)
+                            )
                             text = n(buffer)
                             if len(text) > 0 and text.strip() != "":
                                 self._add_message(text)
@@ -115,14 +118,12 @@ class Receiver(object):
                     # end while: read loop
                 # end while: for connected clients
             except socket.error as error:
-                self.reset_socket()
-                if error.errno == ECONNREFUSED and not self._do_quit:
-                    continue
-                # end if
-                raise error  # Not the error we are looking for, re-raise
+                # if error.errno in [ECONNREFUSED] and not self._do_quit:
+                #   continue
+                # # end if
+                logger.error("Socket failed with network error: {e}\nRetrying...".format(e=error))
             except Exception as error:
-                self.reset_socket()
-                raise error
+                logger.error("Socket failed: {e}\nRetrying...".format(e=error))
             # end try
             self.reset_socket()
         # end while not ._do_quit: retry connection

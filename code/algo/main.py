@@ -61,7 +61,6 @@ class BFT_ARM():
         self.rec = MessageQueueReceiver()
         self.rec.start()
         self.sequence_no = old_sequence
-        self.new_sequence()
     # end def
 
     def MsgCollect(self):

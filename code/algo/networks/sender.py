@@ -41,13 +41,13 @@ def broadcast(message):
                     sock.connect((node_host, NODE_PORT))
                     sock.sendall(msg)
                     logger.log(
-                        msg="Sent to {host}:{port}:".format(host=node_host, port=NODE_PORT),
+                        msg="Sending to {host}:{port} succeeded.".format(host=node_host, port=NODE_PORT),
                         level=(logging.SUCCESS if sent == 0 else logging.DEBUG)
                     )
                     sent = 1
                 # end with
             except OSError as e:
-                logger.error("Sending to {host}:{port} failed: {e}\nRetrying...".format(e=e, host=node_host, port=NODE_PORT))
+                logger.error("Sending to {host}:{port} failed: {e} Retrying...".format(e=e, host=node_host, port=NODE_PORT))
                 sleep(0.1)
                 sent = 0
             # end try
