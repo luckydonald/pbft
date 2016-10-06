@@ -36,7 +36,7 @@ class ServiceInfos(object, metaclass=Singleton):
             self.CACHING_TIME = caching_time
         else:
             import os
-            timedelta(seconds=float(os.environ.get("DOCKER_CACHING_TIME", ServiceInfos.CACHING_TIME)))
+            timedelta(seconds=float(os.environ.get("DOCKER_CACHING_TIME", ServiceInfos.CACHING_TIME.total_seconds())))
         # end if
     # end def
 
