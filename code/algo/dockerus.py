@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import inspect
 
 from DictObject import DictObject
 from luckydonaldUtils.logger import logging
@@ -14,11 +13,32 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceInfos(object, metaclass=Singleton):
+    """
+    Infos about a `docker-compose scale` group.
+    """
     __author__ = 'luckydonald'
     LABEL_COMPOSE_CONTAINER_NUMBER = 'com.docker.compose.container-number'
     LABEL_COMPOSE_PROJECT = 'com.docker.compose.project'
     LABEL_COMPOSE_SERVICE = 'com.docker.compose.service'
     CACHING_TIME = timedelta(seconds=5)
+
+    def __init__(self, caching_time=None):
+        """
+        Infos about a `docker-compose scale` group.
+
+        If caching_time is not specified, the $DOCKER_CACHING_TIME environment variable will be used.
+        If that is empty, too, it will fallback to the default CACHING_TIME of 5 seconds.
+
+        :param caching_time: must be a datetime.timedelta object
+        """
+        if caching_time:
+            assert isinstance(caching_time, timedelta)
+            self.CACHING_TIME = caching_time
+        else:
+            import os
+            timedelta(seconds=float(os.environ.get("DOCKER_CACHING_TIME", ServiceInfos.CACHING_TIME)))
+        # end if
+    # end def
 
     @property
     @cached(max_age=CACHING_TIME)
