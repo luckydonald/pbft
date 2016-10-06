@@ -1,2 +1,2 @@
-luckydonald-utils
+luckydonald-utils==0.50
 docker-py

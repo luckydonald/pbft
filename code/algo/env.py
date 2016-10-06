@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-
 from luckydonaldUtils.logger import logging
 
 __author__ = 'luckydonald'

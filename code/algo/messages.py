@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from luckydonaldUtils.logger import logging
 
-from enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE
+from .enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -134,14 +134,6 @@ class ProposeMessage(Message):
         return ProposeMessage(**kwargs)
     # end def
 
-    def sort_by_nodes(self):
-        store = {}
-        for msg in self.value_store:
-            store[msg.node] = msg
-        # end for
-        return store
-    # end def
-
     def to_dict(self):
         data = super().to_dict()
         data["node"] = self.node
@@ -159,6 +151,7 @@ class PrevoteMessage(Message):
         self.node = node
         self.leader = leader
         self.value = value
+    # end if
 
     @staticmethod
     def from_dict(data):
@@ -209,3 +202,12 @@ class VoteMessage(Message):
         return data
     # end def
 # end class
+
+
+class NewLeaderMessage(Message):
+    def __init__(self, sequence_no, node, leader, value):
+        super().__init__(VOTE, sequence_no)
+        self.node = node
+        self.leader = leader
+        self.value = value
+    # end def

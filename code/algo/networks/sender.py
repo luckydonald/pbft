@@ -4,9 +4,9 @@ from time import sleep
 
 from luckydonaldUtils.logger import logging
 
-from env import NODE_PORT
-from messages import Message
-from todo import logger
+from ..env import NODE_PORT
+from ..messages import Message
+from ..todo import logger
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ def send_message(msg):
 
 
 def broadcast(message):
-    from dockerus import ServiceInfos
+    from ..dockerus import ServiceInfos
     if not isinstance(message, str):
         raise TypeError("Parameter `message` is not type `str` but {type}: {msg}".format(type=type(message), msg=message))
     hosts = ServiceInfos().other_hostnames()
@@ -34,18 +34,22 @@ def broadcast(message):
     logger.debug("Prepared sending to *:{port}:\n{msg}".format(port=NODE_PORT, msg=msg))
     msg = bytes(msg, "utf-8")
     for node_host in hosts:
-        sent = False
-        while not sent:
+        sent = -1
+        while not sent == 1:
             try:
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:  # UDP SOCK_DGRAM
-                    logger.debug("Sending to {host}:{port}:".format(host=node_host, port=NODE_PORT))
                     sock.connect((node_host, NODE_PORT))
                     sock.sendall(msg)
-                    sent = True
+                    logger.log(
+                        msg="Sent to {host}:{port}:".format(host=node_host, port=NODE_PORT),
+                        level=(logging.SUCCESS if sent == 0 else logging.DEBUG)
+                    )
+                    sent = 1
                 # end with
             except OSError as e:
-                logger.error("Sending to {host}:{port} failed: {e}".format(e=e, host=node_host, port=NODE_PORT))
-                sleep(1)
+                logger.error("Sending to {host}:{port} failed: {e}\nRetrying...".format(e=e, host=node_host, port=NODE_PORT))
+                sleep(0.1)
+                sent = 0
             # end try
         # end while
     # end for
