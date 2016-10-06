@@ -3,11 +3,10 @@
 # built in modules
 import sys
 from datetime import timedelta
-from time import sleep
 from statistics import median
 
 # dependency modules
-from luckydonaldUtils.functions import cached
+from luckydonaldUtils.functions import cached, gone
 from luckydonaldUtils.logger import logging
 
 # own modules
@@ -47,8 +46,8 @@ else:
 # value_store = {}  # INIT_Store
 # current_leader = 0 # o
 # sequence_no = None # cid
-P = {}
-LC = {}  # leader change
+# P = {}
+# LC = {}  # leader change
 
 
 class BFT_ARM():
@@ -108,7 +107,7 @@ class BFT_ARM():
             while not (len(self.value_store) >= (self.nodes_total - self.nodes_faulty)):
                 # wait until |INIT_Store| > n - t
                 logger.success("INITs: {} > {}".format(len(self.value_store), (self.nodes_total - self.nodes_faulty)))
-                init_msg = self.rec.init_queue.pop_message()
+                init_msg = self.rec.init_queue.get_message(sequence_number=self.sequence_no)
                 assert isinstance(init_msg, InitMessage)
                 self.value_store[init_msg.node] = init_msg
             # end
@@ -119,7 +118,7 @@ class BFT_ARM():
             logger.critical("Step 1.1 PROPOSAL>")
         # end if
         logger.critical("Step 2.0 >PROPOSAL")
-        prop_message = self.rec.propose_queue.pop_message()
+        prop_message = self.rec.propose_queue.get_message(sequence_number=self.sequence_no)
         assert isinstance(prop_message, ProposeMessage)
         if self.verify_proposal(prop_message):
             send_message(PrevoteMessage(self.sequence_no, self.node_number, self.current_leader, value))
@@ -133,14 +132,14 @@ class BFT_ARM():
         while not self.should_timeout:
             if self.rec.prevote_queue.has_message():
                 logger.critical("Step 3.A >PREVOTE")
-                msg = self.rec.prevote_queue.pop_message()
+                msg = self.rec.prevote_queue.get_message(sequence_number=self.sequence_no)
                 value, is_enough = self.buffer_incomming(msg, prevote_buffer)
                 if is_enough:
                     send_message(VoteMessage(self.sequence_no, self.node_number, self.current_leader, value))
                     logger.critical("Step 3.A VOTE>")
                     # end def
             elif self.rec.vote_queue.has_message():
-                msg = self.rec.vote_queue.pop_message()
+                msg = self.rec.vote_queue.get_message(sequence_number=self.sequence_no)
                 logger.critical("Step 3.B >VOTE")
                 value, is_enough = self.buffer_incomming(msg, vote_buffer)
                 if is_enough:
@@ -195,7 +194,8 @@ class BFT_ARM():
         return msg.leader == self.current_leader and median(values) == msg.proposal
     # end def
 
-    def get_specific_message_type(self, *classes_or_types, sequence_number=None):
+    @gone  # TODO: get_specific_message_type function not needed anymore
+    def get_specific_message_type(self, *classes_or_types, sequence_number=None):  # TODO Remove this def
         msg = None
         classes_or_types = flatten_list(classes_or_types)
         classes_or_types = tuple(classes_or_types)
@@ -204,10 +204,12 @@ class BFT_ARM():
             msg = self.rec.pop_message()
             if isinstance(msg, classes_or_types):
                 logger.success("Got Message: {}".format(msg))
-                break
-            elif sequence_number is not None and msg.sequence_no != sequence_number:
-                logger.warning("Discarded Message (wrong sequence number): {}".format(msg))
-                msg = None
+                if sequence_number is not None and msg.sequence_no != sequence_number:
+                    logger.warning("Discarded Message (wrong sequence number): {}".format(msg))
+                    msg = None
+                else:
+                    break
+                # end if
             else:
                 logger.warning("Discarded Message (wrong type): {}".format(msg))
                 msg = None
@@ -215,6 +217,9 @@ class BFT_ARM():
         # end while
         return msg
     # end def
+    
+    def get_message(self):
+        
 
     @property
     @cached(max_age=timedelta(seconds=60))

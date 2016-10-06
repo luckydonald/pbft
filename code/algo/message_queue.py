@@ -42,6 +42,23 @@ class LockedQueue(object):
         # end with
     # end def
 
+    def get_message(self, sequence_number=None):
+        if sequence_number is None:  # no check needed:
+            return self.pop_message()
+        # end if
+        msg = None
+        while msg is None:
+            msg = self.pop_message()
+            if msg.sequence_no != sequence_number:
+                logger.warning("Discarded Message (wrong sequence number): {}".format(msg))
+                msg = None
+            # end if
+        # end while
+        assert isinstance(msg, Message)
+        assert isinstance(msg, self._clazz)
+        return msg
+    # end def
+
     def append_message(self, message):
         if not isinstance(message, self._clazz):
             raise TypeError("Given message is not type {_clazz} but type {type}:\n{msg}".format(
