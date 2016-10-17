@@ -6,7 +6,7 @@ WORKDIR /code/
 
 # libs
 RUN mkdir /code/libs/
-ADD ./libs/ /code/libs
+ADD ./extras/libs/ /code/libs
 ADD ./requirements.txt /code
 RUN pip install -r requirements.txt
 RUN rm requirements.txt

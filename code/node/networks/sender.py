@@ -15,10 +15,18 @@ MSG_FORMAT = "ANSWER {length}\n{msg}\n"
 
 
 def send_message(msg):
+    import json
+    import requests
     logger.debug(msg)
     assert isinstance(msg, Message)
-    import json
-    broadcast(json.dumps(msg.to_dict()))
+    data = msg.to_dict()
+    broadcast(json.dumps(data))
+    try:
+        requests.put("http://db_proxy/dump/", data)
+    except requests.RequestException:
+        logger.warning("Failed to report message to db.")
+        pass
+    # end def
     return
 # end def
 

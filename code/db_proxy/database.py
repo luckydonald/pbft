@@ -14,6 +14,7 @@ SEQUENCE_TYPE = int
 
 
 def from_dict(data):
+    assert data is not None
     assert "type" in data
     type = data["type"]
     assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE]

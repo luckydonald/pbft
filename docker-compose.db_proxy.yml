@@ -20,3 +20,16 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "1234secure"
       POSTGRES_DB: "messages"
+
+  postgres_browser:
+    # image: jacksoncage/phppgadmin
+    build: ./extras/phppgadmin-docker
+    ports:
+      - "8080:80"
+    environment:
+      POSTGRES_HOST: "postgres"  # service name
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1234secure"
+      POSTGRES_DEFAULTDB: "messages"
+      # APACHE_SERVERNAME: "postgres_browser"
+      APACHE_SERVERNAME: "localhost"

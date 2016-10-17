@@ -31,3 +31,8 @@ services:
     extends:
       file: docker-compose.db_proxy.yml
       service: postgres
+
+  postgres_browser:
+    extends:
+      file: docker-compose.db_proxy.yml
+      service: postgres_browser
