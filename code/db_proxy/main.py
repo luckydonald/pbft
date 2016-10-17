@@ -2,7 +2,6 @@
 from luckydonaldUtils.logger import logging
 from flask import Flask
 from flask import request
-from flask import Response
 from pony import orm
 
 __author__ = 'luckydonald'
@@ -17,8 +16,8 @@ app = Flask(__name__)
 @app.route("/dump/")
 @app.route("/dump")
 def dump_to_db():
-    from .database import Message
-    Message.from_dict(request.get_json())
+    from .database import from_dict
+    from_dict(request.get_json())
 # end def
 
 @app.route("/")

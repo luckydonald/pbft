@@ -3,3 +3,4 @@ docker-py
 
 flask  # api
 pony  # db
+psycopg2cffi  # db

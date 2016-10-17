@@ -3,9 +3,8 @@ services:
   db_proxy:
     build:
       context: .
-      dockerfile: ./code/db_proxy/Dockerfile
+      dockerfile: ./Dockerfile.db_proxy
     restart: "unless-stopped"
-    command: ["main_db_proxy.py"]
     environment:
       POSTGRES_HOST: "postgres"  # service name
       POSTGRES_USER: "postgres"

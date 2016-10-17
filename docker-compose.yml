@@ -21,6 +21,11 @@ services:
       service: db_proxy
     ports:
       - "80:80"
+    restart: "no"
+    command: ["python", "main_db_proxy.py"]
+
+    # entrypoint: []
+    # command: ["ls", "-la"]
 
   postgres:
     extends:

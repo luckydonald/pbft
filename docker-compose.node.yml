@@ -3,7 +3,7 @@ services:
   node:
     build:
       context: .
-      dockerfile: ./code/node/Dockerfile
+      dockerfile: ./Dockerfile
     command: ["main_node.py"]
     environment:
       DOCKER_CACHING_TIME: 5

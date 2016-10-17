@@ -12,58 +12,78 @@ MSG_TYPE_TYPE = int
 NODE_TYPE = int
 SEQUENCE_TYPE = int
 
-class Message(messages.Message, db.Entity):
+
+def from_dict(data):
+    assert "type" in data
+    type = data["type"]
+    assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE]
+    if type == INIT:
+        return DBInitMessage.from_dict(data)
+    # end def
+    if type == LEADER_CHANGE:
+        # return DBLeaderChangeMessage.from_dict(data)
+        raise NotImplementedError("Leader change")
+    # end def
+    if type == PROPOSE:
+        return DBProposeMessage.from_dict(data)
+    # end def
+    if type == PREVOTE:
+        return DBPrevoteMessage.from_dict(data)
+    # end def
+    if type == VOTE:
+        return DBVoteMessage.from_dict(data)
+    # end def
+    raise NotImplementedError("Message type {}".format(type))
+# end def
+
+
+class DBInitMessage(messages.InitMessage, db.Entity):
     type = orm.Required(MSG_TYPE_TYPE)
     sequence_no = orm.Required(SEQUENCE_TYPE)
-
-    @staticmethod
-    def from_dict(data):
-        assert "type" in data
-        type = data["type"]
-        assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE]
-        if type == INIT:
-            return InitMessage.from_dict(data)
-        # end def
-        if type == LEADER_CHANGE:
-            return LeaderChangeMessage.from_dict(data)
-        # end def
-        if type == PROPOSE:
-            return ProposeMessage.from_dict(data)
-        # end def
-        if type == PREVOTE:
-            return PrevoteMessage.from_dict(data)
-        # end def
-        if type == VOTE:
-            return VoteMessage.from_dict(data)
-        # end def
-        return Message(**{
-            "type": data["type"],
-            "sequence_no": data["sequence_no"],
-        })
-    # end def
-
-
-class InitMessageDB(messages.InitMessage, Message):
     node = orm.Required(NODE_TYPE)
     value = orm.Required(VALUE_TYPE)
 # end class
 
 
-class ProposeMessage(messages.ProposeMessage, Message):
+class DBProposeMessage(messages.ProposeMessage, db.Entity):
+    type = orm.Required(MSG_TYPE_TYPE)
+    sequence_no = orm.Required(SEQUENCE_TYPE)
     node = orm.Required(NODE_TYPE)
     leader = orm.Required(NODE_TYPE)
     proposal = orm.Required(VALUE_TYPE)
-    # assert isinstance(value_store, list)
-    value_store = orm.Required(list)
+    value_store_json = orm.Required(str)  # json
+
+    @property
+    def value_store(self):
+        import json
+        return json.loads(self.value_store_json)
+    # end def
+
+    @value_store.setter
+    def value_store(self, val):
+        import json
+        self.value_store_json = json.dumps(val)
+    # end def
+
+    @value_store.deleter
+    def value_store(self):
+        del self.value_store_json
+    # end def
+
+
 # end class
 
-class PrevoteMessage(messages.PrevoteMessage, Message):
+class DBPrevoteMessage(messages.PrevoteMessage, db.Entity):
+    type = orm.Required(MSG_TYPE_TYPE)
+    sequence_no = orm.Required(SEQUENCE_TYPE)
     node = orm.Required(NODE_TYPE)
     leader = orm.Required(NODE_TYPE)
     value = orm.Required(VALUE_TYPE)
 # end class
 
-class VoteMessage(messages.VoteMessage, Message):
+class DBVoteMessage(messages.VoteMessage, db.Entity):
+    type = orm.Required(MSG_TYPE_TYPE)
+    sequence_no = orm.Required(SEQUENCE_TYPE)
     node = orm.Required(NODE_TYPE)
     leader = orm.Required(NODE_TYPE)
     value = orm.Required(VALUE_TYPE)
