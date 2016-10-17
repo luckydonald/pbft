@@ -24,8 +24,8 @@ services:
     restart: "no"
     command: ["python", "main_db_proxy.py"]
 
-    # entrypoint: []
-    # command: ["ls", "-la"]
+    #entrypoint: []
+    #command: ["ls", "-la"]
 
   postgres:
     extends:

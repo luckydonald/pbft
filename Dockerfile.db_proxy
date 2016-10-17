@@ -6,4 +6,4 @@ COPY ./code/db_proxy/requirements.txt /app/
 RUN pip install -r requirements.txt
 RUN rm requirements.txt
 COPY ./code /app
-COPY ./code/db_proxy/uwsgi.ini /app/uswgi.ini
+COPY ./code/db_proxy/uwsgi.ini /app/uwsgi.ini

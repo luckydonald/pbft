@@ -53,7 +53,6 @@ def setup_logging():
     logging.test_logger_levels()
 # end def
 
-
 if __name__ == '__main__':  # if this is the executed file
     setup_logging()
     main()

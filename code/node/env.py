@@ -28,3 +28,5 @@ if DEBUGGER.lower() in ["true", "yes", "1"]:
 else:
     DEBUGGER = False
 # end if
+
+DATABASE_URL = "http://db_proxy/dump/"

@@ -4,7 +4,7 @@ from time import sleep
 
 from luckydonaldUtils.logger import logging
 
-from ..env import NODE_PORT
+from ..env import NODE_PORT, DATABASE_URL
 from ..messages import Message
 from ..todo import logger
 
@@ -21,13 +21,18 @@ def send_message(msg):
     assert isinstance(msg, Message)
     data = msg.to_dict()
     broadcast(json.dumps(data))
-    try:
-        requests.put("http://db_proxy/dump/", data)
-    except requests.RequestException:
-        logger.warning("Failed to report message to db.")
-        pass
+    loggert = logging.getLogger("request")
+    def print_url(r, *args, **kwargs):
+        loggert.info(r.url)
     # end def
-    return
+    while (True):
+        try:
+            requests.put(DATABASE_URL, data, hooks=dict(response=print_url))
+            break
+        except requests.RequestException as e:
+            logger.warning("Failed to report message to db: {e}".format(e=e))
+        # end def
+        return
 # end def
 
 

@@ -13,8 +13,8 @@ class Message(object):
         self.type = type
         self.sequence_no = sequence_no
 
-    @staticmethod
-    def from_dict(data):
+    @classmethod
+    def from_dict(cls, data):
         assert "type" in data
         type = data["type"]
         assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE]
@@ -33,7 +33,7 @@ class Message(object):
         if type == VOTE:
             return VoteMessage.from_dict(data)
         # end def
-        return Message(**{
+        return cls(**{
             "type": data["type"],
             "sequence_no": data["sequence_no"],
         })
@@ -61,15 +61,14 @@ class InitMessage(Message):
         self.value = value  # vi
     # end def
     
-    @staticmethod
-    def from_dict(data):
+    @classmethod
+    def from_dict(cls, data):
         kwargs = {
             "sequence_no": data["sequence_no"],
             "node": data["node"],
             "value": data["value"],
         }
-        return InitMessage(**kwargs)
-
+        return cls(**kwargs)
     # end def
 
     def to_dict(self):
@@ -87,14 +86,14 @@ class LeaderChangeMessage(Message):
         super(LeaderChangeMessage, self).__init__(LEADER_CHANGE, sequence_no)
     # end def
 
-    @staticmethod
-    def from_dict(data):
+    @classmethod
+    def from_dict(cls, data):
         raise NotImplementedError("lel")
         kwargs = {
             "type": data["type"],
             "sequence_no": data["sequence_no"],
         }
-        return LeaderChangeMessage(**kwargs)
+        return cls(**kwargs)
     # end def
 
     def to_dict(self):
@@ -116,8 +115,8 @@ class ProposeMessage(Message):
         assert isinstance(value_store, list)
         self.value_store = value_store
 
-    @staticmethod
-    def from_dict(data):
+    @classmethod
+    def from_dict(cls, data):
         value_store = []
         for v in data.get("value_store", []):
             msg = InitMessage.from_dict(v)
@@ -131,7 +130,7 @@ class ProposeMessage(Message):
             "proposal": data.get("proposal"),
             "value_store": value_store
         }
-        return ProposeMessage(**kwargs)
+        return cls(**kwargs)
     # end def
 
     def to_dict(self):
@@ -153,15 +152,15 @@ class PrevoteMessage(Message):
         self.value = value
     # end if
 
-    @staticmethod
-    def from_dict(data):
+    @classmethod
+    def from_dict(cls, data):
         kwargs = {
             "sequence_no": data["sequence_no"],
             "node": data["node"],
             "leader": data["leader"],
             "value": data["value"],
         }
-        return PrevoteMessage(**kwargs)
+        return cls(**kwargs)
 
     # end def
 
@@ -183,15 +182,15 @@ class VoteMessage(Message):
         self.value = value
     # end def
 
-    @staticmethod
-    def from_dict(data):
+    @classmethod
+    def from_dict(cls, data):
         kwargs = {
             "sequence_no": data["sequence_no"],
             "node": data["node"],
             "leader": data["leader"],
             "value": data["value"],
         }
-        return VoteMessage(**kwargs)
+        return cls(**kwargs)
     # end def
 
     def to_dict(self):

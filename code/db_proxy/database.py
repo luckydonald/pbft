@@ -39,7 +39,6 @@ def from_dict(data):
 
 
 class DBInitMessage(messages.InitMessage, db.Entity):
-    type = orm.Required(MSG_TYPE_TYPE)
     sequence_no = orm.Required(SEQUENCE_TYPE)
     node = orm.Required(NODE_TYPE)
     value = orm.Required(VALUE_TYPE)

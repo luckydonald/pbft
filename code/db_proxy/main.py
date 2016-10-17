@@ -3,6 +3,7 @@ from luckydonaldUtils.logger import logging
 from flask import Flask
 from flask import request
 from pony import orm
+from .database import from_dict, db
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -12,14 +13,19 @@ __version__ = VERSION
 
 app = Flask(__name__)
 
+
 @orm.db_session
-@app.route("/dump", methods=['PUT'])
-@app.route("/dump/", methods=['PUT'])
+@app.route("/dump/", methods=['POST', 'GET', 'PUT'])
 def dump_to_db():
-    from .database import from_dict
-    msg = from_dict(request.get_json(force=True))
-    logger.info("Added {}".format(msg))
-    return "ok"
+    try:
+        logger.info("Incoming: {}".format(request.get_json()))
+        msg = from_dict(request.get_json(force=True))
+        db.commit()
+        logger.info("Added {}: {id}".format(msg, id=msg.id))
+        return "ok: {}".format(msg)
+    except Exception as e:
+        logger.exception("lel")
+        raise
 # end def
 
 
