@@ -1,0 +1,3 @@
+[submodule "extras/phppgadmin-docker"]
+	path = extras/phppgadmin-docker
+	url = https://github.com/luckydonald-forks/phppgadmin-docker.git
