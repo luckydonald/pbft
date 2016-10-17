@@ -3,7 +3,7 @@ from time import sleep
 
 from luckydonaldUtils.logger import logging, LevelByNameFilter
 
-from algo.main import BFT_ARM
+from node.main import BFT_ARM
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ def setup_cleanup(algo):
 
 
 def setup_logging():
-    filter = LevelByNameFilter(logging.WARNING, debug="algo.main, algo.todo, algo.messages", info="algo")
+    filter = LevelByNameFilter(logging.WARNING, debug="node.main, node.todo, node.messages", info="node")
     logging.add_colored_handler(level=logging.DEBUG, date_formatter="%Y-%m-%d %H:%M:%S", filter=filter)
     logging.test_logger_levels()
 # end def

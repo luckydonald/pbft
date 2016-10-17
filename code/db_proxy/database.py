@@ -1,9 +1,9 @@
 from pony import orm
 
-from algo import messages
+from node import messages
 from .env import POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASS, POSTGRES_DB
 
-from algo.enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE
+from node.enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE
 
 db = orm.Database()
 

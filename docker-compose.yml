@@ -13,16 +13,16 @@ services:
 
     #  docker run -ti --entrypoint /bin/bash 9b6a81855c06
     #  d-c run --entrypoint /bin/bash node-3
-    #  NODE_ID=3 NODE_TOTAL=4 POSSIBLE_FAILURES=1 NODE_HOST=teamproject16_node-{i}_1 NODE_PORT=4458 python main.py
+    #  NODE_ID=3 NODE_TOTAL=4 POSSIBLE_FAILURES=1 NODE_HOST=teamproject16_node-{i}_1 NODE_PORT=4458 python main_node.py
 
   db_proxy:
     extends:
-      file: d-c.db_proxy.yml
+      file: docker-compose.db_proxy.yml
       service: db_proxy
     ports:
       - "80:80"
 
   postgres:
     extends:
-      file: d-c.db_proxy.yml
+      file: docker-compose.db_proxy.yml
       service: postgres

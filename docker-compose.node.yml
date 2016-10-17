@@ -1,7 +1,10 @@
 version: '2'
 services:
   node:
-    build: .
+    build:
+      context: .
+      dockerfile: ./code/node/Dockerfile
+    command: ["main_node.py"]
     environment:
       DOCKER_CACHING_TIME: 5
       NODE_PORT: 4458

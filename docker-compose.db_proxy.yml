@@ -1,15 +1,16 @@
 version: '2'
 services:
   db_proxy:
-    build: .
+    build:
+      context: .
+      dockerfile: ./code/db_proxy/Dockerfile
+    restart: "unless-stopped"
     command: ["main_db_proxy.py"]
     environment:
       POSTGRES_HOST: "postgres"  # service name
       POSTGRES_USER: "postgres"
       POSTGRES_PASS: "1234secure"
       POSTGRES_DB: "messages"
-    ports:
-      - "80:80"
 
   postgres:
     image: postgres
