@@ -211,3 +211,4 @@ class NewLeaderMessage(Message):
         self.leader = leader
         self.value = value
     # end def
+# end class

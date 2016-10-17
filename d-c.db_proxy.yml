@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db_proxy:
+    build: .
+    command: ["main_db_proxy.py"]
+    environment:
+      POSTGRES_HOST: "postgres"  # service name
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASS: "1234secure"
+      POSTGRES_DB: "messages"
+    ports:
+      - "80:80"
+
+  postgres:
+    image: postgres
+    restart: "unless-stopped"
+    volumes:
+      - /data/postgres:/data/postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1234secure"
+      POSTGRES_DB: "messages"

@@ -41,7 +41,7 @@ class ServiceInfos(object, metaclass=Singleton):
     # end def
 
     @property
-    @cached(max_age=CACHING_TIME)
+    @cached
     def cli(self):
         return Client(base_url='unix://var/run/docker.sock')
     # end def
