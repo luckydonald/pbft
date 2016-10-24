@@ -82,13 +82,13 @@ class InitMessage(Message):
 
 class LeaderChangeMessage(Message):
     def __init__(self, sequence_no, node_num, leader, P):
-        raise NotImplementedError("lel")
+        raise NotImplementedError("LeaderChangeMessage")
         super(LeaderChangeMessage, self).__init__(LEADER_CHANGE, sequence_no)
     # end def
 
     @classmethod
     def from_dict(cls, data):
-        raise NotImplementedError("lel")
+        raise NotImplementedError("LeaderChangeMessage")
         kwargs = {
             "type": data["type"],
             "sequence_no": data["sequence_no"],
@@ -97,7 +97,7 @@ class LeaderChangeMessage(Message):
     # end def
 
     def to_dict(self):
-        raise NotImplementedError("lel")
+        raise NotImplementedError("LeaderChangeMessage")
         return {
             "type": self.type,
             "sequence_no": self.sequence_no,
