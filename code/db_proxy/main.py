@@ -20,9 +20,13 @@ def dump_to_db():
     try:
         logger.info("Incoming: {}".format(request.get_json()))
         msg = to_db(request.get_json(force=True))
-        db.commit()
-        logger.info("Added {}: {id}".format(msg, id=msg.id))
-        return "ok: {}".format(msg)
+        if msg:
+            db.commit()
+            logger.info("Added {}: {id}".format(msg, id=msg.id))
+            return "ok: {}".format(msg)
+        else:
+            return "fail: None"
+        # end if
     except Exception as e:
         logger.exception("lel")
         raise

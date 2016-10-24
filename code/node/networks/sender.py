@@ -20,14 +20,15 @@ def send_message(msg):
     logger.debug(msg)
     assert isinstance(msg, Message)
     data = msg.to_dict()
-    broadcast(json.dumps(data))
+    data_string = json.dumps(data)
+    broadcast(data_string)
     loggert = logging.getLogger("request")
     def print_url(r, *args, **kwargs):
         loggert.info(r.url)
     # end def
     while (True):
         try:
-            requests.put(DATABASE_URL, data, hooks=dict(response=print_url))
+            requests.put(DATABASE_URL, data=data_string, hooks=dict(response=print_url))
             break
         except requests.RequestException as e:
             logger.warning("Failed to report message to db: {e}".format(e=e))

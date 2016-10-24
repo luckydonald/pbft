@@ -170,6 +170,8 @@ MSG_TYPE_CLASS_MAP = {
 
 @orm.db_session
 def to_db(msg):
+    if msg is None:
+        return None
     if isinstance(msg, dict):
         # is still dict (json)
         msg = messages.Message.from_dict(msg)  # make a Message subclass first.
