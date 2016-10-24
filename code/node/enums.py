@@ -4,10 +4,13 @@ from luckydonaldUtils.logger import logging
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
 
-INIT = 1
-LEADER_CHANGE = 2
-PROPOSE = 3
-PREVOTE = 4
-VOTE = 5
+__all__ = ["UNSET", "INIT", "PROPOSE", "PREVOTE", "VOTE", "LEADER_CHANGE", "all"]
 
-all = [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE]
+UNSET = 0
+INIT = 1
+PROPOSE = 2
+PREVOTE = 3
+VOTE = 4
+LEADER_CHANGE = 5
+
+all = [UNSET, INIT, PROPOSE, PREVOTE, VOTE, LEADER_CHANGE]

@@ -4,7 +4,7 @@ import logging
 from node import messages
 from .env import POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASS, POSTGRES_DB
 
-from node.enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE
+from node.enums import UNSET, INIT, PROPOSE, PREVOTE, VOTE
 
 logger = logging.getLogger(__file__)
 db = orm.Database()
@@ -21,7 +21,7 @@ class DBMessage(db.Entity):
     node = orm.Optional(NODE_TYPE)
     value = orm.Optional(VALUE_TYPE)
     leader = orm.Optional(NODE_TYPE)
-    _discriminator_ = 0
+    _discriminator_ = UNSET
 
     def from_db(self):
         clazz = MSG_TYPE_CLASS_MAP[self.type]
