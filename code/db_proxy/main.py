@@ -18,7 +18,7 @@ app = Flask(__name__)
 @app.route("/dump/", methods=['POST', 'GET', 'PUT'])
 def dump_to_db():
     try:
-        logger.info("Incoming: {}".format(request.get_json()))
+        logger.info("Incoming: {}".format(request.get_json(force=True)))
         msg = to_db(request.get_json(force=True))
         if msg:
             db.commit()
