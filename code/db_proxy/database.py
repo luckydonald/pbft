@@ -1,10 +1,12 @@
-from luckydonaldUtils.functions import deprecated
+from datetime import datetime
 from pony import orm
 import logging
+
 from node import messages
+from node.enums import UNSET, INIT, PROPOSE, PREVOTE, VOTE
 from .env import POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASS, POSTGRES_DB
 
-from node.enums import UNSET, INIT, PROPOSE, PREVOTE, VOTE
+__author__ = "luckydonald"
 
 logger = logging.getLogger(__file__)
 db = orm.Database()
@@ -17,6 +19,7 @@ SEQUENCE_TYPE = int
 
 class DBMessage(db.Entity):
     type = orm.Discriminator(MSG_TYPE_TYPE)
+    date = orm.Required(datetime, sql_default='CURRENT_TIMESTAMP')
     sequence_no = orm.Required(SEQUENCE_TYPE)
     node = orm.Optional(NODE_TYPE)
     value = orm.Optional(VALUE_TYPE)
