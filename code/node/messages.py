@@ -60,7 +60,7 @@ class InitMessage(Message):
         self.node = node  # i
         self.value = value  # vi
     # end def
-    
+
     @classmethod
     def from_dict(cls, data):
         kwargs = {

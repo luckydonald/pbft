@@ -3,7 +3,7 @@ from luckydonaldUtils.logger import logging
 from flask import Flask
 from flask import request
 from pony import orm
-from .database import from_dict, db
+from .database import to_db, db
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ app = Flask(__name__)
 def dump_to_db():
     try:
         logger.info("Incoming: {}".format(request.get_json()))
-        msg = from_dict(request.get_json(force=True))
+        msg = to_db(request.get_json(force=True))
         db.commit()
         logger.info("Added {}: {id}".format(msg, id=msg.id))
         return "ok: {}".format(msg)
