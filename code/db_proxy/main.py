@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
+from flask import Flask, request
 from luckydonaldUtils.logger import logging
-from flask import Flask, jsonify
-from flask import request
 from pony import orm
-from .database import to_db, db
+
+from .utils import jsonify
+from .database import to_db, db, DBVoteMessage, DBMessage, DBInitMessage
+from node.enums import INIT  # noqa # pylint: disable=unused-import
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -16,7 +20,7 @@ app = Flask(__name__)
 debug = DebuggedApplication(app, console_path="/console/")
 
 
-
+@app.route("/dump", methods=['POST', 'GET', 'PUT'])
 @app.route("/dump/", methods=['POST', 'GET', 'PUT'])
 @orm.db_session
 def dump_to_db():
@@ -35,19 +39,21 @@ def dump_to_db():
         raise
 # end def
 
+
 @app.route("/get_value")
+@app.route("/get_value/")
 @orm.db_session
 def get_value():
     """
     Gets the value they decided on, and the current value of each node.
     :return:
     """
-    from .database import DBVoteMessage, DBMessage, DBInitMessage
-    from node.enums import INIT
-    from pony import orm
-    # from .database import DBVoteMessage, DBInitMessage, DBMessage
     latest_vote = orm.select(m for m in DBVoteMessage).order_by(orm.desc(DBVoteMessage.date)).first()
+    if not latest_vote:
+        return jsonify({})
+    # end if
     assert isinstance(latest_vote, DBVoteMessage)
+    assert INIT == INIT
     latest_values = DBMessage.select_by_sql("""
     SELECT DISTINCT ON (m.node) * FROM (
       SELECT * FROM DBmessage WHERE type = $INIT
@@ -57,7 +63,53 @@ def get_value():
     for msg in latest_values:
         assert isinstance(msg, DBInitMessage)
         data[str(msg.node)] = msg.value
-    return jsonify(data)
+    # end for
+    return jsonify(data, allow_all_origin=True)
+# end def
+
+
+@app.route("/get_data")
+@app.route("/get_data/")
+@orm.db_session
+def get_data():
+    node = request.args.getlist('node', None)
+    limit = request.args.get('limit', 100)
+    assert isinstance(limit, int)  # TODO: specify error message
+    if node:
+        for i in node:
+            assert isinstance(i, int)  # TODO: specify error message
+        # end for
+        node_values = orm.select(m for m in DBInitMessage if m.node in list(node)).order_by(orm.desc(DBInitMessage.date)).limit(limit)
+    else:
+        node_values = orm.select(m for m in DBInitMessage).order_by(orm.desc(DBInitMessage.date)).limit(limit)
+    if not node_values:
+        return jsonify({})
+    # end if
+    data = {}
+    for msg in node_values:
+        assert isinstance(msg, DBInitMessage)
+        assert isinstance(msg.date, datetime)
+        if str(msg.node) not in data:
+            data[str(msg.node)] = dict()
+        # end if
+        data[str(msg.node)][msg.date.timestamp()] = msg.value
+    # end for
+    return jsonify(data, allow_all_origin=True)
+# end def
+
+
+@app.route("/test")
+@app.route("/test/")
+@orm.db_session
+def test():
+    node = request.args.getlist('node', None)
+    if request.environ.get('HTTP_ORIGIN', None) is not None:
+        logger.warning("HTTP_ORIGIN: {!r}".format(request.environ['HTTP_ORIGIN']))
+        # res.headers["Access-Control-Allow-Origin"] = request.environ['HTTP_ORIGIN']
+    # end if
+    return str(request.environ.get('HTTP_ORIGIN', None))
+# end def
+
 
 @app.route("/console/")
 def console():
