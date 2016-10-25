@@ -8,24 +8,28 @@ $( document ).ready(function(){
             var container = $("#nodearea");
             container.empty();
             console.log(data);
+            var node = $("<div>");
+            node.addClass("node").addClass("summary");
+            node.append($("<h3>").text("Summary"));
+            node.append("<h5>Agreed Value:</h5>");
+            if("summary" in data) {
+                node.append($("<span>").text(data["summary"]).addClass("value"));
+            } else {
+                node.append($("<span>").text("No recent agreement").addClass("value"));
+            }
+            container.prepend(node);
             Object.keys(data).forEach(function (key, value) {
+                if (key === "summary") {
+                    return;
+                }
                 var node = $("<div>");
                 node.addClass("node");
-                if (key === "summary") {
-                    node.addClass("summary");
-                    node.append($("<h3>").text("Summary"));
-                    node.append("<h5>Agreed Value:</h5>");
-                } else {
-                    node.append($("<h3>").text("Node " + key));
-                    node.append("<h5>Value:</h5>");
-                }
+                node.append($("<h3>").text("Node " + key));
+                node.append("<h5>Value:</h5>");
                 node.append($("<span>").text(this[key]).addClass("value"));
-                if (key === "summary") {
-                    container.prepend(node);
-                } else {
-                    container.append(node);
-                }
+                container.append(node);
             }, data);
+
         });
-    }, 1000);
+    }, 100);
 });
