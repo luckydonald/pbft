@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 VERSION = "0.0.1"
 __version__ = VERSION
+assert INIT == INIT  # to prevent the unused import warning. Is used in SQL statement.
 
 from werkzeug.debug import DebuggedApplication
 app = Flask(__name__)
@@ -48,15 +49,16 @@ def get_value():
     Gets the value they decided on, and the current value of each node.
     :return:
     """
-    latest_vote = orm.select(m for m in DBVoteMessage).order_by(orm.desc(DBVoteMessage.date)).first()
+    latest_vote = orm.select(m for m in DBVoteMessage if m.date > orm.raw_sql("NOW() - '10 seconds'::INTERVAL")).order_by(orm.desc(DBVoteMessage.date)).first()
     if not latest_vote:
         return jsonify({})
     # end if
     assert isinstance(latest_vote, DBVoteMessage)
-    assert INIT == INIT
     latest_values = DBMessage.select_by_sql("""
     SELECT DISTINCT ON (m.node) * FROM (
-      SELECT * FROM DBmessage WHERE type = $INIT
+      SELECT * FROM DBmessage
+      WHERE type = $INIT
+      AND date >= NOW() - '10 seconds'::INTERVAL
     ) as m ORDER BY m.node, m.date DESC
     """)
     data = {"summary": latest_vote.value}
@@ -74,10 +76,11 @@ def get_value():
 def get_data():
     node = request.args.getlist('node', None)
     limit = request.args.get('limit', 100)
-    assert isinstance(limit, int)  # TODO: specify error message
+    assert str.isnumeric(limit)  # TODO: specify error message, on error  # like int("abc")
+    limit = int(limit)
     if node:
         for i in node:
-            assert isinstance(i, int)  # TODO: specify error message
+            assert str.isnumeric(i)  # TODO: specify error message
         # end for
         node_values = orm.select(m for m in DBInitMessage if m.node in list(node)).order_by(orm.desc(DBInitMessage.date)).limit(limit)
     else:
