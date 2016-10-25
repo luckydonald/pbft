@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js">
+        /*var paragraphs = document.getElementById("test");
+        for (var i = 0; i < paragraphs.length; i++) {
+            var paragraph = paragraphs.item(i);
+            paragraph.style.setProperty("color", "red", null);
+        }*/
+    </script>
+    <title>D3 JavaScript Testing</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var section = d3.selectAll(".section");
+        var div = section.append("div");
+        div.html("Ich bin eine Sektion!");
+    </script>
+
+    <div class="section"></div>
+    <div class="section"></div>
+    <div class="stuff"></div>
+    <div class="section"></div>
+</body>
+</html>
