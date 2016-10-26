@@ -1,6 +1,6 @@
 luckydonald-utils==0.51
 docker-py
 
-# db_proxy
+# api
 flask  # api
 pony   # db

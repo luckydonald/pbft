@@ -1,9 +1,9 @@
 version: '2'
 services:
-  db_proxy:
+  api:
     build:
       context: .
-      dockerfile: ./Dockerfile.db_proxy
+      dockerfile: ./api.Dockerfile
     restart: "unless-stopped"
     environment:
       POSTGRES_HOST: "postgres"  # service name

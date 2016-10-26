@@ -2,7 +2,7 @@ version: '2'
 services:
   node:
     extends:
-      file: docker-compose.node.yml
+      file: node.docker-compose.yml
       service: node
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -15,24 +15,24 @@ services:
     #  d-c run --entrypoint /bin/bash node-3
     #  NODE_ID=3 NODE_TOTAL=4 POSSIBLE_FAILURES=1 NODE_HOST=teamproject16_node-{i}_1 NODE_PORT=4458 python main_node.py
 
-  db_proxy:
+  api:
     extends:
-      file: docker-compose.db_proxy.yml
-      service: db_proxy
+      file: api.docker-compose.yml
+      service: api
     ports:
       - "80:80"
     restart: "no"
-    command: ["python", "main_db_proxy.py"]
+    command: ["python", "main_api.py"]
 
     #entrypoint: []
     #command: ["ls", "-la"]
 
   postgres:
     extends:
-      file: docker-compose.db_proxy.yml
+      file: api.docker-compose.yml
       service: postgres
 
   postgres_browser:
     extends:
-      file: docker-compose.db_proxy.yml
+      file: api.docker-compose.yml
       service: postgres_browser

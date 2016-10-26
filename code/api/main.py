@@ -46,7 +46,9 @@ def dump_to_db():
 @orm.db_session
 def get_value():
     """
-    Gets the value they decided on, and the current value of each node.
+    Gets latest value they decided on, and the most recent measured value of each node.
+    Only considers events in the last 10 seconds.
+
     :return:
     """
     latest_vote = orm.select(m for m in DBVoteMessage if m.date > orm.raw_sql("NOW() - '10 seconds'::INTERVAL")).order_by(orm.desc(DBVoteMessage.date)).first()

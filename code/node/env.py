@@ -29,4 +29,4 @@ else:
     DEBUGGER = False
 # end if
 
-DATABASE_URL = "http://db_proxy/dump/"
+DATABASE_URL = "http://api/dump/"
