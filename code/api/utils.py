@@ -5,7 +5,7 @@ from luckydonaldUtils.logger import logging
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
 
-ORIGIN_LIST = "http://localhost:63342", "http://localhost"
+ORIGIN_LIST = ["http://localhost"]
 
 
 def jsonify(data, allow_all_origin=False):
@@ -19,7 +19,7 @@ def jsonify(data, allow_all_origin=False):
     if allow_all_origin:
         res.headers["Access-Control-Allow-Origin"] = '*'
     elif origin and origin in ORIGIN_LIST:
-        res.headers["Access-Control-Allow-Origin"] = request.environ['HTTP_ORIGIN']
+        res.headers["Access-Control-Allow-Origin"] = origin
     # end if
     return res
 # end def

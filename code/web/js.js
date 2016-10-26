@@ -4,7 +4,7 @@
 
 $( document ).ready(function(){
     setInterval( function () {
-        $.getJSON("http://localhost/get_value/", function (data) {
+        $.getJSON("http://localhost/get_value/", function (data) { //TODO host
             var container = $("#nodearea");
             container.empty();
             console.log(data);
@@ -29,7 +29,6 @@ $( document ).ready(function(){
                 node.append($("<span>").text(this[key]).addClass("value"));
                 container.append(node);
             }, data);
-
         });
     }, 100);
 });

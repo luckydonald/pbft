@@ -53,7 +53,7 @@ def get_value():
     """
     latest_vote = orm.select(m for m in DBVoteMessage if m.date > orm.raw_sql("NOW() - '10 seconds'::INTERVAL")).order_by(orm.desc(DBVoteMessage.date)).first()
     if not latest_vote:
-        return jsonify({})
+        return jsonify({}, allow_all_origin=True)
     # end if
     assert isinstance(latest_vote, DBVoteMessage)
     latest_values = DBMessage.select_by_sql("""
@@ -88,7 +88,7 @@ def get_data():
     else:
         node_values = orm.select(m for m in DBInitMessage).order_by(orm.desc(DBInitMessage.date)).limit(limit)
     if not node_values:
-        return jsonify({})
+        return jsonify({}, allow_all_origin=True)
     # end if
     data = {}
     for msg in node_values:
