@@ -16,7 +16,7 @@ Also contains a `"summary"` field, containing the last value they have agreed on
 ```curl
 $ curl http://0.0.0.0/get_value/
 ```
-```json
+```python
 {
     "1": 0.5,
     "2": 0.6,
@@ -46,7 +46,7 @@ An dictionary with nodes as keys and a subdictionary, with timestaps as keys for
 ```curl
 $ curl http://0.0.0.0/get_data/
 ```
-```json
+```python
 
 {
     "1": {
@@ -72,7 +72,7 @@ $ curl http://0.0.0.0/get_data/
 ```curl
 $ curl http://0.0.0.0/get_data/?node=1&node=2
 ```
-```json
+```python
 
 {
     "1": {
