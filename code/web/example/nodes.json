@@ -1,0 +1,20 @@
+[{
+	"id": 1,
+	"value": 0.5,
+	"primary": true
+}, {
+	"id": 2,
+	"value": 0.6,
+	"primary": false
+}, {
+	"id": 3,
+	"value": 0.5,
+	"primary": false
+}, {
+	"id": 4,
+	"value": 0.5,
+	"primary": false
+}, {
+	"id": "summary",
+	"value": 0.5
+}]
