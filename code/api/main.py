@@ -20,9 +20,12 @@ from werkzeug.debug import DebuggedApplication
 app = Flask(__name__)
 debug = DebuggedApplication(app, console_path="/console/")
 
+API_V1 = ""
+API_V2 = "/api/v2"
 
-@app.route("/dump", methods=['POST', 'GET', 'PUT'])
-@app.route("/dump/", methods=['POST', 'GET', 'PUT'])
+
+@app.route(API_V1+"/dump", methods=['POST', 'GET', 'PUT'])
+@app.route(API_V1+"/dump/", methods=['POST', 'GET', 'PUT'])
 @orm.db_session
 def dump_to_db():
     try:
@@ -41,8 +44,8 @@ def dump_to_db():
 # end def
 
 
-@app.route("/get_value")
-@app.route("/get_value/")
+@app.route(API_V1+"/get_value")
+@app.route(API_V1+"/get_value/")
 @orm.db_session
 def get_value():
     """
@@ -72,8 +75,43 @@ def get_value():
 # end def
 
 
-@app.route("/get_data")
-@app.route("/get_data/")
+@app.route(API_V2+"/get_value")
+@app.route(API_V2+"/get_value/")
+@orm.db_session
+def get_value_v2():
+    """
+    Gets latest value they decided on, and the most recent measured value of each node.
+    Only considers events in the last 10 seconds.
+
+    :return:
+    """
+    latest_vote = orm.select(m for m in DBVoteMessage if m.date > orm.raw_sql("NOW() - '10 seconds'::INTERVAL")).order_by(orm.desc(DBVoteMessage.date)).first()
+    if not latest_vote:
+        return jsonify({}, allow_all_origin=True)
+    # end if
+    assert isinstance(latest_vote, DBVoteMessage)
+    latest_values = DBMessage.select_by_sql("""
+    SELECT DISTINCT ON (m.node) * FROM (
+      SELECT * FROM DBmessage
+      WHERE type = $INIT
+      AND date >= NOW() - '10 seconds'::INTERVAL
+    ) as m ORDER BY m.node, m.date DESC
+    """)
+    data = {
+        "summary": {"value": latest_vote.value},
+        "leader": 1,  # done later via observing latest LeaderChange events.
+        "nodes": []
+    }
+    for msg in latest_values:
+        assert isinstance(msg, DBInitMessage)
+        data["nodes"].append({"node": str(msg.node), "value": msg.value})
+    # end for
+    return jsonify(data, allow_all_origin=True)
+# end def
+
+
+@app.route(API_V1+"/get_data")
+@app.route(API_V1+"/get_data/")
 @orm.db_session
 def get_data():
     node = request.args.getlist('node', None)
@@ -103,8 +141,8 @@ def get_data():
 # end def
 
 
-@app.route("/test")
-@app.route("/test/")
+@app.route(API_V1+"/test")
+@app.route(API_V1+"/test/")
 @orm.db_session
 def test():
     node = request.args.getlist('node', None)
