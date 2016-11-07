@@ -1,3 +1,6 @@
 [submodule "extras/phppgadmin-docker"]
 	path = extras/phppgadmin-docker
 	url = https://github.com/luckydonald-forks/phppgadmin-docker.git
+[submodule "code/node_java"]
+	path = code/node_java
+	url = https://github.com/luckydonald/PBFT-JAVA.git
