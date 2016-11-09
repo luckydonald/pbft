@@ -32,4 +32,4 @@ ADD ./src /app/src
 RUN npm install
 CMD [ "npm", "start" ]
 # CMD ["sleep 12312312312312312312"]
-CMD [ "node_modules/http-server/bin/http-server", "-p", "8000", "-c-1", "/app/src"]
+CMD [ "node_modules/http-server/bin/http-server", "-p", "8000", "-c-1", "/app/"]
