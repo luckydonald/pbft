@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="pbftGui" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="pbftGui" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="pbftGui" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="pbftGui" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Practical Byzantine Fault Tolerance GUI</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="app.animations.css">
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="hover-effect.js"></script>
+  <script src="node-handling.js"></script>
+  <script src="app.module.js"></script>
+  <script src="app.config.js"></script>
+  <script src="app.animations.js"></script>
+  <script src="core/core.module.js"></script>
+  <script src="core/node/node.module.js"></script>
+  <script src="core/node/node.service.js"></script>
+  <script src="node-list/node-list.module.js"></script>
+  <script src="node-list/node-list.component.js"></script>
+  <script src="value-graph/value-graph.module.js"></script>
+  <script src="value-graph/value-graph.component.js"></script>
+  <script src="node-list-view/node-list-view.module.js"></script>
+  <script src="node-list-view/node-list-view.component.js"></script>
+  <script src="failure-table/failure-table.module.js"></script>
+  <script src="failure-table/failure-table.component.js"></script>
+  <script src="failure-table-view/failure-table-view.module.js"></script>
+  <script src="failure-table-view/failure-table-view.component.js"></script>
+</head>
+<body>
+  <div id="container">
+    <ul id="menubar">
+      <li class="menuitem"><a href="#!/nodes">Nodes</a></li>
+      <li class="menuitem"><a href="#!/failures">Failures</a></li>
+    </ul>
+    <div id="main">
+      <!--[if lt IE 7]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+
+      <div ng-view class="view-frame"></div>
+
+      <div>Angular seed app: v<span app-version></span></div>
+
+      <!-- In production use:
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+      -->
+    </div>
+    <div id="footer">
+      (c) by us, duh.
+    </div>
+  </div>
+</body>
+</html>
