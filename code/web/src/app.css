@@ -80,7 +80,6 @@ input {
   float: left;
   text-align: center;
   width: 15%;
-  height: 120px;
   margin: 3% 1% 1% 1%;
   padding: 1%;
   background-color: cornflowerblue;
@@ -113,33 +112,34 @@ input {
 .node.primary:hover {
   border-color: #7cf1ca;
 }
-.node.primary:hover:hover {
-  background-color: #7cf1ca;
-  color: black;
-}
 .node.summary {
   background-color: cadetblue;
   color: white;
 }
+.node.summary:hover {
+  background-color: #7cf1ca;
+  color: black;
+}
 .node.non-upscaled:hover {
   background-color: #1972ff;
-  height: 160px !important;
 }
 .node.non-upscaled:hover .click-hint {
-  visibility: visible;
-  height: 1em;
+  height: 1.1em;
   opacity: 1;
 }
 .node.upscaled .click-hint {
-  opacity: 0;
-  visibility: hidden;
-}
-.node .click-hint {
-  visibility: hidden;
   height: 0;
   opacity: 0;
-  margin-top: 1.5em;
-  font-size: 0.8em;
+}
+.node .click-hint {
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+  position: relative;
+  -webkit-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
+  -moz-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
+  -o-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
+  transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
 }
 .primary-label {
   font-style: italic;

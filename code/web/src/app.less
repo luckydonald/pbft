@@ -1,3 +1,13 @@
+// MACROS
+.transition(...) {  // http://stackoverflow.com/a/14988517/3423324
+@props: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+-webkit-transition: @props;
+-moz-transition: @props;
+-o-transition: @props;
+transition: @props;
+}
+
+
 /* app css stylesheet */
 
 body {
@@ -5,6 +15,7 @@ body {
   font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
   font-variant: small-caps;
 }
+
 
 //.menu {
 //  list-style: none;
@@ -33,10 +44,7 @@ body {
 h3, h5 {
   //font-variant: small-caps;
   margin-bottom: 0;
-  -webkit-transition: font-size .3s ease-out, opacity .3s ease-out;
-  -moz-transition: font-size .3s ease-out, opacity .3s ease-out;
-  -o-transition: font-size .3s ease-out, opacity .3s ease-out;
-  transition: font-size .3s ease-out, opacity .3s ease-out;
+  .transition(font-size .3s ease-out, opacity .3s ease-out);
 }
 
 th, td {
@@ -115,7 +123,6 @@ input {
   float: left;
   text-align: center;
   width: 15%;
-  height: 120px;
   margin: 3% 1% 1% 1%;
   padding: 1%;
   background-color: cornflowerblue;
@@ -124,10 +131,7 @@ input {
   border-radius: 0.5em;
   border-width: 0 5px 0 5px;
   border-style: solid;
-  -webkit-transition: width .3s ease-out, height .3s ease-out, opacity .3s ease-out;
-  -moz-transition: width .3s ease-out, height .3s ease-out, opacity .3s ease-out;
-  -o-transition: width .3s ease-out, height .3s ease-out, opacity .3s ease-out;
-  transition: width .3s ease-out, height .3s ease-out, opacity .3s ease-out;
+  .transition(width .3s ease-out, height .3s ease-out, opacity .3s ease-out);
 
   &.upscaled {
     width: 80%;
@@ -152,46 +156,43 @@ input {
 
     &:hover {
       border-color: #7cf1ca;
-
-      &:hover {
-        background-color: #7cf1ca;
-        color: black;
-      }
     }
   }
 
   &.summary {
     background-color: cadetblue;
     color: white;
+
+    &:hover {
+        background-color: #7cf1ca;
+        color: black;
+      }
   }
 
   &.non-upscaled:hover {
     background-color: #1972ff;
-    height: 160px !important;
+    //height: 160px !important;
 
     .click-hint {
-      visibility: visible;
-      height: 1em;
+      height: 1.1em;
       opacity: 1;
     }
   }
 
   &.upscaled .click-hint {
+    height: 0;
     opacity: 0;
-    visibility: hidden;
   }
 
   .click-hint {
-      visibility: hidden;
+      overflow: hidden;
       height: 0;
       opacity: 0;
-      margin-top: 1.5em;
+      position: relative;
+      //margin-top: 1.5em;
       //font-variant: small-caps;
-      font-size: 0.8em;
-      //-webkit-transition: visibility .5s ease-out;
-      //-moz-transition: visibility .5s ease-out;
-      //-o-transition: visibility .5s ease-out;
-      //transition: visibility .5s ease-out;
+      //font-size: 0.8em;
+      .transition(height .2s ease-in-out, opacity .3s ease-out);
   }
 }
 
@@ -206,7 +207,6 @@ input {
   width: 0;
   height: 0;
 }
-
 
 
 .value-graph {
