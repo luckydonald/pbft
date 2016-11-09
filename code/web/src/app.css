@@ -112,6 +112,14 @@ input {
 .node.primary:hover {
   border-color: #7cf1ca;
 }
+.node.primary:hover .primary-label {
+  color: #7cf1ca;
+}
+.node.primary .primary-label {
+  font-style: italic;
+  font-size: 0.8em;
+  color: #c4e3f3;
+}
 .node.summary {
   background-color: cadetblue;
   color: white;
@@ -140,11 +148,6 @@ input {
   -moz-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
   -o-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
   transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
-}
-.primary-label {
-  font-style: italic;
-  font-size: 0.8em;
-  color: #c4e3f3;
 }
 .primary-edge {
   width: 0;

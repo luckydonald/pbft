@@ -8,6 +8,16 @@ transition: @props;
 }
 
 
+// COLORS
+@node-highlight: cadetblue;
+@node-highlight-hover: #7cf1ca;
+
+@node-normal: cornflowerblue;
+@node-normal-hover: #1972ff;
+
+@node-leader: #c4e3f3;
+@node-leader-hover: @node-highlight-hover;
+
 /* app css stylesheet */
 
 body {
@@ -125,7 +135,7 @@ input {
   width: 15%;
   margin: 3% 1% 1% 1%;
   padding: 1%;
-  background-color: cornflowerblue;
+  background-color: @node-normal;
   color: black;
   border-color: transparent;
   border-radius: 0.5em;
@@ -152,25 +162,36 @@ input {
   }
 
   &.primary {
-    border-color: #c4e3f3;
+    border-color: @node-leader;
 
     &:hover {
-      border-color: #7cf1ca;
+      border-color: @node-leader-hover;
+
+      .primary-label {
+        color: @node-leader-hover;
+      }
+
+    }
+
+    .primary-label {
+      font-style: italic;
+      font-size: 0.8em;
+      color: @node-leader;
     }
   }
 
   &.summary {
-    background-color: cadetblue;
+    background-color: @node-highlight;
     color: white;
 
     &:hover {
-        background-color: #7cf1ca;
+        background-color: @node-highlight-hover;
         color: black;
       }
   }
 
   &.non-upscaled:hover {
-    background-color: #1972ff;
+    background-color: @node-normal-hover;
     //height: 160px !important;
 
     .click-hint {
@@ -194,13 +215,6 @@ input {
       //font-size: 0.8em;
       .transition(height .2s ease-in-out, opacity .3s ease-out);
   }
-}
-
-
-.primary-label {
-  font-style: italic;
-  font-size: 0.8em;
-  color: #c4e3f3;
 }
 
 .primary-edge {
