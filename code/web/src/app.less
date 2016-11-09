@@ -18,6 +18,8 @@ transition: @props;
 @node-leader: #c4e3f3;
 @node-leader-hover: @node-highlight-hover;
 
+@bg-color: #124;
+
 /* app css stylesheet */
 
 body {
@@ -71,53 +73,59 @@ input {
   //min-width: 550px;
   height: 98vh;
   margin: 0 auto 0 auto;
-  background-color: lightgray;
   border: 0 solid transparent;
-  border-top-width: 2vh;
+  background-color: @bg-color;
 }
 
 #menubar {
-  width: 40%;
   height: 5%;
-  margin: 0 auto 0 auto;
-  display: table;
-  border-spacing: 10px 0;
-  a {
-    color: white;
-    text-decoration: none;
-  }
+  width: 100%;
+  padding-top: 2vh;
+  background-color: lightgray;
 
-  .menuitem {
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle;
-    width: 44%;
-    font-size: 0.7em;
+  ul {
     height: 100%;
-    margin: 0 3% 0 3%;
-    border-width: 0 5px 0 5px;
-    background-color: #124;
-    border-radius: 7px 7px 0 0;
+    margin: 0 auto 0 auto;
+    display: table;
+    border-spacing: 10px 0;
+    width: 40%;
 
-    &:hover {
-      background-color: #126;
+    .menuitem {
+      text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+      width: 44%;
+      font-size: 0.7em;
+      height: 100%;
+      margin: 0 3% 0 3%;
+      border-width: 0 5px 0 5px;
+      background-color: @bg-color;
+      border-radius: 7px 7px 0 0;
+
+      &:hover {
+        background-color: #126;
+      }
+
+      a {
+        color: white;
+        text-decoration: none;
+      }
     }
   }
 }
 
 #main {
   width: 100%;
-  height: 90%;
-  margin: 0 auto 0 auto;
-  background-color: #124;
+  //height: 100%;
+  //margin: 0 auto 0 auto;
+  background-color: @bg-color;
   color: white;
-  overflow: hidden;
 }
 
 #footer {
   width: 100%;
-  height: 5%;
-  margin: 0 auto 0 auto;
+  display: inline-table;
+  height: 1.2em;
   text-align: center;
   background-color: gold;
 }
@@ -126,10 +134,9 @@ input {
 #nodearea {
   float: left;
   width: 100%;
-  //margin: 0 10px;
-  //padding: 20px;
   box-sizing: border-box;
   padding: 3% 10px; //top+bottom  left+right
+  background-color: @bg-color;
 
   .node {
     display: block;

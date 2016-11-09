@@ -24,22 +24,23 @@ input {
   width: 100%;
   height: 98vh;
   margin: 0 auto 0 auto;
-  background-color: lightgray;
   border: 0 solid transparent;
-  border-top-width: 2vh;
+  background-color: #124;
 }
 #menubar {
-  width: 40%;
   height: 5%;
+  width: 100%;
+  padding-top: 2vh;
+  background-color: lightgray;
+}
+#menubar ul {
+  height: 100%;
   margin: 0 auto 0 auto;
   display: table;
   border-spacing: 10px 0;
+  width: 40%;
 }
-#menubar a {
-  color: white;
-  text-decoration: none;
-}
-#menubar .menuitem {
+#menubar ul .menuitem {
   text-align: center;
   display: table-cell;
   vertical-align: middle;
@@ -51,21 +52,22 @@ input {
   background-color: #124;
   border-radius: 7px 7px 0 0;
 }
-#menubar .menuitem:hover {
+#menubar ul .menuitem:hover {
   background-color: #126;
+}
+#menubar ul .menuitem a {
+  color: white;
+  text-decoration: none;
 }
 #main {
   width: 100%;
-  height: 90%;
-  margin: 0 auto 0 auto;
   background-color: #124;
   color: white;
-  overflow: hidden;
 }
 #footer {
   width: 100%;
-  height: 5%;
-  margin: 0 auto 0 auto;
+  display: inline-table;
+  height: 1.2em;
   text-align: center;
   background-color: gold;
 }
@@ -74,6 +76,7 @@ input {
   width: 100%;
   box-sizing: border-box;
   padding: 3% 10px;
+  background-color: #124;
 }
 #nodearea .node {
   display: block;
