@@ -13,23 +13,16 @@ ENV PATH /app/libs/bin:$PATH
 RUN echo $PATH
 
 # code install
-ADD package.json /app
-ADD bower.json /app
-ADD .bowerrc /app
-# RUN npm config set prefix /libs && npm install -g bower && npm install -g && which bower
-#RUN npm install -g || /app/code/npm-debug.log
-RUN npm install -g
 RUN npm install -g bower
-RUN ls /app/libs/
-RUN ls /app/libs/bin/
+RUN npm install -g http-server
 
-RUN which npm
-RUN which bower
+ADD package.json /app
+
+# Bower install
+ADD .bowerrc /app
+ADD bower.json /app
 RUN bower install --allow-root
-RUN ls -la
 
 ADD ./src /app/src
-RUN npm install
-CMD [ "npm", "start" ]
-# CMD ["sleep 12312312312312312312"]
-CMD [ "node_modules/http-server/bin/http-server", "-p", "8000", "-c-1", "/app/"]
+ENTRYPOINT ["http-server", "-p", "8000", "-c-1"]
+CMD ["/app/"]
