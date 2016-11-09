@@ -36,6 +36,11 @@ services:
     #entrypoint: []
     #command: ["ls", "-la"]
 
+  web:
+    extends:
+      file: code/web/docker-compose.yml
+      service: web
+
   postgres:
     extends:
       file: api.docker-compose.yml

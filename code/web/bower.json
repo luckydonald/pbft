@@ -1,5 +1,5 @@
 {
-  "name": "angular-seed",
+  "name": "pbft-gui",
   "description": "A starter project for AngularJS",
   "version": "0.0.0",
   "homepage": "https://github.com/angular/angular-seed",
@@ -7,13 +7,16 @@
   "private": true,
   "dependencies": {
     "angular": "~1.5.0",
-    "angular-route": "~1.5.0",
-    "angular-loader": "~1.5.0",
-    "angular-mocks": "~1.5.0",
+    "angular-route": "1.5.0",
+    "angular-loader": "1.5.0",
+    "angular-mocks": "1.5.0",
     "angular-resource": "1.5.0",
     "angular-animate": "1.5.x",
     "html5-boilerplate": "^5.3.0",
     "bootstrap": "3.3.x",
     "jquery": "2.2.x"
+  },
+  "resolutions": {
+    "angular": "~1.5.0"
   }
 }
