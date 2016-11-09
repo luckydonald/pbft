@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    #command: ["main_node.py"]
+    #environment:
+    #  DOCKER_CACHING_TIME: 5
+    #  NODE_PORT: 4458
+    #  NODE_DEBUGGER: 0

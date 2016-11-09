@@ -1,0 +1,46 @@
+<div ng-repeat="node in $ctrl.summary" class="node summary">
+    <h3>{{node.id | uppercase}}</h3>
+    <h5>Agreed value:</h5>
+    <span class="value">{{node.value}}</span>
+</div>
+
+<div ng-repeat="node in $ctrl.otherNodes"
+     class="node node-hover {{( node.primary == true) ? 'primary' : ''}}"
+     onclick="handleNodeScaling(this)"
+     onmouseover="toggleVisibility(getChildByClassName(this,'click-hint'))"
+     onmouseout="toggleVisibility(getChildByClassName(this,'click-hint'))"
+     >
+    <h3 class="id-label">
+        Node {{node.id}} <span class="primary-label" ng-show="{{node.primary}}">primary</span>
+    </h3>
+    <h5 class="value-label">
+        Value:
+    </h5>
+    <span class="value">
+        {{node.value}}
+    </span>
+    <div class="value-graph">
+        <value-graph></value-graph>
+    </div>
+    <div class="click-hint">click for more details</div>
+</div>
+
+<table>
+    <caption>
+        JSON Table
+    </caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>VALUE</th>
+            <th>PRIMARY</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="node in $ctrl.nodes">
+            <td>{{node.id}}</td>
+            <td>{{node.value}}</td>
+            <td>{{(node.primary == true || node.primary == false) ? node.primary : 'undefined'}}</td>
+        </tr>
+    </tbody>
+</table>

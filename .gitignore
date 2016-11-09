@@ -154,3 +154,10 @@ pyvenv.cfg
 pip-selfcheck.json
 
 ## USER STUFF!
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
+.idea
