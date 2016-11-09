@@ -1,65 +1,59 @@
 .view-frame {
-    position: relative;
+  position: relative;
 }
-
 .view-frame.ng-enter,
 .view-frame.ng-leave {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: inherit;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: inherit;
 }
-
 .view-frame.ng-enter {
-    animation: 0.5s fade-in;
-    z-index: 100;
+  animation: 0.5s fade-in;
+  z-index: 100;
 }
-
 .view-frame.ng-leave {
-    animation: 0.5s fade-out;
-    z-index: 99;
+  animation: 0.5s fade-out;
+  z-index: 99;
 }
-
-.view-frame.ng-enter.ng-enter-active {
-
-}
-
 @keyframes fade-in {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
 @keyframes fade-out {
-    from {opacity: 1;}
-    to {opacity: 0;}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-
 .node.ng-enter,
 .node.ng-leave,
 .node.ng-move {
-    transition: 0.25s linear all;
+  transition: 0.25s linear all;
 }
-
 .node.ng-enter,
 .node.ng-move {
-    width: 0;
-    opacity: 0;
-    overflow: hidden;
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
 }
-
 .node.ng-enter.ng-enter-active,
 .node.ng-move.ng-move-active {
-    width: 120px;
-    opacity: 1;
+  width: 120px;
+  opacity: 1;
 }
-
 .node.ng-leave {
-    opacity: 1;
-    overflow: hidden;
+  opacity: 1;
+  overflow: hidden;
 }
-
 .node.ng-leave.ng-leave-active {
-    width: 0;
-    opacity: 0;
-    padding: 0;
+  width: 0;
+  opacity: 0;
+  padding: 0;
 }

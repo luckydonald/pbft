@@ -1,0 +1,62 @@
+.view-frame {
+  position: relative;
+
+  &.ng-enter, &.ng-leave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: inherit;
+  }
+
+  &.ng-enter {
+    animation: 0.5s fade-in;
+    z-index: 100;
+  }
+
+  &.ng-leave {
+    animation: 0.5s fade-out;
+    z-index: 99;
+  }
+}
+
+
+@keyframes fade-in {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fade-out {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.node {
+  &.ng-enter,
+  &.ng-leave,
+  &.ng-move {
+    transition: 0.25s linear all;
+  }
+  &.ng-enter,
+  &.ng-move {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  &.ng-enter.ng-enter-active,
+  &.ng-move.ng-move-active {
+    width: 120px;
+    opacity: 1;
+  }
+
+  &.ng-leave {
+    opacity: 1;
+    overflow: hidden;
+
+    &.ng-leave-active {
+      width: 0;
+      opacity: 0;
+      padding: 0;
+    }
+  }
+}
