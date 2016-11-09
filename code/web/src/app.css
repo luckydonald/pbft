@@ -22,7 +22,6 @@ input {
 }
 #container {
   width: 100%;
-  min-width: 550px;
   height: 98vh;
   margin: 0 auto 0 auto;
   background-color: lightgray;
@@ -40,26 +39,7 @@ input {
   color: white;
   text-decoration: none;
 }
-#main {
-  width: 100%;
-  height: 90%;
-  margin: 0 auto 0 auto;
-  background-color: #124;
-  color: white;
-  overflow: hidden;
-}
-#nodearea {
-  float: left;
-  width: 100%;
-}
-#footer {
-  width: 100%;
-  height: 5%;
-  margin: 0 auto 0 auto;
-  text-align: center;
-  background-color: gold;
-}
-.menuitem {
+#menubar .menuitem {
   text-align: center;
   display: table-cell;
   vertical-align: middle;
@@ -71,16 +51,39 @@ input {
   background-color: #124;
   border-radius: 7px 7px 0 0;
 }
-.menuitem:hover {
+#menubar .menuitem:hover {
   background-color: #126;
 }
-.node {
+#main {
+  width: 100%;
+  height: 90%;
+  margin: 0 auto 0 auto;
+  background-color: #124;
+  color: white;
+  overflow: hidden;
+}
+#footer {
+  width: 100%;
+  height: 5%;
+  margin: 0 auto 0 auto;
+  text-align: center;
+  background-color: gold;
+}
+#nodearea {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3% 10px;
+}
+#nodearea .node {
   display: block;
+  position: relative;
   opacity: 1;
   float: left;
   text-align: center;
-  width: 15%;
-  margin: 3% 1% 1% 1%;
+  margin-right: 2%;
+  margin-bottom: 2.1em;
+  box-sizing: border-box;
   padding: 1%;
   background-color: cornflowerblue;
   color: black;
@@ -88,58 +91,67 @@ input {
   border-radius: 0.5em;
   border-width: 0 5px 0 5px;
   border-style: solid;
-  -webkit-transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
-  -moz-transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
-  -o-transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
-  transition: width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+  -webkit-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+  -moz-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+  -o-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+  transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
 }
-.node.upscaled {
-  width: 80%;
+#nodearea .node.upscaled {
+  left: 0;
+  right: 0;
+  width: 100%;
   text-align: left;
+  margin: 0;
   height: inherit;
 }
-.node.upscaled h3.id-label {
+#nodearea .node.upscaled h3.id-label {
   font-size: 2em;
 }
-.node.reduced {
-  opacity: 0.4;
-  width: 1%;
+#nodearea .node.reduced {
+  width: 0;
+  height: 0;
   padding: 0;
+  margin: 0;
+  -webkit-transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+  -moz-transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+  -o-transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+  transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
 }
-.node.primary {
+#nodearea .node.primary {
   border-color: #c4e3f3;
 }
-.node.primary:hover {
+#nodearea .node.primary:hover {
   border-color: #7cf1ca;
 }
-.node.primary:hover .primary-label {
+#nodearea .node.primary:hover .primary-label {
   color: #7cf1ca;
 }
-.node.primary .primary-label {
+#nodearea .node.primary .primary-label {
   font-style: italic;
   font-size: 0.8em;
   color: #c4e3f3;
 }
-.node.summary {
+#nodearea .node.summary {
   background-color: cadetblue;
   color: white;
 }
-.node.summary:hover {
+#nodearea .node.summary:hover {
   background-color: #7cf1ca;
   color: black;
 }
-.node.non-upscaled:hover {
+#nodearea .node.non-upscaled:hover {
   background-color: #1972ff;
+  margin-bottom: 1em;
 }
-.node.non-upscaled:hover .click-hint {
+#nodearea .node.non-upscaled:hover .click-hint {
   height: 1.1em;
   opacity: 1;
 }
-.node.upscaled .click-hint {
+#nodearea .node.upscaled .click-hint {
   height: 0;
   opacity: 0;
 }
-.node .click-hint {
+#nodearea .node .click-hint {
   overflow: hidden;
   height: 0;
   opacity: 0;
@@ -149,11 +161,11 @@ input {
   -o-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
   transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
 }
-.primary-edge {
+#nodearea .node .primary-edge {
   width: 0;
   height: 0;
 }
-.value-graph {
+#nodearea .node .value-graph {
   display: none;
   width: 100%;
   text-align: center;

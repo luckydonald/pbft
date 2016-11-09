@@ -15,6 +15,22 @@
 	"value": 0.5,
 	"primary": false
 }, {
+	"id": 5,
+	"value": 0.5,
+	"primary": false
+}, {
+	"id": 6,
+	"value": 0.5,
+	"primary": false
+}, {
+	"id": 7,
+	"value": 0.8,
+	"primary": false
+}, {
+	"id": 8,
+	"value": 0.5,
+	"primary": false
+}, {
 	"id": "summary",
 	"value": 0.5
 }]

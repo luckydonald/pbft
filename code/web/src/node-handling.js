@@ -7,11 +7,11 @@ function handleNodeScaling(element) {
     if (!classes.contains('clicked')) {
         classes.add('clicked');
     }
-    toggleBigSmall(element,getUnclickedNodes());
+    toggleBigSmall(element, getUnclickedNodes());
     classes.remove('clicked');
 }
 
-function toggleBigSmall(element,otherElements) {
+function toggleBigSmall(element, otherElements) {
     var classes = element.classList;
     if (classes.contains('reduced')) {
         return;
