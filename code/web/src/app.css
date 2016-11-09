@@ -179,7 +179,7 @@ input {
   color: black;
 }
 
-.node-hover:hover {
+.node.non-upscaled:hover {
   background-color: #1972ff;
   height: 160px !important;
 }
@@ -190,8 +190,18 @@ input {
   text-align: center;
 }
 
-.click-hint {
-  visibility: hidden;
+.node.non-upscaled:hover .click-hint {
+  height: 1em;
+
+}
+.node .click-hint {
+  height: 0;
+}
+.node.upscaled .click-hint {
+  display: none;
+}
+
+.node .click-hint {
   margin-top: 1.5em;
   /*font-variant: small-caps;*/
   font-size: 0.8em;

@@ -18,11 +18,10 @@ function toggleBigSmall(element,otherElements) {
     }
     if (classes.contains('upscaled')) {
         classes.remove('upscaled');
-        classes.add('node-hover');
+        classes.add('non-upscaled');
         toggleDisplay(getChildByClassName(element,'value'),'none');
         toggleDisplay(getChildByClassName(element,'value-label'),'none');
         toggleDisplay(getChildByClassName(element,'value-graph'),'block');
-        toggleVisibility(getChildByClassName(element,'click-hint'));
         for (var i = 0; i < otherElements.length; i++) {
             otherClasses = otherElements[i].classList;
             if (!otherClasses.contains('reduced')) {
@@ -33,12 +32,11 @@ function toggleBigSmall(element,otherElements) {
             }
         }
     } else {
-        toggleVisibility(getChildByClassName(element,'click-hint'));
         toggleDisplay(getChildByClassName(element,'value'),'none');
         toggleDisplay(getChildByClassName(element,'value-label'),'none');
         toggleDisplay(getChildByClassName(element,'value-graph'),'block');
         classes.add('upscaled');
-        classes.remove('node-hover');
+        classes.remove('non-upscaled');
         for (var i = 0; i < otherElements.length; i++) {
             otherClasses = otherElements[i].classList;
             if (otherClasses.contains('reduced')) {
@@ -69,9 +67,9 @@ function getUnclickedNodes() {
 
 function toggleVisibility(element) {
     if (element.parentNode.classList.contains('reduced')) {
-        console.log('reduced, dont toggle.');
+        console.log("reduced, don't toggle.");
         return;
-    } else if (!element.parentNode.classList.contains('node-hover')) {
+    } else if (!element.parentNode.classList.contains('non-upscaled')) {
         element.style.visibility = 'hidden';
     } else if (!element.style.length > 0) {
         element.style.visibility = 'visible';

@@ -5,10 +5,8 @@
 </div>
 
 <div ng-repeat="node in $ctrl.otherNodes"
-     class="node node-hover {{( node.primary == true) ? 'primary' : ''}}"
+     class="node non-upscaled {{( node.primary == true) ? 'primary' : ''}}"
      onclick="handleNodeScaling(this)"
-     onmouseover="toggleVisibility(getChildByClassName(this,'click-hint'))"
-     onmouseout="toggleVisibility(getChildByClassName(this,'click-hint'))"
      >
     <h3 class="id-label">
         Node {{node.id}} <span class="primary-label" ng-show="{{node.primary}}">primary</span>
