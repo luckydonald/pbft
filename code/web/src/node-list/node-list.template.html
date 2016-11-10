@@ -10,12 +10,12 @@
 </div>
 
 <div ng-repeat="node in $ctrl.otherNodes"
-     class="node non-upscaled {{( node.primary == true) ? 'primary' : ''}}"
+     class="node non-upscaled {{( node.leader == true) ? 'leader' : ''}}"
      onclick="handleNodeScaling(this)"
      >
     <div class="node-main">
         <h3 class="id-label">
-            Node {{node.id}} <span class="primary-label" ng-show="{{node.primary}}">primary</span>
+            Node {{node.id}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
         </h3>
         <div class="overview">
             <h5 class="value-label">
@@ -45,14 +45,14 @@
         <tr>
             <th>ID</th>
             <th>VALUE</th>
-            <th>PRIMARY</th>
+            <th>Leader</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="node in $ctrl.nodes">
             <td>{{node.id}}</td>
             <td>{{node.value}}</td>
-            <td>{{(node.primary == true || node.primary == false) ? node.primary : 'undefined'}}</td>
+            <td>{{(node.leader == true || node.leader == false) ? node.leader : 'undefined'}}</td>
         </tr>
     </tbody>
 </table>

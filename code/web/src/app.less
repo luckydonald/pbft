@@ -20,8 +20,8 @@ transition: @props;
 
 @bg-color: #124;
 
+// STYLES
 /* app css stylesheet */
-
 body {
   margin: 0;
   font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
@@ -144,17 +144,6 @@ input {
     color: black;
     .transition(width .3s ease-out, height .2s ease-out);
 
-    @media all and (min-height: 1081px) {
-  body{
-
-	background-image: url("../images/sweet_apple_acres_by_bronyb34r-d4upsn7_big.png");
-	background-position: 50% 100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-
-  }
-}
-
     .node-main {
       border-color: transparent;
       border-radius: 0.5em;
@@ -206,7 +195,7 @@ input {
       .transition(width .3s ease-out, height .5s ease-out, padding .3s ease-out, margin .3s ease-out);
     }
 
-    &.primary {
+    &.leader {
       .node-main {
         border-color: @node-leader;
       }
@@ -216,13 +205,13 @@ input {
           border-color: @node-leader-hover;
         }
 
-        .primary-label {
+        .leader-label {
           color: @node-leader-hover;
         }
 
       }
 
-      .primary-label {
+      .leader-label {
         font-style: italic;
         font-size: 0.8em;
         color: @node-leader;
@@ -284,7 +273,7 @@ input {
         border-bottom-right-radius: 0.5em;
     }
 
-    .primary-edge {
+    .leader-edge {
       width: 0;
       height: 0;
     }

@@ -1,35 +1,35 @@
 [{
 	"id": 1,
 	"value": 0.5,
-	"primary": true
+	"leader": true
 }, {
 	"id": 2,
 	"value": 0.6,
-	"primary": false
+	"leader": false
 }, {
 	"id": 3,
 	"value": 0.5,
-	"primary": false
+	"leader": false
 }, {
 	"id": 4,
 	"value": 0.5,
-	"primary": false
+	"leader": false
 }, {
 	"id": 5,
 	"value": 0.5,
-	"primary": false
+	"leader": false
 }, {
 	"id": 6,
 	"value": 0.5,
-	"primary": false
+	"leader": false
 }, {
 	"id": 7,
 	"value": 0.8,
-	"primary": false
+	"leader": false
 }, {
 	"id": 8,
 	"value": 0.5,
-	"primary": false
+	"leader": false
 }, {
 	"id": "summary",
 	"value": 0.5

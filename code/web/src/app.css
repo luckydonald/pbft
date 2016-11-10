@@ -87,14 +87,6 @@ input {
   -o-transition: width 0.3s ease-out, height 0.2s ease-out;
   transition: width 0.3s ease-out, height 0.2s ease-out;
 }
-@media all and (min-height: 1081px) {
-  #nodearea .node body {
-    background-image: url("../images/sweet_apple_acres_by_bronyb34r-d4upsn7_big.png");
-    background-position: 50% 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-}
 #nodearea .node .node-main {
   border-color: transparent;
   border-radius: 0.5em;
@@ -147,17 +139,17 @@ input {
   -o-transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
   transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
 }
-#nodearea .node.primary .node-main {
+#nodearea .node.leader .node-main {
   border-color: #c4e3f3;
 }
-#nodearea .node.primary:hover .node-main,
-#nodearea .node.primary:hover .click-hint {
+#nodearea .node.leader:hover .node-main,
+#nodearea .node.leader:hover .click-hint {
   border-color: #7cf1ca;
 }
-#nodearea .node.primary:hover .primary-label {
+#nodearea .node.leader:hover .leader-label {
   color: #7cf1ca;
 }
-#nodearea .node.primary .primary-label {
+#nodearea .node.leader .leader-label {
   font-style: italic;
   font-size: 0.8em;
   color: #c4e3f3;
@@ -206,7 +198,7 @@ input {
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
 }
-#nodearea .node .primary-edge {
+#nodearea .node .leader-edge {
   width: 0;
   height: 0;
 }
