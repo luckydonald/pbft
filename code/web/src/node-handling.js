@@ -26,7 +26,6 @@ function toggleBigSmall(element, otherElements) {
                 return;
             } else {
                 otherClasses.remove('reduced');
-                //toggleDisplayForChildren(otherElements[i]);
             }
         }
     } else {
@@ -38,7 +37,6 @@ function toggleBigSmall(element, otherElements) {
                 return;
             } else {
                 otherClasses.add('reduced');
-                toggleDisplayForChildren(otherElements[i]);
             }
         }
     }
