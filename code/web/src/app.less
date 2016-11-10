@@ -172,10 +172,9 @@ input {
       }
     }
 
-    // The clicked one
+    // One clicked -> Detail view.
+    // The clicked one, in foreground
     &.upscaled {
-      left: 0;
-      right: 0;
       width: 100%;
       text-align: left;
       margin: 0;
@@ -186,13 +185,48 @@ input {
       }
     }
 
-    // The not-clicked ones
+    // One clicked -> Detail view.
+    // The not-clicked ones, hidden
     &.reduced {
-      width: 0;
-      height: 0;
-      padding: 0;
-      margin: 0;
-      .transition(width .3s ease-out, height .5s ease-out, padding .3s ease-out, margin .3s ease-out);
+      display: none;
+    }
+
+    // None clicked -> Overview.
+    // Display all nodes.
+    &.non-upscaled {
+      &:hover {
+        .node-main {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          background-color: @node-normal-hover;
+        }
+        .click-hint {
+          color: black;
+          height: 1.4em;
+          background-color: @node-normal-hover;
+          .transition(height .2s ease-in-out, width .2s ease-in-out, color .2s ease-in-out);
+        }
+      }
+      .overview {
+        display: block;
+      }
+      .details {
+        display: none;
+      }
+    }
+
+    &.upscaled {
+      width: 100%-2%;
+      .overview {
+        display: none;
+        .click-hint {
+          height: 0;
+          // opacity: 0;
+        }
+      }
+      .details {
+        display: block;
+      }
     }
 
     &.leader {
@@ -230,41 +264,6 @@ input {
           background-color: @node-highlight-hover;
           color: white;
         }
-      }
-    }
-
-    &.non-upscaled {
-      &:hover {
-        .node-main {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-          background-color: @node-normal-hover;
-        }
-        .click-hint {
-          color: black;
-          height: 1.4em;
-          background-color: @node-normal-hover;
-          .transition(height .2s ease-in-out, width .2s ease-in-out, color .2s ease-in-out);
-        }
-      }
-      .overview {
-        display: block;
-      }
-      .details {
-        display: none;
-      }
-    }
-
-    &.upscaled {
-      .overview {
-        display: none;
-        .click-hint {
-          height: 0;
-          // opacity: 0;
-        }
-      }
-      .details {
-        display: block;
       }
     }
 
