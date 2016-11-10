@@ -4,14 +4,6 @@ body {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   font-variant: small-caps;
 }
-h3,
-h5 {
-  margin-bottom: 0;
-  -webkit-transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
-  -moz-transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
-  -o-transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
-  transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
-}
 th,
 td {
   padding: 5px;
@@ -83,10 +75,10 @@ input {
   margin-bottom: 2.1em;
   box-sizing: border-box;
   color: black;
-  -webkit-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
-  -moz-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
-  -o-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
-  transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
+  -webkit-transition: width 0.3s ease-out, height 0.2s ease-out;
+  -moz-transition: width 0.3s ease-out, height 0.2s ease-out;
+  -o-transition: width 0.3s ease-out, height 0.2s ease-out;
+  transition: width 0.3s ease-out, height 0.2s ease-out;
 }
 #nodearea .node .node-main {
   border-color: transparent;
@@ -95,10 +87,29 @@ input {
   border-style: solid;
   background-color: cornflowerblue;
   box-sizing: border-box;
-  padding: 1%;
+  padding: 0.5em 1%;
+}
+#nodearea .node h3,
+#nodearea .node h5 {
+  margin-bottom: 0;
+  margin-top: 0;
+  -webkit-transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
+  -moz-transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
+  -o-transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
+  transition: font-size 0.3s ease-out, opacity 0.3s ease-out;
 }
 #nodearea .node .click-hint-wrapper {
   height: 1.4em;
+  margin-top: -0.5em;
+}
+#nodearea .node .click-hint-wrapper .click-hint {
+  display: block;
+  white-space: nowrap;
+  padding: 0 .3em;
+  -webkit-transition: width 0.3s ease-out, height 0.2s ease-in-out;
+  -moz-transition: width 0.3s ease-out, height 0.2s ease-in-out;
+  -o-transition: width 0.3s ease-out, height 0.2s ease-in-out;
+  transition: width 0.3s ease-out, height 0.2s ease-in-out;
 }
 #nodearea .node.upscaled {
   left: 0;
@@ -121,10 +132,11 @@ input {
   -o-transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
   transition: width 0.3s ease-out, height 0.5s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
 }
-#nodearea .node.primary {
+#nodearea .node.primary .node-main {
   border-color: #c4e3f3;
 }
-#nodearea .node.primary:hover {
+#nodearea .node.primary:hover .node-main,
+#nodearea .node.primary:hover .click-hint {
   border-color: #7cf1ca;
 }
 #nodearea .node.primary:hover .primary-label {
@@ -151,10 +163,6 @@ input {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   background-color: #1972ff;
-  -webkit-transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
-  -moz-transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
-  -o-transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
-  transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
 }
 #nodearea .node.non-upscaled:hover .click-hint {
   height: 1.4em;
@@ -174,10 +182,10 @@ input {
   border-bottom-right-radius: 0.5em;
   box-sizing: border-box;
   padding: 0 1%;
-  -webkit-transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
-  -moz-transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
-  -o-transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
-  transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  -webkit-transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+  -moz-transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+  -o-transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }
 #nodearea .node .click-hint-wrapper {
   border-bottom-left-radius: 0.5em;

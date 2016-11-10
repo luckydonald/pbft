@@ -53,12 +53,6 @@ body {
 //  padding-right: 0.3em;
 //}
 
-h3, h5 {
-  //font-variant: small-caps;
-  margin-bottom: 0;
-  .transition(font-size .3s ease-out, opacity .3s ease-out);
-}
-
 th, td {
   padding: 5px;
   border: 1px dashed white;
@@ -70,7 +64,6 @@ input {
 
 #container {
   width: 100%;
-  //min-width: 550px;
   height: 98vh;
   margin: 0 auto 0 auto;
   border: 0 solid transparent;
@@ -82,7 +75,6 @@ input {
   width: 100%;
   padding-top: 2vh;
   background-color: lightgray;
-  // height: 100%;
   margin: 0 auto 0 auto;
   display: table;
   border-spacing: 10px 0;
@@ -111,8 +103,6 @@ input {
 
 #main {
   width: 100%;
-  //height: 100%;
-  //margin: 0 auto 0 auto;
   background-color: @bg-color;
   color: white;
 }
@@ -145,7 +135,7 @@ input {
     //margin: 3% 1% 1% 1%;
     box-sizing: border-box;
     color: black;
-    .transition(width .3s ease-out, margin-bottom .3s ease-out, height .3s ease-out);
+    .transition(width .3s ease-out, height .2s ease-out);
 
     .node-main {
       border-color: transparent;
@@ -154,10 +144,25 @@ input {
       border-style: solid;
       background-color: @node-normal;
       box-sizing: border-box;
-      padding: 1%;
+      padding: 0.5em 1%;
     }
+
+    h3, h5 {
+      margin-bottom: 0;
+      margin-top: 0;
+      .transition(font-size .3s ease-out, opacity .3s ease-out);
+    }
+
     .click-hint-wrapper {
       height: 1.4em;
+      margin-top: -0.5em;
+
+      .click-hint {
+        display: block;
+        white-space: nowrap;
+        padding: 0 0.3em;
+        .transition(width .3s ease-out, height .2s ease-in-out);
+      }
     }
 
     // The clicked one
@@ -167,7 +172,6 @@ input {
       width: 100%;
       text-align: left;
       margin: 0;
-      //float: none;
       height: inherit;
 
       h3.id-label {
@@ -185,10 +189,14 @@ input {
     }
 
     &.primary {
-      border-color: @node-leader;
+      .node-main {
+        border-color: @node-leader;
+      }
 
       &:hover {
-        border-color: @node-leader-hover;
+        .node-main, .click-hint {
+          border-color: @node-leader-hover;
+        }
 
         .primary-label {
           color: @node-leader-hover;
@@ -219,14 +227,10 @@ input {
     }
 
     &.non-upscaled:hover {
-      //height: 160px !important;
-      //margin-bottom: 1em;
       .node-main {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         background-color: @node-normal-hover;
-        .transition(border-bottom-left-radius .3s ease-out, border-bottom-right-radius .3s ease-out);
-
       }
       .click-hint {
         height: 1.4em;
@@ -254,7 +258,7 @@ input {
       border-bottom-right-radius: 0.5em;
       box-sizing: border-box;
       padding: 0 1%;
-      .transition(height .2s ease-in-out, border-bottom-left-radius .3s ease-out, border-bottom-right-radius .3s ease-out);
+      .transition(height .2s ease-in-out, width .2s ease-in-out);
     }
 
     .click-hint-wrapper {
