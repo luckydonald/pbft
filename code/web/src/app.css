@@ -160,10 +160,8 @@ input {
 #nodearea .node.summary .node-main {
   background-color: cadetblue;
 }
-#nodearea .node.summary:hover {
-  color: black;
-}
-#nodearea .node.summary:hover .node-main {
+#nodearea .node.summary.non-upscaled:hover .node-main,
+#nodearea .node.summary.non-upscaled:hover .click-hint {
   background-color: #7cf1ca;
 }
 #nodearea .node.non-upscaled:hover .node-main {
@@ -172,13 +170,19 @@ input {
   background-color: #1972ff;
 }
 #nodearea .node.non-upscaled:hover .click-hint {
+  color: black;
   height: 1.4em;
   background-color: #1972ff;
+  -webkit-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
+  -moz-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
+  -o-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 #nodearea .node.upscaled .click-hint {
   height: 0;
 }
 #nodearea .node .click-hint {
+  color: transparent;
   overflow: hidden;
   height: 0;
   position: relative;
@@ -189,10 +193,10 @@ input {
   border-bottom-right-radius: 0.5em;
   box-sizing: border-box;
   padding: 0 1%;
-  -webkit-transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
-  -moz-transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
-  -o-transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
-  transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+  -webkit-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
+  -moz-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
+  -o-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 #nodearea .node .click-hint-wrapper {
   border-bottom-left-radius: 0.5em;
