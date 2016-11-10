@@ -28,36 +28,31 @@ input {
   background-color: #124;
 }
 #menubar {
-  height: 5%;
+  height: 1.5em;
   width: 100%;
   padding-top: 2vh;
   background-color: lightgray;
-}
-#menubar ul {
-  height: 100%;
   margin: 0 auto 0 auto;
   display: table;
   border-spacing: 10px 0;
-  width: 40%;
-}
-#menubar ul .menuitem {
   text-align: center;
-  display: table-cell;
-  vertical-align: middle;
-  width: 44%;
-  font-size: 0.7em;
-  height: 100%;
-  margin: 0 3% 0 3%;
-  border-width: 0 5px 0 5px;
+}
+#menubar a {
   background-color: #124;
+  height: 100%;
+  vertical-align: middle;
+  border-width: 0 5px 0 5px;
   border-radius: 7px 7px 0 0;
-}
-#menubar ul .menuitem:hover {
-  background-color: #126;
-}
-#menubar ul .menuitem a {
+  margin: 0 3% 0 3%;
+  padding: 1%;
+  display: inline-block;
   color: white;
   text-decoration: none;
+  width: 40%;
+}
+#menubar a:hover {
+  background-color: #126;
+  color: #7cf1ca;
 }
 #main {
   width: 100%;

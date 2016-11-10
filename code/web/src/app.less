@@ -78,38 +78,33 @@ input {
 }
 
 #menubar {
-  height: 5%;
+  height: 1.5em;
   width: 100%;
   padding-top: 2vh;
   background-color: lightgray;
+  // height: 100%;
+  margin: 0 auto 0 auto;
+  display: table;
+  border-spacing: 10px 0;
+  text-align: center;
 
-  ul {
+  a {
+    background-color: @bg-color;
     height: 100%;
-    margin: 0 auto 0 auto;
-    display: table;
-    border-spacing: 10px 0;
+    vertical-align: middle;
+    border-width: 0 5px 0 5px;
+    border-radius: 7px 7px 0 0;
+    margin: 0 3% 0 3%;
+    padding: 1%;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+
     width: 40%;
 
-    .menuitem {
-      text-align: center;
-      display: table-cell;
-      vertical-align: middle;
-      width: 44%;
-      font-size: 0.7em;
-      height: 100%;
-      margin: 0 3% 0 3%;
-      border-width: 0 5px 0 5px;
-      background-color: @bg-color;
-      border-radius: 7px 7px 0 0;
-
-      &:hover {
-        background-color: #126;
-      }
-
-      a {
-        color: white;
-        text-decoration: none;
-      }
+    &:hover {
+      background-color: #126;
+      color: @node-highlight-hover;
     }
   }
 }
