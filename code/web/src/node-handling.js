@@ -20,22 +20,16 @@ function toggleBigSmall(element, otherElements) {
     if (classes.contains('upscaled')) {
         classes.remove('upscaled');
         classes.add('non-upscaled');
-        toggleDisplay(getChildByClassName(lel, 'value'),'none');
-        toggleDisplay(getChildByClassName(lel, 'value-label'),'none');
-        toggleDisplay(getChildByClassName(lel, 'value-graph'),'block');
         for (var i = 0; i < otherElements.length; i++) {
             otherClasses = otherElements[i].classList;
             if (!otherClasses.contains('reduced')) {
                 return;
             } else {
                 otherClasses.remove('reduced');
-                toggleDisplayForChildren(otherElements[i]);
+                //toggleDisplayForChildren(otherElements[i]);
             }
         }
     } else {
-        toggleDisplay(getChildByClassName(lel,'value'), 'none');
-        toggleDisplay(getChildByClassName(lel,'value-label'), 'none');
-        toggleDisplay(getChildByClassName(lel,'value-graph'), 'block');
         classes.add('upscaled');
         classes.remove('non-upscaled');
         for (var i = 0; i < otherElements.length; i++) {

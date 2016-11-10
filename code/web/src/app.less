@@ -228,38 +228,51 @@ input {
       &.non-upscaled:hover {
         .node-main, .click-hint {
           background-color: @node-highlight-hover;
+          color: white;
         }
       }
     }
 
-    &.non-upscaled:hover {
-      .node-main {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        background-color: @node-normal-hover;
+    &.non-upscaled {
+      &:hover {
+        .node-main {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          background-color: @node-normal-hover;
+        }
+        .click-hint {
+          color: black;
+          height: 1.4em;
+          background-color: @node-normal-hover;
+          .transition(height .2s ease-in-out, width .2s ease-in-out, color .2s ease-in-out);
+        }
       }
-      .click-hint {
-        color: black;
-        height: 1.4em;
-        background-color: @node-normal-hover;
-        .transition(height .2s ease-in-out, width .2s ease-in-out, color .2s ease-in-out);
+      .overview {
+        display: block;
+      }
+      .details {
+        display: none;
       }
     }
 
-    &.upscaled .click-hint {
-      height: 0;
-      // opacity: 0;
+    &.upscaled {
+      .overview {
+        display: none;
+        .click-hint {
+          height: 0;
+          // opacity: 0;
+        }
+      }
+      .details {
+        display: block;
+      }
     }
 
     .click-hint {
       color: transparent;
       overflow: hidden;
       height: 0;
-      // opacity: 0;
       position: relative;
-      //margin-top: 1.5em;
-      //font-variant: small-caps;
-      //font-size: 0.8em;
       border-color: transparent;
       border-width: 0 5px 0 5px;
       border-style: solid;
@@ -279,11 +292,10 @@ input {
       width: 0;
       height: 0;
     }
-
-    .value-graph {
-      display: none;
-      width: 100%;
-      text-align: center;
-    }
   }
+}
+
+.value-graph {
+  width: 100%;
+  text-align: center;
 }

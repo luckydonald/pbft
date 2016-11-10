@@ -163,6 +163,7 @@ input {
 #nodearea .node.summary.non-upscaled:hover .node-main,
 #nodearea .node.summary.non-upscaled:hover .click-hint {
   background-color: #7cf1ca;
+  color: white;
 }
 #nodearea .node.non-upscaled:hover .node-main {
   border-bottom-left-radius: 0;
@@ -178,8 +179,20 @@ input {
   -o-transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: height 0.2s ease-in-out, width 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-#nodearea .node.upscaled .click-hint {
+#nodearea .node.non-upscaled .overview {
+  display: block;
+}
+#nodearea .node.non-upscaled .details {
+  display: none;
+}
+#nodearea .node.upscaled .overview {
+  display: none;
+}
+#nodearea .node.upscaled .overview .click-hint {
   height: 0;
+}
+#nodearea .node.upscaled .details {
+  display: block;
 }
 #nodearea .node .click-hint {
   color: transparent;
@@ -206,8 +219,7 @@ input {
   width: 0;
   height: 0;
 }
-#nodearea .node .value-graph {
-  display: none;
+.value-graph {
   width: 100%;
   text-align: center;
 }
