@@ -123,7 +123,14 @@ input {
   padding: 3% 10px; //top+bottom  left+right
   background-color: @bg-color;
 
+  &, .node-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
   .node {
+    flex: 1 0 auto;
     display: block;
     position: relative;
     opacity: 1;
@@ -136,6 +143,17 @@ input {
     box-sizing: border-box;
     color: black;
     .transition(width .3s ease-out, height .2s ease-out);
+
+    @media all and (min-height: 1081px) {
+  body{
+
+	background-image: url("../images/sweet_apple_acres_by_bronyb34r-d4upsn7_big.png");
+	background-position: 50% 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+
+  }
+}
 
     .node-main {
       border-color: transparent;

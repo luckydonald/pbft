@@ -1,0 +1,13 @@
+.node {
+  width: auto;
+}
+@media only screen and (min-width: 481px) and (max-width: 600px) {
+  .node {
+    width: 48%;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .node {
+    width: 31.33333333%;
+  }
+}

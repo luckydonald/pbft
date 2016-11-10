@@ -65,7 +65,14 @@ input {
   padding: 3% 10px;
   background-color: #124;
 }
+#nodearea,
+#nodearea .node-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
 #nodearea .node {
+  flex: 1 0 auto;
   display: block;
   position: relative;
   opacity: 1;
@@ -79,6 +86,14 @@ input {
   -moz-transition: width 0.3s ease-out, height 0.2s ease-out;
   -o-transition: width 0.3s ease-out, height 0.2s ease-out;
   transition: width 0.3s ease-out, height 0.2s ease-out;
+}
+@media all and (min-height: 1081px) {
+  #nodearea .node body {
+    background-image: url("../images/sweet_apple_acres_by_bronyb34r-d4upsn7_big.png");
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
 }
 #nodearea .node .node-main {
   border-color: transparent;
@@ -105,7 +120,7 @@ input {
 #nodearea .node .click-hint-wrapper .click-hint {
   display: block;
   white-space: nowrap;
-  padding: 0 .3em;
+  padding: 0 0.3em;
   -webkit-transition: width 0.3s ease-out, height 0.2s ease-in-out;
   -moz-transition: width 0.3s ease-out, height 0.2s ease-in-out;
   -o-transition: width 0.3s ease-out, height 0.2s ease-in-out;

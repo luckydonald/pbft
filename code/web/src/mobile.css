@@ -1,0 +1,6 @@
+.node {
+  width: 100%;
+}
+.node .click-hint {
+  content: 'tap for details';
+}

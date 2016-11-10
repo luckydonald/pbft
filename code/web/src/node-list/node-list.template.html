@@ -1,8 +1,11 @@
-<div ng-repeat="node in $ctrl.summary" class="node summary">
+<div ng-repeat="node in $ctrl.summary"  class="node summary non-upscaled">
     <div class="node-main">
         <h3>{{node.id | uppercase}}</h3>
         <h5>Agreed value:</h5>
         <span class="value">{{node.value}}</span>
+    </div>
+    <div class="click-hint-wrapper">
+        <div class="click-hint">click for more details</div>
     </div>
 </div>
 
@@ -14,14 +17,18 @@
         <h3 class="id-label">
             Node {{node.id}} <span class="primary-label" ng-show="{{node.primary}}">primary</span>
         </h3>
-        <h5 class="value-label">
-            Value:
-        </h5>
-        <span class="value">
-            {{node.value}}
-        </span>
-        <div class="value-graph">
-            <value-graph></value-graph>
+        <div class="overview">
+            <h5 class="value-label">
+                Value:
+            </h5>
+            <span class="value">
+                {{node.value}}
+            </span>
+        </div>
+        <div class="details">
+            <div class="value-graph">
+                <value-graph></value-graph>
+            </div>
         </div>
     </div>
     <div class="click-hint-wrapper">
