@@ -1,7 +1,9 @@
 <div ng-repeat="node in $ctrl.summary" class="node summary">
-    <h3>{{node.id | uppercase}}</h3>
-    <h5>Agreed value:</h5>
-    <span class="value">{{node.value}}</span>
+    <div class="node-main">
+        <h3>{{node.id | uppercase}}</h3>
+        <h5>Agreed value:</h5>
+        <span class="value">{{node.value}}</span>
+    </div>
 </div>
 
 <div ng-repeat="node in $ctrl.otherNodes"

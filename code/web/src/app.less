@@ -209,12 +209,17 @@ input {
     }
 
     &.summary {
-      background-color: @node-highlight;
       color: white;
 
+      .node-main {
+        background-color: @node-highlight;
+      }
+
       &:hover {
-        background-color: @node-highlight-hover;
         color: black;
+        .node-main {
+          background-color: @node-highlight-hover;
+        }
       }
     }
 

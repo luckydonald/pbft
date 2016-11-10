@@ -141,12 +141,16 @@ input {
   color: #c4e3f3;
 }
 #nodearea .node.summary {
-  background-color: cadetblue;
   color: white;
 }
+#nodearea .node.summary .node-main {
+  background-color: cadetblue;
+}
 #nodearea .node.summary:hover {
-  background-color: #7cf1ca;
   color: black;
+}
+#nodearea .node.summary:hover .node-main {
+  background-color: #7cf1ca;
 }
 #nodearea .node.non-upscaled:hover .node-main {
   border-bottom-left-radius: 0;
