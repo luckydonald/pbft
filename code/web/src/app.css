@@ -87,17 +87,23 @@ input {
   margin-right: 2%;
   margin-bottom: 2.1em;
   box-sizing: border-box;
-  padding: 1%;
-  background-color: cornflowerblue;
   color: black;
+  -webkit-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
+  -moz-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
+  -o-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
+  transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out;
+}
+#nodearea .node .node-main {
   border-color: transparent;
   border-radius: 0.5em;
   border-width: 0 5px 0 5px;
   border-style: solid;
-  -webkit-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
-  -moz-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
-  -o-transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
-  transition: width 0.3s ease-out, margin-bottom 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out;
+  background-color: cornflowerblue;
+  box-sizing: border-box;
+  padding: 1%;
+}
+#nodearea .node .click-hint-wrapper {
+  height: 1.4em;
 }
 #nodearea .node.upscaled {
   left: 0;
@@ -142,27 +148,41 @@ input {
   background-color: #7cf1ca;
   color: black;
 }
-#nodearea .node.non-upscaled:hover {
+#nodearea .node.non-upscaled:hover .node-main {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   background-color: #1972ff;
-  margin-bottom: 1em;
+  -webkit-transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  -moz-transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  -o-transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  transition: border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
 }
 #nodearea .node.non-upscaled:hover .click-hint {
-  height: 1.1em;
-  opacity: 1;
+  height: 1.4em;
+  background-color: #1972ff;
 }
 #nodearea .node.upscaled .click-hint {
   height: 0;
-  opacity: 0;
 }
 #nodearea .node .click-hint {
   overflow: hidden;
   height: 0;
-  opacity: 0;
   position: relative;
-  -webkit-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
-  -moz-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
-  -o-transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
-  transition: height 0.2s ease-in-out, opacity 0.3s ease-out;
+  border-color: transparent;
+  border-width: 0 5px 0 5px;
+  border-style: solid;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  box-sizing: border-box;
+  padding: 0 1%;
+  -webkit-transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  -moz-transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  -o-transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+  transition: height 0.2s ease-in-out, border-bottom-left-radius 0.3s ease-out, border-bottom-right-radius 0.3s ease-out;
+}
+#nodearea .node .click-hint-wrapper {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
 }
 #nodearea .node .primary-edge {
   width: 0;

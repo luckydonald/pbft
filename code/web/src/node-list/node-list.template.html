@@ -8,19 +8,23 @@
      class="node non-upscaled {{( node.primary == true) ? 'primary' : ''}}"
      onclick="handleNodeScaling(this)"
      >
-    <h3 class="id-label">
-        Node {{node.id}} <span class="primary-label" ng-show="{{node.primary}}">primary</span>
-    </h3>
-    <h5 class="value-label">
-        Value:
-    </h5>
-    <span class="value">
-        {{node.value}}
-    </span>
-    <div class="value-graph">
-        <value-graph></value-graph>
+    <div class="node-main">
+        <h3 class="id-label">
+            Node {{node.id}} <span class="primary-label" ng-show="{{node.primary}}">primary</span>
+        </h3>
+        <h5 class="value-label">
+            Value:
+        </h5>
+        <span class="value">
+            {{node.value}}
+        </span>
+        <div class="value-graph">
+            <value-graph></value-graph>
+        </div>
     </div>
-    <div class="click-hint">click for more details</div>
+    <div class="click-hint-wrapper" onclick="handleNodeScaling(this)">
+        <div class="click-hint">click for more details</div>
+    </div>
 </div>
 
 <!--

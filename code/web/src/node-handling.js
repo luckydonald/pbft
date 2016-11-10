@@ -16,12 +16,13 @@ function toggleBigSmall(element, otherElements) {
     if (classes.contains('reduced')) {
         return;
     }
+    var lel = getChildByClassName(element, 'node-main');
     if (classes.contains('upscaled')) {
         classes.remove('upscaled');
         classes.add('non-upscaled');
-        toggleDisplay(getChildByClassName(element,'value'),'none');
-        toggleDisplay(getChildByClassName(element,'value-label'),'none');
-        toggleDisplay(getChildByClassName(element,'value-graph'),'block');
+        toggleDisplay(getChildByClassName(lel, 'value'),'none');
+        toggleDisplay(getChildByClassName(lel, 'value-label'),'none');
+        toggleDisplay(getChildByClassName(lel, 'value-graph'),'block');
         for (var i = 0; i < otherElements.length; i++) {
             otherClasses = otherElements[i].classList;
             if (!otherClasses.contains('reduced')) {
@@ -32,9 +33,9 @@ function toggleBigSmall(element, otherElements) {
             }
         }
     } else {
-        toggleDisplay(getChildByClassName(element,'value'),'none');
-        toggleDisplay(getChildByClassName(element,'value-label'),'none');
-        toggleDisplay(getChildByClassName(element,'value-graph'),'block');
+        toggleDisplay(getChildByClassName(lel,'value'), 'none');
+        toggleDisplay(getChildByClassName(lel,'value-label'), 'none');
+        toggleDisplay(getChildByClassName(lel,'value-graph'), 'block');
         classes.add('upscaled');
         classes.remove('non-upscaled');
         for (var i = 0; i < otherElements.length; i++) {
@@ -78,9 +79,8 @@ function toggleVisibility(element) {
     }
 }
 
-function toggleDisplay(element,defaultval) {
+function toggleDisplay(element, defaultval) {
     if (!element.style.length > 0) {
-        console.log('initialising.');
         element.style.display = ''; //initialising
         console.log('setting to default.');
         element.style.display = defaultval;

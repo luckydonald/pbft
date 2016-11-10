@@ -149,14 +149,21 @@ input {
     margin-bottom: 2.1em;
     //margin: 3% 1% 1% 1%;
     box-sizing: border-box;
-    padding: 1%;
-    background-color: @node-normal;
     color: black;
-    border-color: transparent;
-    border-radius: 0.5em;
-    border-width: 0 5px 0 5px;
-    border-style: solid;
-    .transition(width .3s ease-out, margin-bottom .3s ease-out, height .3s ease-out, opacity .3s ease-out);
+    .transition(width .3s ease-out, margin-bottom .3s ease-out, height .3s ease-out);
+
+    .node-main {
+      border-color: transparent;
+      border-radius: 0.5em;
+      border-width: 0 5px 0 5px;
+      border-style: solid;
+      background-color: @node-normal;
+      box-sizing: border-box;
+      padding: 1%;
+    }
+    .click-hint-wrapper {
+      height: 1.4em;
+    }
 
     // The clicked one
     &.upscaled {
@@ -212,29 +219,47 @@ input {
     }
 
     &.non-upscaled:hover {
-      background-color: @node-normal-hover;
       //height: 160px !important;
-      margin-bottom: 1em;
+      //margin-bottom: 1em;
+      .node-main {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        background-color: @node-normal-hover;
+        .transition(border-bottom-left-radius .3s ease-out, border-bottom-right-radius .3s ease-out);
+
+      }
       .click-hint {
-        height: 1.1em;
-        opacity: 1;
+        height: 1.4em;
+        background-color: @node-normal-hover;
       }
     }
 
     &.upscaled .click-hint {
       height: 0;
-      opacity: 0;
+      // opacity: 0;
     }
 
     .click-hint {
       overflow: hidden;
       height: 0;
-      opacity: 0;
+      // opacity: 0;
       position: relative;
       //margin-top: 1.5em;
       //font-variant: small-caps;
       //font-size: 0.8em;
-      .transition(height .2s ease-in-out, opacity .3s ease-out);
+      border-color: transparent;
+      border-width: 0 5px 0 5px;
+      border-style: solid;
+      border-bottom-left-radius: 0.5em;
+      border-bottom-right-radius: 0.5em;
+      box-sizing: border-box;
+      padding: 0 1%;
+      .transition(height .2s ease-in-out, border-bottom-left-radius .3s ease-out, border-bottom-right-radius .3s ease-out);
+    }
+
+    .click-hint-wrapper {
+        border-bottom-left-radius: 0.5em;
+        border-bottom-right-radius: 0.5em;
     }
 
     .primary-edge {
