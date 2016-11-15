@@ -21,6 +21,7 @@
   <script src="/bower_components/angular-route/angular-route.js"></script>
   <script src="/bower_components/angular-resource/angular-resource.js"></script>
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/d3/d3.js"></script>
   <script src="hover-effect.js"></script>
   <script src="node-handling.js"></script>
   <script src="app.module.js"></script>
@@ -29,10 +30,15 @@
   <script src="core/core.module.js"></script>
   <script src="core/node/node.module.js"></script>
   <script src="core/node/node.service.js"></script>
+  <script src="core/d3/d3.factory.module.js"></script>
+  <script src="core/d3/d3.factory.js"></script>
+  <script src="core/d3/d3.directive.module.js"></script>
+  <script src="core/d3/d3.directive.js"></script>
   <script src="node-list/node-list.module.js"></script>
   <script src="node-list/node-list.component.js"></script>
   <script src="value-graph/value-graph.module.js"></script>
   <script src="value-graph/value-graph.component.js"></script>
+  <script src="value-graph/value-graph.d3.js"></script>
   <script src="node-list-view/node-list-view.module.js"></script>
   <script src="node-list-view/node-list-view.component.js"></script>
   <script src="failure-table/failure-table.module.js"></script>
@@ -52,7 +58,6 @@
       <![endif]-->
 
       <div ng-view class="view-frame"></div>
-
       <!-- In production use:
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
       -->

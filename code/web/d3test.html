@@ -1,26 +1,392 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js">
-        /*var paragraphs = document.getElementById("test");
-        for (var i = 0; i < paragraphs.length; i++) {
-            var paragraph = paragraphs.item(i);
-            paragraph.style.setProperty("color", "red", null);
-        }*/
-    </script>
-    <title>D3 JavaScript Testing</title>
-</head>
-<body>
-    <script type="text/javascript">
-        var section = d3.selectAll(".section");
-        var div = section.append("div");
-        div.html("Ich bin eine Sektion!");
-    </script>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test n stuff</title>
+        <script src="d3/d3.v3.js"></script>
+        <style type="text/css">
+            div.bar {
+                display: inline-block;
+                text-align: center;
+                font-family: Verdana, sans-serif;
+                color: white;
+                width: 30px;
+                margin: 0 5px 5px 0;
+                background-color: red;
+            }
+            rect:hover {
+                fill: teal;
+            }
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }
+            .axis text {
+                font-family: sans-serif;
+                font-size: 11px;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="randomize">Click me to randomize (add, delete, update) values.</p>
+        <p id="add">Click me to add a value.</p>
+        <p id="delete">Click me to delete a value.</p>
+        <script type="text/javascript">
+            // derp.
+            var dataset = [];
+            var setset = [
+                    [5,20],
+                    [480,90],
+                    [250,50],
+                    [100,33],
+                    [330,95],
+                    [410,12],
+                    [475,44],
+                    [25,67],
+                    [85,21],
+                    [220,88],
+                    [600,150],
+                    [400,170]
 
-    <div class="section"></div>
-    <div class="section"></div>
-    <div class="stuff"></div>
-    <div class="section"></div>
-</body>
+            ];
+            var bars = 40;
+            var w = 1000;
+            var h = 200;
+            var barPadding = 2;
+            var circlePadding = 30;
+            var fontsize = 10;
+
+            dataset = getRandom(dataset,h);
+
+            var xScale = d3.scale.ordinal()
+                    .domain(d3.range(dataset.length))
+                    .rangeRoundBands([0,w],0.05);
+            var yScale = d3.scale.linear()
+                    .domain([0,d3.max(dataset,function(d){
+                        return d;
+                    })])
+                    .range([15,h]);
+
+            var svg_plain = d3.select("body")
+                    .append("svg")
+                    .attr("width",w)
+                    .attr("height",h);
+            var svg_plain_rects = svg_plain.selectAll("rect")
+                    .data(dataset);
+            svg_plain_rects.enter()
+                    .append("rect")
+                    .attr("x",function(d,e){
+                        return xScale(e);
+                    })
+                    .attr("y",function(d){
+                        return h-yScale(d);
+                    })
+                    .attr("width",function(d,e){
+                        return xScale.rangeBand();
+                    })
+                    .attr("height",function(d){
+                        return yScale(d);
+                    })
+                    .attr("fill",function(d){
+                        return "rgb("+(d+100)+","+(d+75)+","+(d+100)+")";
+                    });
+            var svg_plain_txt = svg_plain.selectAll("text")
+                    .data(dataset);
+            svg_plain_txt.enter()
+                    .append("text")
+                    .text(function(d){
+                        return d;
+                    })
+                    .attr("x",function(d,e){
+                        return xScale(e)+(w/dataset.length-barPadding)/2;
+                    })
+                    .attr("y",function(){
+                        return h-5;
+                    })
+                    .attr("font-family","sans-serif")
+                    .attr("font-size",function(){
+                        return w/dataset.length-barPadding-5;
+                    })
+                    .attr("text-anchor","middle")
+                    .attr("fill","white")
+                    .attr("stroke",function(d){
+                        return yScale(d) <= (w/dataset.length-barPadding-1) ? "black" : "white"
+                    });
+
+            d3.select("p#randomize")
+                    .on("click", function() {
+                        dataset = getRandom(dataset,h);
+
+                        update();
+                    });
+            d3.select("p#add")
+                    .on("click",function() {
+                        d3.select(this).text("I'm too lazy to program this right now..")
+                                .transition().delay(2000).text("...sorry.");
+
+                        var randomNum = Math.round(Math.random()*100);
+                        dataset.push(randomNum);
+
+                        console.log("new value:"+randomNum+" dataset:"+dataset);
+
+                        update();
+                    });
+            d3.select("p#delete")
+                    .on("click",function() {
+                        d3.select(this).text("I'm too lazy to program this right now..").transition().delay(2000).text("...not sorry. :^)");
+                    });
+
+
+            function update() {
+                xScale.domain(d3.range(dataset.length));
+                yScale.domain([0,d3.max(dataset,function(d){
+                    return d;
+                })]);
+
+                svg_plain_rects = svg_plain.selectAll("rect")
+                        .data(dataset);
+
+                svg_plain_rects.enter().append("rect")
+                        .attr("x",function(d,e){
+                            return xScale(e);
+                        })
+                        .attr("y",function(){
+                            return h;
+                        })
+                        .attr("width",function(d,e){
+                            return xScale.rangeBand();
+                        })
+                        .attr("height",function(){
+                            return 0;
+                        })
+                        .attr("fill",function(d){
+                            return "rgb("+(d+100)+","+(d+75)+","+(d+100)+")";
+                        });
+                svg_plain_rects.transition()
+                        .duration(100)
+                        .ease("linear")
+                        .each("start",function(d){
+                            d3.select(this)
+                                    .attr("fill","rgb("+(d+10)+","+(d+5)+","+(d+10)+")");
+                        })
+                        .attr("x",function(d,e){
+                            return xScale(e);
+                        })
+                        .attr("width",function(d,e){
+                            return xScale.rangeBand();
+                        })
+                        .transition()
+                        .delay(function(d,e){
+                            return 100+e/dataset.length*1000;
+                        })
+                        .duration(500)
+                        .ease("linear")
+                        .attr("y",function(d){
+                            return h-yScale(d);
+                        })
+                        .attr("height",function(d){
+                            return yScale(d);
+                        })
+                        .attr("fill",function(d){
+                            return "rgb("+(d+100)+","+(d+75)+","+(d+100)+")";
+                        });
+
+                svg_plain_txt = svg_plain.selectAll("text")
+                        .data(dataset);
+
+                svg_plain_txt.enter()
+                        .append("text")
+                        .transition()
+                        .delay(function(d,e){
+                            return 100+e/dataset.length*1000;
+                        })
+                        .duration(500)
+                        .ease("linear")
+                        .text(function(d){
+                            return d;
+                        })
+                        .attr("x",function(d,e){
+                            return xScale(e)+(w/dataset.length-barPadding)/2;
+                        })
+                        .attr("y",function(){
+                            return h-5;
+                        })
+                        .attr("font-family","sans-serif")
+                        .attr("font-size",function(){
+                            return w/dataset.length-barPadding-5;
+                        })
+                        .attr("text-anchor","middle")
+                        .attr("fill","white")
+                        .attr("stroke",function(d){
+                            return yScale(d) <= (w/dataset.length-barPadding-1) ? "black" : "white"
+                        });
+                svg_plain_txt.transition()
+                        .duration(100)
+                        .ease("linear")
+                        .attr("x",function(d,e){
+                            return xScale(e)+(w/dataset.length-barPadding)/2;
+                        })
+                        .attr("font-size",function(){
+                            return w/dataset.length-barPadding-5;
+                        })
+                        .transition()
+                        .delay(function(d,e){
+                            return 100+e/dataset.length*1000;
+                        })
+                        .duration(500)
+                        .ease("linear")
+                        .text(function(d){
+                            return d;
+                        })
+                        .attr("y",function(){
+                            return h-5;
+                        })
+                        .attr("font-family","sans-serif")
+                        .attr("font-size",function(){
+                            return w/dataset.length-barPadding-5;
+                        })
+                        .attr("text-anchor","middle")
+                        .attr("fill","white")
+                        .attr("stroke",function(d){
+                            return yScale(d) <= (w/dataset.length-barPadding-1) ? "black" : "white"
+                        });
+
+                svg_plain_rects.exit().remove();
+                svg_plain_txt.exit().remove();
+            }
+
+            /*var xScale = d3.scale.linear()
+                    .domain([0,d3.max(setset,function(d){return d[0];})])
+                    .range([circlePadding,w - circlePadding * 2]);
+            var yScale = d3.scale.linear()
+                    .domain([0,d3.max(setset,function(d){return d[1];})])
+                    .range([h - circlePadding,circlePadding]);
+            var rScale = d3.scale.linear()
+                    .domain([0,d3.max(setset,function(d){return d[1];})])
+                    .range([2,15]);
+            var xAxis = d3.svg.axis()
+                    .scale(xScale)
+                    .orient("bottom")
+                    .ticks(5);
+            var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left")
+                    .ticks(5);
+
+            var svg_scatter = d3.select("body")
+                    .append("svg")
+                    .attr("width",w)
+                    .attr("height",h);
+            svg_scatter.selectAll("circle")
+                    .data(setset)
+                    .enter()
+                    .append("circle")
+                    .attr("cx",function(d){return xScale(d[0]);})
+                    .attr("cy",function(d){return yScale(d[1]);})
+                    .attr("r",function(d){return rScale(d[1]);});
+            svg_scatter.selectAll("line")
+                    .data(setset)
+                    .enter()
+                    .append("line")
+                    .attr("x1",function(d){return xScale(d[0]);})
+                    .attr("y1",function(d){return yScale(d[1]);})
+                    .attr("x2",function(d){return xScale(d[0])+20;})
+                    .attr("y2",function(d){return yScale(d[1])-5;})
+                    .attr("stroke","blue");
+            svg_scatter.selectAll("text")
+                    .data(setset)
+                    .enter()
+                    .append("text")
+                    .text(function(d){return d[0]+","+d[1];})
+                    .attr("x",function(d){return xScale(d[0])+20;})
+                    .attr("y",function(d){return yScale(d[1]);})
+                    .attr("font-family","sans-serif")
+                    .attr("font-size","11px")
+                    .attr("fill","blue");
+
+            svg_scatter.append("g")
+                    .attr("class","axis")
+                    .attr("transform","translate(0,"+(h-circlePadding)+")")
+                    .call(xAxis);
+            svg_scatter.append("g")
+                    .attr("class","axis")
+                    .attr("transform","translate("+circlePadding+",0)")
+                    .call(yAxis);
+            */
+            /*var circles = svg.selectAll("circles")
+                    .data(dataset)
+                    .enter()
+                    .append("circle")
+                    .attr("fill",makeRandomColor());
+            circles.attr("cx", function(d,i) {
+                return (i*50)+25;
+            })
+                    .attr("cy",h/2)
+                    .attr("r",function(d){return d;});
+            */
+
+            function getRandom(array, max) {
+                bars = Math.round(Math.random()*100);
+                console.log("random! #bars: " +bars);
+                array = [];
+                if (max === undefined) {
+                    for (var i = 0; i < bars; i++) {
+                        array.push(Math.round(Math.random()*100));
+                    }
+                } else {
+                    for (var i = 0; i < bars; i++) {
+                        array.push(Math.round((Math.random()*100)%max));
+                    }
+                }
+
+                return array;
+            }
+
+            function bubbleSort(array) {
+                for (var i = 0; i < array.length; i++) {
+                    for (var j = 0; j < array.length-1; j++) {
+                        if (array[j] > array[j+1]) {
+                            var temp = array[j+1];
+                            array[j+1] = array[j];
+                            array[j] = temp;
+                        }
+                    }
+                }
+                return array;
+            }
+
+            function makeRandomColor() {
+                var r = Math.round((Math.random()*1000)+(Math.random()*100)+(Math.random()*10))%255;
+                var g = Math.round((Math.random()*1000)+(Math.random()*100)+(Math.random()*10))%255;
+                var b = Math.round((Math.random()*1000)+(Math.random()*100)+(Math.random()*10))%255;
+                console.log("r"+r+"g"+g+"b"+b);
+                return "#"+to2DigitHex(r)+to2DigitHex(g)+to2DigitHex(b);
+            }
+
+            function to2DigitHex(val) {
+                var firstDigit = Math.floor(val/16);
+                var secDigit = val - firstDigit*16;
+                console.log("1stDigit: " +firstDigit+ " | " +toHexDigit(firstDigit)+ " ; 2ndDigit: " +secDigit+ " | " +toHexDigit(secDigit));
+                return ""+(toHexDigit(firstDigit))+(toHexDigit(secDigit));
+            }
+
+            function toHexDigit(val) {
+                return (val <= 9 ? val :
+                                (val == 10 ? "a" :
+                                                (val == 11 ? "b" :
+                                                                (val == 12 ? "c" :
+                                                                                (val == 13 ? "d" :
+                                                                                                (val == 14 ? "e" :
+                                                                                                                (val == 15 ? "f" : "x")
+                                                                                                )
+                                                                                )
+                                                                )
+                                                )
+                                )
+                );
+            }
+        </script>
+    </body>
 </html>

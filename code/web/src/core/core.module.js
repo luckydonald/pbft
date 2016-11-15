@@ -4,5 +4,7 @@
 'use strict';
 
 angular.module('core', [
-    'core.node'
+    'core.node',
+    'core.d3Factory',
+    'core.d3Directive'
 ]);
