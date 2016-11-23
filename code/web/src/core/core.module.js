@@ -6,5 +6,6 @@
 angular.module('core', [
     'core.node',
     'core.d3Factory',
-    'core.d3Directive'
+    'core.d3Directive',
+    'core.recompile'
 ]);

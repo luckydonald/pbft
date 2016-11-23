@@ -16,8 +16,9 @@ function toggleBigSmall(element, otherElements) {
     if (classes.contains('reduced')) {
         return;
     }
-    var lel = getChildByClassName(element, 'node-main');
     if (classes.contains('upscaled')) {
+        var vl = getChildByClassName(element, 'value-graph');
+        vl.removeChild(vl.getElementsByTagName("value-graph")[0]);
         classes.remove('upscaled');
         classes.add('non-upscaled');
         for (var i = 0; i < otherElements.length; i++) {
@@ -31,6 +32,8 @@ function toggleBigSmall(element, otherElements) {
     } else {
         classes.add('upscaled');
         classes.remove('non-upscaled');
+        var vl = getChildByClassName(element, 'value-graph');
+        vl.appendChild(document.createElement("value-graph"));
         for (var i = 0; i < otherElements.length; i++) {
             otherClasses = otherElements[i].classList;
             if (otherClasses.contains('reduced')) {
@@ -96,16 +99,22 @@ function toggleDisplayForChildren(parent) {
 }
 
 function getChildByClassName(parent,className) {
-    children = parent.childNodes;
-    for (var i = 0; i < children.length; i++) {
+    var children = parent.childNodes;
+    var result = null;
+    for (var i = 0; i < children.length && result == null; i++) {
+        //console.log("element: " +children[i]);
         if (children[i].nodeType != 1) {
             continue;
         }
-        chClasses = children[i].classList;
+        var chClasses = children[i].classList;
+        //console.log(" > classes: " +chClasses+ " :: requested class name: " +className);
         if (chClasses.contains(className)) {
+            //console.log("found it!");
             return children[i];
+        } else {
+            //console.log("going deeper..");
+            result = getChildByClassName(children[i],className);
         }
     }
-    console.log('className not found, returning null..');
-    return null;
+    return result;
 }

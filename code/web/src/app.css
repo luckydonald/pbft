@@ -217,3 +217,7 @@ input {
   width: 100%;
   text-align: center;
 }
+
+.ng-isolate-scope {
+  width: 100%;
+}
