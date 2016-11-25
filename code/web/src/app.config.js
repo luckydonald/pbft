@@ -6,7 +6,7 @@
 angular.
     module('pbftGui').
     config(['$locationProvider', '$routeProvider', 
-        function($locationProvider, $routeProvider) {
+        function($locationProvider, $routeProvider, $routeParams) {
             $locationProvider.hashPrefix('!');
 
             $routeProvider.
@@ -15,6 +15,9 @@ angular.
                 }).
                 when('/failures', {
                     template: '<failure-table-view></failure-table-view>'
+                }).
+                when('/nodes/:nodeid', {
+                    template: function($routeParams) { return "<div>This is a detailed view of node " +$routeParams.nodeid+ "!</div><a href='#!/nodes'>Return</a>"; }
                 }).
                 otherwise({redirectTo: '/nodes'});
 }]);

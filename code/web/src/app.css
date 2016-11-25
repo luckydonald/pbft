@@ -87,6 +87,13 @@ input {
   -o-transition: width 0.3s ease-out, height 0.2s ease-out;
   transition: width 0.3s ease-out, height 0.2s ease-out;
 }
+
+#nodearea .node a,
+#nodearea .node a:visited {
+  color: black;
+  text-decoration: none;
+}
+
 #nodearea .node .node-main {
   border-color: transparent;
   border-radius: 0.5em;
