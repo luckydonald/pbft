@@ -1,3 +1,19 @@
-<div d3-directive></div>
-<!--[insert value graph here]
-<p ng-repeat="test in $ctrl.testValues">{{test}}</p>-->
+<div id="nodearea">
+    <div class="node upscaled {{( node.leader == true) ? 'leader' : ''}}">
+        <a href="#!/nodes">
+            <div class="node-main">
+                <h3 class="id-label">
+                    Node {{$ctrl.nodeid}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
+                </h3>
+                <div class="details">
+                    <div class="value-graph">
+                        <!--<div d3-directive></div>-->
+                        <value-graph-d3 data="[0.5,0.6,0.7,0.8]"></value-graph-d3>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <!--<button type="button" ng-click="$ctrl.decrement()">-</button>
+        <button type="button" ng-click="$ctrl.increment()">+</button>-->
+    </div>
+</div>

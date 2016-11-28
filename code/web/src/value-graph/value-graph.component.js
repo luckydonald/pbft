@@ -7,13 +7,21 @@ angular.
     module('valueGraph').
     component('valueGraph', {
         templateUrl: 'value-graph/value-graph.template.html',
+        bindings: {
+            nodeid: '='
+        },
         controller: ['$http', function ValueGraphController($http) {
-            // not implemented yet
-            this.testValues = [
-                'This is a test.',
-                'If it´s shown..',
-                'everything works fine!',
-                ':)_____)'
-                ]
+            /*function increment() {
+                this.id++;
+                console.log(this.id);
+            }
+            
+            function decrement() {
+                this.id--;
+                console.log(this.id);
+            }
+
+            this.increment = increment;
+            this.decrement = decrement;*/
         }]
     });

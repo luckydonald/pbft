@@ -17,7 +17,7 @@ angular.
                     template: '<failure-table-view></failure-table-view>'
                 }).
                 when('/nodes/:nodeid', {
-                    template: function($routeParams) { return "<div>This is a detailed view of node " +$routeParams.nodeid+ "!</div><a href='#!/nodes'>Return</a>"; }
+                    template: function($routeParams) { return "<value-graph nodeid='"+$routeParams.nodeid+"'></value-graph>"; } //<div>This is a detailed view of node " +$routeParams.nodeid+ "!</div><a href='#!/nodes'>Return</a>
                 }).
                 otherwise({redirectTo: '/nodes'});
 }]);
