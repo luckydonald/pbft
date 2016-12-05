@@ -57,6 +57,7 @@ input {
   height: 1.5em;
   position: fixed;
   bottom: 0;
+  background-color: #124;
 }
 .footer-fillin {
   width: 10%;
@@ -69,7 +70,7 @@ input {
   float: left;
   text-align: center;
   color: white;
-  border-top: 2px solid white;
+  border-top: 1px solid white;
 }
 #nodearea {
   margin: 0 auto 0 auto;
@@ -238,6 +239,27 @@ input {
   width: 100%;
   height: 100%;
   text-align: center;
+}
+
+#failure-table {
+  width: 100%;
+  height: 95vh;
+  margin: 5vh 0 0 0;
+  font-variant: small-caps;
+}
+
+#failure-table h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 50%;
+  height: 5vh;
+  border-bottom: 1px solid white;
+}
+
+#failure-table #timeline {
+  width: 80%;
+  height: 90vh;
+  margin: 0 auto;
 }
 
 .ng-isolate-scope {
