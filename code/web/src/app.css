@@ -59,12 +59,12 @@ input {
   bottom: 0;
   background-color: #124;
 }
-.footer-fillin {
+#footer .footer-fillin {
   width: 10%;
   height: 100%;
   float: left;
 }
-#footer-content {
+#footer #footer-content {
   width: 80%;
   height: 100%;
   float: left;
@@ -73,7 +73,7 @@ input {
   border-top: 1px solid white;
 }
 #nodearea {
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
   padding: 3% 10px;
@@ -90,7 +90,6 @@ input {
   display: inline-block;
   position: relative;
   opacity: 1;
-  /*float: left;*/
   text-align: center;
   margin-right: 1%;
   margin-left: 1%;
@@ -102,13 +101,11 @@ input {
   -o-transition: width 0.3s ease-out, height 0.2s ease-out;
   transition: width 0.3s ease-out, height 0.2s ease-out;
 }
-
 #nodearea .node a,
 #nodearea .node a:visited {
   color: black;
   text-decoration: none;
 }
-
 #nodearea .node .node-main {
   border-color: transparent;
   border-radius: 0.5em;
@@ -184,6 +181,11 @@ input {
 #nodearea .node.upscaled .details {
   display: block;
 }
+#nodearea .node.upscaled .details .value-graph {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
 #nodearea .node.leader .node-main {
   border-color: #c4e3f3;
 }
@@ -235,19 +237,12 @@ input {
   width: 0;
   height: 0;
 }
-.value-graph {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
 #failure-table {
   width: 100%;
   height: 95vh;
   margin: 5vh 0 0 0;
   font-variant: small-caps;
 }
-
 #failure-table h3 {
   margin-top: 0;
   margin-bottom: 0;
@@ -255,13 +250,8 @@ input {
   height: 5vh;
   border-bottom: 1px solid white;
 }
-
 #failure-table #timeline {
   width: 80%;
   height: 90vh;
   margin: 0 auto;
-}
-
-.ng-isolate-scope {
-  width: 100%;
 }
