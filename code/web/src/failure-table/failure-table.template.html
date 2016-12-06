@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div id="failure-table">
+    <h3>Timeline for Message Flow of Nodes <span ng-repeat="node in $ctrl.nodes">|{{node.id}}|</span></h3>
+    <button type="button" style="color: black;" ng-click="$ctrl.setupTimeline(null,true)">Scale ON</button>
+    <button type="button" style="color: black;" ng-click="$ctrl.setupTimeline(null,false)">Scale OFF</button>
+    <div id="timeline">
+        <!-- TIMELINE SLOT -->
+    </div>
+</div>
