@@ -75,17 +75,27 @@ angular.
                         .attr("x",x).attr("y",y)
                         .attr("width",function(){return nW;}).attr("height",function(){return nH;})
                         .attr("fill",nC);
-                    svg.append("text")
+
+                    var text = svg.append("text")
                         .text(function(){return "Node " +self.nodes[i].id;})
-                        .attr("x",x+(nW/2)).attr("y",(y+10))
+                        .attr("x",x+(nW/2-getTextWidth("Node" +self.nodes[i].id)/2)).attr("y",(y+nH/2))
                         .attr("fill","white")
-                        .attr("font-family","Verdana").attr("font-size","12px");
+                        .attr("font-family","Verdana");
                     svg.append("line")
                         .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
                         .attr("x2",(x+(nW/2))).attr("y2",svgHeight)
                         .attr("stroke",nC).attr("stroke-width",3).attr("stroke-linecap","round").attr("stroke-dasharray","1,10");
                 }
-                out("#!# SVG WIDTH " +(svgWidth)+ " :: WIDTH ALL NODES " +(nW*len)+ " :: WIDTH ALL GAPS " +(svgWidth-(nW*len))+ " :: WIDTH PER GAP " +((svgWidth-(nW*len))/(len+1)));
+            }
+
+            function getTextWidth(str) {
+                var temp = d3.select("body")
+                    .append("svg");
+                temp.append("text").text(str).attr("x",0).attr("y",20).attr("font-family","Verdana");
+                var tW = temp.node().getBBox().width;
+                temp.remove();
+
+                return tW;
             }
 
             function setupHelpMeasurements(svg,svgWidth,svgHeight) {
