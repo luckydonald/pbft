@@ -71,7 +71,6 @@ input {
 }
 
 #menubar {
-  height: 1.5em;
   width: 100%;
   padding-top: 2vh;
   background-color: lightgray;
@@ -82,7 +81,7 @@ input {
 
   a {
     background-color: @bg-color;
-    height: 100%;
+    height: 5vh;
     vertical-align: middle;
     border-width: 0 5px 0 5px;
     border-radius: 7px 7px 0 0;
@@ -109,7 +108,7 @@ input {
 #footer {
   width: 100%;
   display: block;
-  height: 1.5em;
+  height: 7vh;
   position: fixed;
   bottom: 0;
   background-color: @bg-color;
@@ -321,22 +320,23 @@ input {
 
 #failure-table {
   width: 100%;
-  height: 95vh;
   margin: 5vh 0 0 0;
   font-variant: small-caps;
 
   h3 {
-    margin: 0 auto;
+    margin: 0 auto 5px auto;
     text-align: center;
     width: 50%;
     height: 5vh;
+    min-height: 30px;
     border-bottom: 1px solid white;
   }
 
   #timeline {
     width: 80%;
-    height: 90vh;
+    height: 75vh;
     margin: 0 auto;
+    overflow: scroll;
   }
 }
 

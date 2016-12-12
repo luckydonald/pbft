@@ -26,11 +26,13 @@ angular.
 
             self.setupTimeline = (function(data, help) {
                 d3.select("div#timeline").select("*").remove();
+                data = self.nodes;      // please remove later :X
 
                 var svg = d3.select("div#timeline")
                     .append("svg")
                     .attr("width","100%").attr("height","100%");
 
+                var minW = data.length*80;
                 var tl = d3.select("div#timeline")[0][0];
                 var width = tl.offsetWidth;
                 var height = tl.offsetHeight;
@@ -39,21 +41,25 @@ angular.
                     width = tl.offsetWidth;
                     height = tl.offsetHeight;
                     svg.selectAll("*").remove();
-                    setupBackground(svg,width,height);
+                    setupBackground(svg,maxVal(minW,width),height);
                     if (help) {
-                        setupHelpMeasurements(svg,width,height);
+                        setupHelpMeasurements(svg,maxVal(minW,width),height);
                     }
-                    setupNodeElements(svg,width,height);
+                    setupNodeElements(svg,maxVal(minW,width),height,false);
+
+                    out("height: " +height);
                 });
-                setupBackground(svg,width,height);
+                setupBackground(svg,maxVal(minW,width),height);
                 if (help) {
-                    setupHelpMeasurements(svg,width,height);
+                    setupHelpMeasurements(svg,maxVal(minW,width),height);
                 }
-                setupNodeElements(svg,width,height);
+                setupNodeElements(svg,maxVal(minW,width),height,true);
+
+                out("height: " +height);
             });
 
             self.setupTimeline(null,false);
-            
+
             function setupBackground(svg,svgWidth,svgHeight) {
                 svg.append("rect")
                     .attr("x",0).attr("y",0)
@@ -61,7 +67,7 @@ angular.
                     .attr("fill","white");
             }
 
-            function setupNodeElements(svg, svgWidth, svgHeight) {
+            function setupNodeElements(svg, svgWidth, svgHeight, isAnim) {      //isAnim selects if node entry should be animated or not
                 var len = self.nodes.length;
                 var nW = svgWidth/(len*len); // node width
                 var nH = 50; // node height
@@ -71,20 +77,64 @@ angular.
                 var y = svgHeight*0.1;
                 for (var i = 0; i < len; i++) {
                     var x = i*nW+(i+1)*gap;
-                    svg.append("rect")
-                        .attr("x",x).attr("y",y)
-                        .attr("width",function(){return nW;}).attr("height",function(){return nH;})
-                        .attr("fill",nC);
+                    if (isAnim) {
+                        svg.append("rect")
+                            .attr("x",x).attr("y",y)
+                            .attr("width",0).attr("height",nH)
+                            .attr("fill",nC)
+                            .transition().duration(1000)
+                            .attr("width",function(){return nW;});
 
-                    var text = svg.append("text")
-                        .text(function(){return "Node " +self.nodes[i].id;})
-                        .attr("x",x+(nW/2-getTextWidth("Node" +self.nodes[i].id)/2)).attr("y",(y+nH/2))
-                        .attr("fill","white")
-                        .attr("font-family","Verdana");
-                    svg.append("line")
-                        .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
-                        .attr("x2",(x+(nW/2))).attr("y2",svgHeight)
-                        .attr("stroke",nC).attr("stroke-width",3).attr("stroke-linecap","round").attr("stroke-dasharray","1,10");
+                        var txtW = getTextWidth("Node " +self.nodes[i].id);
+                        if (nW > txtW) {
+                            var text = svg.append("text")
+                                .text(function(){return "Node " +self.nodes[i].id;})
+                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
+                                .attr("fill","white")
+                                .attr("font-family","Verdana");
+                        } else {
+                            var text = svg.append("text")
+                                .text("")
+                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y-svgHeight*0.01))
+                                .attr("fill","black")
+                                .attr("font-family","Verdana")
+                                .transition().delay(500).duration(500)
+                                .text(function(){return "Node " +self.nodes[i].id;});
+                        }
+                        svg.append("line")
+                            .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
+                            .attr("x2",(x+(nW/2))).attr("y2",y+(nH/2))
+                            .attr("stroke",nC).attr("stroke-width",0).attr("stroke-linecap","round").attr("stroke-dasharray","1,10")
+                            .transition().delay(1000).duration(500)
+                            .attr("y2",svgHeight)
+                            .attr("stroke-width",3);
+                    } else {
+                        svg.append("rect")
+                            .attr("x",x).attr("y",y)
+                            .attr("width",function(){return nW;}).attr("height",nH)
+                            .attr("fill",nC);
+
+                        var txtW = getTextWidth("Node " +self.nodes[i].id);
+                        if (nW > txtW) {
+                            var text = svg.append("text")
+                                .text(function(){return "Node " +self.nodes[i].id;})
+                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
+                                .attr("fill","white")
+                                .attr("font-family","Verdana");
+                        } else {
+                            var text = svg.append("text")
+                                .text(function(){return "Node " +self.nodes[i].id;})
+                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y-svgHeight*0.01))
+                                .attr("fill","black")
+                                .attr("font-family","Verdana");
+                        }
+                        svg.append("line")
+                            .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
+                            .attr("x2",(x+(nW/2))).attr("y2",svgHeight)
+                            .attr("stroke",nC).attr("stroke-width",3).attr("stroke-linecap","round").attr("stroke-dasharray","1,10")
+                            .transition().delay(1000).duration(500);
+                    }
+
                 }
             }
 
@@ -170,6 +220,10 @@ angular.
                         .attr("x2",(i*x)+(i*nW+(i+1)*gap)).attr("y2",(svgHeight*0.4))
                         .attr("stroke","orange").attr("stroke-width",1);
                 }*/
+            }
+
+            function maxVal(n1,n2) {
+                return n1 <= n2 ? n2 : n1;
             }
 
             function out(str) {
