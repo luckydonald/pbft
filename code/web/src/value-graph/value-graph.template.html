@@ -1,2 +1,18 @@
-[insert value graph here]
-<p ng-repeat="test in $ctrl.testValues">{{test}}</p>
+<div id="nodearea">
+    <div class="node upscaled {{( node.leader == true) ? 'leader' : ''}}">
+        <a href="#!/nodes">
+            <div class="node-main">
+                <h3 class="id-label">
+                    Node {{$ctrl.nodeid}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
+                </h3>
+                <div class="details">
+                    <div class="value-graph">
+                        <!-- VALUE GRAPH SLOT -->
+                    </div>
+                </div>
+            </div>
+        </a>
+        <!--<button type="button" ng-click="$ctrl.decrement()">-</button>
+        <button type="button" ng-click="$ctrl.increment()">+</button>-->
+    </div>
+</div>

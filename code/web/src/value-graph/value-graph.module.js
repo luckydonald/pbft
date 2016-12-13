@@ -3,4 +3,7 @@
  */
 'use strict';
 
-angular.module('valueGraph',[]);
+angular.module('valueGraph',[
+    'core.d3Factory',
+    'nodeList'
+]);

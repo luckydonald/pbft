@@ -32,8 +32,6 @@
   <script src="core/node/node.service.js"></script>
   <script src="core/d3/d3.factory.module.js"></script>
   <script src="core/d3/d3.factory.js"></script>
-  <script src="core/d3/d3.directive.module.js"></script>
-  <script src="core/d3/d3.directive.js"></script>
   <script src="node-list/node-list.module.js"></script>
   <script src="node-list/node-list.component.js"></script>
   <script src="value-graph/value-graph.module.js"></script>
@@ -63,7 +61,15 @@
       -->
     </div>
     <div id="footer">
-      (c) by us, duh. Version: <span app-version>&lt;Unknown&gt;</span>
+      <div class="footer-fillin">
+        <!-- just for spacing -->
+      </div>
+      <div id="footer-content">
+        (c) by us, duh. Version: <span app-version>&lt;Unknown&gt;</span>
+      </div>
+      <div class="footer-fillin">
+        <!-- just for spacing -->
+      </div>
     </div>
   </div>
 </body>

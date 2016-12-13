@@ -14,13 +14,12 @@ input {
 }
 #container {
   width: 100%;
-  height: 98vh;
+  height: 100vh;
   margin: 0 auto 0 auto;
   border: 0 solid transparent;
   background-color: #124;
 }
 #menubar {
-  height: 1.5em;
   width: 100%;
   padding-top: 2vh;
   background-color: lightgray;
@@ -31,7 +30,7 @@ input {
 }
 #menubar a {
   background-color: #124;
-  height: 100%;
+  height: 5vh;
   vertical-align: middle;
   border-width: 0 5px 0 5px;
   border-radius: 7px 7px 0 0;
@@ -53,13 +52,27 @@ input {
 }
 #footer {
   width: 100%;
-  display: inline-table;
-  height: 1.2em;
+  display: block;
+  height: 7vh;
+  position: fixed;
+  bottom: 0;
+  background-color: #124;
+}
+#footer .footer-fillin {
+  width: 10%;
+  height: 100%;
+  float: left;
+}
+#footer #footer-content {
+  width: 80%;
+  height: 100%;
+  float: left;
   text-align: center;
-  background-color: gold;
+  color: white;
+  border-top: 1px solid white;
 }
 #nodearea {
-  float: left;
+  margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
   padding: 3% 10px;
@@ -73,12 +86,12 @@ input {
 }
 #nodearea .node {
   flex: 1 0 auto;
-  display: block;
+  display: inline-block;
   position: relative;
   opacity: 1;
-  float: left;
   text-align: center;
-  margin-right: 2%;
+  margin-right: 1%;
+  margin-left: 1%;
   margin-bottom: 2.1em;
   box-sizing: border-box;
   color: black;
@@ -86,6 +99,11 @@ input {
   -moz-transition: width 0.3s ease-out, height 0.2s ease-out;
   -o-transition: width 0.3s ease-out, height 0.2s ease-out;
   transition: width 0.3s ease-out, height 0.2s ease-out;
+}
+#nodearea .node a,
+#nodearea .node a:visited {
+  color: black;
+  text-decoration: none;
 }
 #nodearea .node .node-main {
   border-color: transparent;
@@ -162,6 +180,11 @@ input {
 #nodearea .node.upscaled .details {
   display: block;
 }
+#nodearea .node.upscaled .details .value-graph {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
 #nodearea .node.leader .node-main {
   border-color: #c4e3f3;
 }
@@ -213,7 +236,22 @@ input {
   width: 0;
   height: 0;
 }
-.value-graph {
+#failure-table {
   width: 100%;
+  margin: 5vh 0 0 0;
+  font-variant: small-caps;
+}
+#failure-table h3 {
+  margin: 0 auto 5px auto;
   text-align: center;
+  width: 50%;
+  height: 5vh;
+  min-height: 30px;
+  border-bottom: 1px solid white;
+}
+#failure-table #timeline {
+  width: 80%;
+  height: 75vh;
+  margin: 0 auto;
+  overflow: scroll;
 }
