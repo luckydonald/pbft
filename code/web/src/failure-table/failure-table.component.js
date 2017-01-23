@@ -7,8 +7,20 @@ angular.
     module('failureTable').
     component('failureTable', {
         templateUrl: 'failure-table/failure-table.template.html',
-        controller: ['$http', function FailureTableController($http) {
+        controller: ['$http','$compile','$scope', function FailureTableController($http,$compile,$scope) {
             var self = this;
+            var svg = null;
+            var svgWidth = 0;
+            var svgHeight = 0;
+            var nW = 0;              // node width, will be set in method setupNodeElements
+            var nH = 50;              // node height
+            var nC = "red";              // node color
+            var gap = 0;             // gap between nodes, will be set in method setupNodeElements
+            var tlPositions = [];
+            var yProgress = 0;
+            var arrowOffset = 18;   // offset for drawing arrowheads of lines correctly
+            var eHeight = 0;        // height that gets occupied by all elements contained in the svg
+            var logInfoStore = [];
 
             self.nodes = [{
                 "id": "1"    
@@ -24,118 +36,359 @@ angular.
                 "id": "6"
             }*/];
 
+            var tlData = null;
+
+            //$http.get('test_timeline.json').then(function(response) {
+            $http.get('test_timeline.json').success(function(response){
+                tlData = response;
+                var str = "### TL DATA :: ";
+                for (var i = 0; i < tlData.length; i++) {
+                    str = str+ "(" +i+ ")->[TYPE:"+tlData[i].type+"][DATA:";
+                    for (var j = 0; j < tlData[i].data.length; j++) {
+                        str = str+ "{node:" +tlData[i].data[j].node+ ";origin:" +tlData[i].data[j].origin+ ";value:" +tlData[i].data[j].value+ "}";
+                    }
+                    str = str+ "] "
+                }
+                out(str);
+
+                self.setupTimeline(null,false);
+            });
+
             self.setupTimeline = (function(data, help) {
                 d3.select("div#timeline").select("*").remove();
                 data = self.nodes;      // please remove later :X
-
-                var svg = d3.select("div#timeline")
+                svg = d3.select("div#timeline")
                     .append("svg")
-                    .attr("width","100%").attr("height","100%");
+                    .attr("width","100%").attr("height","400px");
+
+                setupSvgDefs(svg);
 
                 var minW = data.length*80;
                 var tl = d3.select("div#timeline")[0][0];
                 var width = tl.offsetWidth;
-                var height = tl.offsetHeight;
+                svgWidth = maxVal(minW,width);
+                svgHeight = tl.offsetHeight;
 
                 window.onresize = (function() {
+                    var oldWidth = svgWidth;
                     width = tl.offsetWidth;
-                    height = tl.offsetHeight;
-                    svg.selectAll("*").remove();
-                    setupBackground(svg,maxVal(minW,width),height);
-                    if (help) {
-                        setupHelpMeasurements(svg,maxVal(minW,width),height);
-                    }
-                    setupNodeElements(svg,maxVal(minW,width),height,false);
-
-                    out("height: " +height);
+                    svgWidth = maxVal(minW,width);
+                    repositionSvgContent(oldWidth,svgWidth);
+                    svgHeight = tl.offsetHeight;
                 });
-                setupBackground(svg,maxVal(minW,width),height);
+                setupBackground(parseInt(svg.attr("height"),10));
                 if (help) {
-                    setupHelpMeasurements(svg,maxVal(minW,width),height);
+                    setupHelpMeasurements(svgHeight);
                 }
-                setupNodeElements(svg,maxVal(minW,width),height,true);
-
-                out("height: " +height);
+                setupNodeElements(svgHeight);
+                handleTimelineInput(tlData);
             });
 
-            self.setupTimeline(null,false);
-
-            function setupBackground(svg,svgWidth,svgHeight) {
-                svg.append("rect")
-                    .attr("x",0).attr("y",0)
-                    .attr("width",function(){return svgWidth;}).attr("height",function(){return svgHeight;})
-                    .attr("fill","white");
+            // removes everything except the defs and arrows ^-^
+            function clearSvg() {
+                svg.selectAll("rect").remove();
+                svg.selectAll("text").remove();
+                svg.selectAll("circle").remove();
+                svg.selectAll("line").remove();
+                svg.selectAll("path:not(.norem)").remove();
             }
 
-            function setupNodeElements(svg, svgWidth, svgHeight, isAnim) {      //isAnim selects if node entry should be animated or not
+            function setupSvgDefs() {
+                // I know that the following is extremely bad code, but
+                // as of now it's not possible to reference the fill color
+                // of the element from within the marker declaration
+
+                var defs = svg.append("defs");
+                defs.append("marker")
+                    .attr("id","initArrow")
+                    .attr("markerWidth",7)
+                    .attr("markerHeight",7)
+                    .attr("refX",0)
+                    .attr("refY",2)
+                    .attr("orient","auto")
+                    .attr("markerUnits","strokeWidth")
+                    .append("path")
+                    .attr("class","norem")
+                    .attr("d","M0,0 L0,4 L4,2 z")
+                    .attr("fill","blue");
+                defs.append("marker")
+                    .attr("id","proposeArrow")
+                    .attr("markerWidth",7)
+                    .attr("markerHeight",7)
+                    .attr("refX",0)
+                    .attr("refY",2)
+                    .attr("orient","auto")
+                    .attr("markerUnits","strokeWidth")
+                    .append("path")
+                    .attr("class","norem")
+                    .attr("d","M0,0 L0,4 L4,2 z")
+                    .attr("fill","lime");
+                defs.append("marker")
+                    .attr("id","prevoteArrow")
+                    .attr("markerWidth",7)
+                    .attr("markerHeight",7)
+                    .attr("refX",0)
+                    .attr("refY",2)
+                    .attr("orient","auto")
+                    .attr("markerUnits","strokeWidth")
+                    .append("path")
+                    .attr("class","norem")
+                    .attr("d","M0,0 L0,4 L4,2 z")
+                    .attr("fill","green");
+                defs.append("marker")
+                    .attr("id","voteArrow")
+                    .attr("markerWidth",7)
+                    .attr("markerHeight",7)
+                    .attr("refX",0)
+                    .attr("refY",2)
+                    .attr("orient","auto")
+                    .attr("markerUnits","strokeWidth")
+                    .append("path")
+                    .attr("class","norem")
+                    .attr("d","M0,0 L0,4 L4,2 z")
+                    .attr("fill","darkgreen");
+            }
+
+            function setupBackground(svgHeight) {
+                out("### SVG HEIGHT FOR BG: " +svgHeight);
+                var selection = svg.select("rect.svgBg");
+                if (selection[0][0] != undefined && selection[0][0] != null) {
+                    //selection[0][0].height.baseVal.value = Math.floor(svgHeight);
+                    selection[0][0].height.baseVal.newValueSpecifiedUnits(1,svgHeight);
+                } else {
+                    svg.append("rect")
+                        .attr("class","svgBg")
+                        .attr("x",0).attr("y",0)
+                        .attr("width",svgWidth).attr("height",svgHeight)
+                        .attr("fill","white");
+                }
+            }
+
+            function setupNodeElements(svgHeight) {      //isAnim selects if node entry should be animated or not
                 var len = self.nodes.length;
-                var nW = svgWidth/(len*len); // node width
-                var nH = 50; // node height
-                var nC = "red"; // node color
-                var gap = (svgWidth-(nW*len))/(len+1);  // one gap := (<width of svg> - <width of all nodes combined>) / (<number of gaps present in the svg>)
+                nW = svgWidth/(len*len); // node width
+                gap = (svgWidth-(nW*len))/(len+1);  // one gap := (<width of svg> - <width of all nodes combined>) / (<number of gaps present in the svg>)
                                                         // NOTE: every node has one gap to it's left and right
                 var y = svgHeight*0.1;
                 for (var i = 0; i < len; i++) {
                     var x = i*nW+(i+1)*gap;
-                    if (isAnim) {
-                        svg.append("rect")
-                            .attr("x",x).attr("y",y)
-                            .attr("width",0).attr("height",nH)
-                            .attr("fill",nC)
-                            .transition().duration(1000)
-                            .attr("width",function(){return nW;});
+                    svg.append("rect")
+                        .attr("x",x).attr("y",y)
+                        .attr("width",nW).attr("height",nH)
+                        .attr("fill",nC);
 
-                        var txtW = getTextWidth("Node " +self.nodes[i].id);
-                        if (nW > txtW) {
-                            var text = svg.append("text")
-                                .text(function(){return "Node " +self.nodes[i].id;})
-                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
-                                .attr("fill","white")
-                                .attr("font-family","Verdana");
-                        } else {
-                            var text = svg.append("text")
-                                .text("")
-                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y-svgHeight*0.01))
-                                .attr("fill","black")
-                                .attr("font-family","Verdana")
-                                .transition().delay(500).duration(500)
-                                .text(function(){return "Node " +self.nodes[i].id;});
-                        }
-                        svg.append("line")
-                            .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
-                            .attr("x2",(x+(nW/2))).attr("y2",y+(nH/2))
-                            .attr("stroke",nC).attr("stroke-width",0).attr("stroke-linecap","round").attr("stroke-dasharray","1,10")
-                            .transition().delay(1000).duration(500)
-                            .attr("y2",svgHeight)
-                            .attr("stroke-width",3);
+                    var txtW = getTextWidth("Node " +self.nodes[i].id);
+                    if (nW > txtW+10) {
+                        var text = svg.append("text")
+                            .text("Node " +self.nodes[i].id)
+                            .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
+                            .attr("fill","white")
+                            .attr("font-family","Verdana");
                     } else {
-                        svg.append("rect")
-                            .attr("x",x).attr("y",y)
-                            .attr("width",function(){return nW;}).attr("height",nH)
-                            .attr("fill",nC);
-
-                        var txtW = getTextWidth("Node " +self.nodes[i].id);
-                        if (nW > txtW) {
-                            var text = svg.append("text")
-                                .text(function(){return "Node " +self.nodes[i].id;})
-                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
-                                .attr("fill","white")
-                                .attr("font-family","Verdana");
-                        } else {
-                            var text = svg.append("text")
-                                .text(function(){return "Node " +self.nodes[i].id;})
-                                .attr("x",x+(nW/2-txtW/2)).attr("y",(y-svgHeight*0.01))
-                                .attr("fill","black")
-                                .attr("font-family","Verdana");
-                        }
-                        svg.append("line")
-                            .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
-                            .attr("x2",(x+(nW/2))).attr("y2",svgHeight)
-                            .attr("stroke",nC).attr("stroke-width",3).attr("stroke-linecap","round").attr("stroke-dasharray","1,10")
-                            .transition().delay(1000).duration(500);
+                        txtW = getTextWidth(self.nodes[i].id);
+                        var text = svg.append("text")
+                            .text(self.nodes[i].id)
+                            .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
+                            .attr("fill","white")
+                            .attr("font-family","Verdana");
                     }
 
+                    tlPositions[self.nodes[i].id] = x+(nW/2);
+                    yProgress = y+nH+30;
+
+                    drawNodeLine(x,y);
                 }
+
+                eHeight = nH + y;
+            }
+
+            function drawNodeLine(x,y) {
+                svg.append("line")
+                    .attr("class","nodeLine")
+                    .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
+                    .attr("x2",(x+(nW/2))).attr("y2",svg.attr("height"))
+                    .attr("stroke",nC).attr("stroke-width",3).attr("stroke-linecap","round").attr("stroke-dasharray","1,10");
+            }
+
+            function handleTimelineInput(data) {
+                var color = null;
+                var arrow = null;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].type === "init") {
+                        color = "blue";
+                        arrow = "initArrow";
+                    } else if (data[i].type === "propose") {
+                        color = "lime";
+                        arrow = "proposeArrow";
+                    } else if (data[i].type === "prevote") {
+                        color = "green";
+                        arrow = "prevoteArrow";
+                    } else if (data[i].type === "vote") {
+                        color = "darkgreen";
+                        arrow = "voteArrow";
+                    } else {
+                        out("Well, that was unexpected. (BAD TYPE)")
+                        return;
+                    }
+
+                    var lineData = data[i].data;
+                    var circleLog = [];
+                    var yHeight = 0;
+                    for (var j = 0; j < lineData.length; j++) {
+                        if (circleLog[lineData[j].origin] == null || circleLog[lineData[j].origin] == 1) {
+                            svg.append("circle")
+                                .classed("startp","true")
+                                .attr("cx",tlPositions[lineData[j].origin])
+                                .attr("cy",yProgress)
+                                .attr("r",7)
+                                .attr("fill",color)
+                                .attr("ng-click","$ctrl.showLogInfo("+logInfoStore.length+")");
+                            circleLog[lineData[j].origin] = (circleLog[lineData[j].origin] == null ? 0 : 2);
+                            // maybe add else[...} to update log entry with every "double" circle?
+                            logInfoStore.push({id:""+logInfoStore.length,timestamp:""+lineData[j].timestamp,log:""+lineData[j].log});
+                        }
+                        if (circleLog[lineData[j].node] == null || circleLog[lineData[j].node] == 0) {
+                            svg.append("circle")
+                                .classed("endp","true")
+                                .attr("cx",tlPositions[lineData[j].node])
+                                .attr("cy",yProgress+100)
+                                .attr("r",7)
+                                .attr("fill",color)
+                                .attr("ng-click","$ctrl.showLogInfo("+logInfoStore.length+")");
+                            circleLog[lineData[j].node] = (circleLog[lineData[j].node] == null ? 1 : 2);
+                            // maybe add else[...} to update log entry with every "double" circle?
+                            logInfoStore.push({id:""+logInfoStore.length,timestamp:""+lineData[j].timestamp,log:""+lineData[j].log});
+                        }
+
+                        var x1 = tlPositions[lineData[j].origin];
+                        var x2 = tlPositions[lineData[j].node];
+                        // +18 when line will go from right to left, -18 otherwise
+                        var actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
+                        var y2 = calculateYCoordinate(
+                            {"x":x1,"y":yProgress}, // starting point of line
+                            {"x":x2,"y":yProgress+100}, // ending point of line
+                            actualX2  // x value to determine corresponding y
+                        );
+                        svg.append("line")
+                            .attr("x1",x1).attr("y1",yProgress)
+                            .attr("x2",actualX2)
+                            .attr("y2",y2)
+                            .attr("stroke",color).attr("stroke-width",3)
+                            .attr("marker-end",("url(#"+arrow+")"));
+
+                        yHeight = y2 - yProgress;
+                    }
+
+                    eHeight = eHeight + (yProgress-eHeight) + 28 + yHeight + 50;             // eHeight + (margin from last phase or nodes) + (span of two circles) + (y height of the lines) + (additional margin)
+
+                    if(eHeight > parseInt(svg.attr("height"),10)) {
+                        svg.attr("height",(eHeight+"px"));
+                        setupBackground(eHeight);
+                        var content = svg.selectAll("line.nodeLine");
+                        for (var k = 0; k < self.nodes.length; k++) {
+                            var line = content[0][k];
+                            line.y2.baseVal.value = eHeight;
+                        }
+                    }
+
+                    yProgress = yProgress+150;
+                    circleLog = [];
+                    var circles = svg.selectAll("circle");
+                    for (var j = 0; j < circles[0].length; j++) {
+                        $compile(circles[0][j])($scope);
+                    }
+                }
+            }
+
+            function repositionSvgContent(oldWidth,newWidth) {
+                if (oldWidth != newWidth) {
+                    var perc = (newWidth/(oldWidth/100))/100; //percentage where 1.0 equals 100%, how many % is newWidth to oldWidth
+                    gap = gap*perc;
+                    var content = svg.selectAll("rect:not(.svgBg)");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var rect = content[0][i];
+                        rect.x.baseVal.value = rect.x.baseVal.value * perc;
+                        rect.width.baseVal.value = rect.width.baseVal.value * perc;
+                        nW = rect.width.baseVal.value;
+                    }
+                    content = svg.selectAll("rect.svgBg");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var bg = content[0][i];
+                        bg.width.baseVal.value = bg.width.baseVal.value * perc;
+                    }
+                    var endps = svg.selectAll("circle.endp");     // end point circles before position shifting
+                    var beforeShift = [];
+                    for (var i = 0; i < endps[0].length; i++) {
+                        beforeShift[i] = endps[0][i].cx.baseVal.value;
+                    }
+                    content = svg.selectAll("circle");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var circle = content[0][i];
+                        circle.cx.baseVal.value = circle.cx.baseVal.value * perc;
+                    }
+                    endps = svg.selectAll("circle.endp");
+                    content = svg.selectAll("line.nodeLine");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var line = content[0][i];
+                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
+                        line.x2.baseVal.value = line.x2.baseVal.value * perc;
+                    }
+                    content = svg.selectAll("line:not(.nodeLine)");
+                    var endpCX = beforeShift[0];    // temp for checking if current line has same end point as previous line
+                    var j = 0;
+                    for (var i = 0; i < content[0].length; i++) {
+                        out("endps[0].length:"+endps[0].length);
+                        var line = content[0][i];
+                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
+                        out("i:"+i+"; j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; endpCX-arrowOffset:"+(endpCX-arrowOffset)+"; endpCX+arrowOffset:"+(endpCX+arrowOffset));
+                        if (!(line.x2.baseVal.value == endpCX-arrowOffset) && !(line.x2.baseVal.value == endpCX+arrowOffset)) {
+                            out("J++!");
+                            j++;
+                            endpCX = beforeShift[j];
+                        }
+                        if (line.x2.baseVal.value == endpCX-arrowOffset) {  // line goes from left to right
+                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value-arrowOffset;
+                        } else {                                            //line goes from right to left
+                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value+arrowOffset;
+                        }
+                        out("   |_> j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; beforeShift[j]:"+beforeShift[j]+"; endps[0][j].cx.baseVal.value:"+endps[0][j].cx.baseVal.value);
+                    }
+                    content = svg.selectAll("text");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var text = content[0][i];
+                        //var x = i*nW+(i+1)*gap;
+                        //x+(nW/2-txtW/2)
+                        if (getTextWidth((text.innerHTML.length > 1 ? text.innerHTML : "Node "+text.innerHTML))+10 >= nW) {
+                            text.innerHTML = delFromString(text.innerHTML,"Node ");
+                        } else {
+                            text.innerHTML = (text.innerHTML.length > 1 ? text.innerHTML : "Node "+text.innerHTML);
+                        }
+                        var x = i*nW+(i+1)*gap;
+                        text.x.baseVal[0].value = x+(nW/2-getTextWidth(text.innerHTML)/2);
+                    }
+                }
+            }
+            
+            self.showLogInfo = (function(id) {
+                var element = null;
+                for (var i = 0; i < logInfoStore.length; i++) {
+                    if (logInfoStore[i].id === ""+id) {
+                        element = logInfoStore[i];
+                        break;
+                    }
+                }
+                if (element = null) {
+                    return;
+                }
+                alert("TIMESTAMP:"+element.timestamp+"; LOG:"+element.log);
+            });
+
+            function hideLogInfo(infoClass) {
+
+            }
+
+            function drawOpenedLogInfos() {
+
             }
 
             function getTextWidth(str) {
@@ -148,7 +401,7 @@ angular.
                 return tW;
             }
 
-            function setupHelpMeasurements(svg,svgWidth,svgHeight) {
+            function setupHelpMeasurements(svgHeight) {
                 // setup vertical line at svg middle
                 svg.append("line")
                     .attr("x1",(svgWidth/2)).attr("y1",0)
@@ -222,8 +475,46 @@ angular.
                 }*/
             }
 
+            function calculateYCoordinate(startP,endP,x) {
+                // y = m*x+b
+                var m = (endP.y-startP.y)/(endP.x-startP.x);
+                var b = startP.y - m*startP.x;
+                return (m*x+b);
+            }
+
             function maxVal(n1,n2) {
                 return n1 <= n2 ? n2 : n1;
+            }
+
+            function delFromString(str,substr) {
+                var res = "";
+                for (var i = 0; i < str.length; i++) {
+                    if (str[i] == substr[0]) {
+                        var k = i+1;
+                        for (var j = 1; j < substr.length; j++) {
+                            if (str[k] == substr[j]) {
+                                if (j == substr.length-1) {
+                                    i = k;
+                                    break;
+                                }
+                                k++;
+                            } else {
+                                break;
+                            }
+                        }
+                    } else {
+                        res = res+str[i];
+                    }
+                }
+                return res;
+            }
+
+            function printArray(array) {
+                var str = "";
+                for (var i = 0; i < array.length; i++) {
+                    str = str +array[i]+ " "
+                }
+                return str;
             }
 
             function out(str) {

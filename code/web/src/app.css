@@ -53,7 +53,7 @@ input {
 #footer {
   width: 100%;
   display: block;
-  height: 7vh;
+  height: 5vh;
   position: fixed;
   bottom: 0;
   background-color: #124;
@@ -245,13 +245,21 @@ input {
   margin: 0 auto 5px auto;
   text-align: center;
   width: 50%;
-  height: 5vh;
+  /*height: 5vh;*/
   min-height: 30px;
   border-bottom: 1px solid white;
 }
 #failure-table #timeline {
+  position: relative;
   width: 80%;
-  height: 75vh;
+  height: 70vh;
   margin: 0 auto;
-  overflow: scroll;
+  vertical-align: top;
+  overflow-y: scroll;
+}
+#failure-table #timeline .svg-content {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
