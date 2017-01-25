@@ -6,8 +6,37 @@
                     Node {{$ctrl.nodeid}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
                 </h3>
                 <div class="details">
-                    <div class="value-graph">
+                    <div id="value-graph-container" class="value-graph">
                         <!-- VALUE GRAPH SLOT -->
+                        <!--
+                        <script>
+                            $(function () {
+                                var myChart = Highcharts.chart('container', {
+                                    chart: {
+                                        type: 'bar'
+                                    },
+                                    title: {
+                                        text: 'Fruit Consumption'
+                                    },
+                                    xAxis: {
+                                        categories: ['Apples', 'Bananas', 'Oranges']
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: 'Fruit eaten'
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Jane',
+                                        data: [1, 0, 4]
+                                    }, {
+                                        name: 'John',
+                                        data: [5, 7, 3]
+                                    }]
+                                });
+                            });
+                        </script>
+                        -->
                     </div>
                 </div>
             </div>

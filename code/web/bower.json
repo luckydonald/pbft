@@ -15,7 +15,8 @@
     "html5-boilerplate": "^5.3.0",
     "bootstrap": "3.3.x",
     "jquery": "2.2.x",
-    "d3": "~3.4"
+    "d3": "~3.4",
+    "highcharts": "5.0.7"
   },
   "resolutions": {
     "angular": "~1.5.0"

@@ -11,27 +11,111 @@ angular.
             nodeid: '='
         },
         controller: ['$http', function ValueGraphController($http) {
-            var nodeData = null;
             var self = this;
-
-            $http.get('node-values.json').then(function (response) {
-                nodeData = response.data;
-                var str = "### DATA :: ";
-                for (var i = 0; i < nodeData[self.nodeid].length; i++) {
-                    str = str+ "(" +i+ ")->" +nodeData[self.nodeid][i].value+ " ";
+            self.nodeData = {};
+            var myChart = null;
+            var url = "http://192.168.99.100";
+            if (self.nodeid == 'summary') {
+                url = url+"/get_data/?limit=40";
+            } else {
+                url = url+"/get_data/?limit=10&node="+self.nodeid;
+            }
+            
+            $http.get(url).then(function (json) {
+                /*var str = "### DATA :: ";
+                for (var i = 0; i < nodeData.length; i++) {
+                    str = str+ "(" +i+ ")->" +nodeData[i]+ " ";
                 }
-                out(str);
-                constructVG(nodeData[self.nodeid]);
-            }, function(response) {
+                out(str);*/
+
+                for (var node in json.data) {
+                    if (json.data.hasOwnProperty(node)) {
+                        self.nodeData[node] = [];
+                        for (var timestamp in json.data[node]) {
+                            if (json.data[node].hasOwnProperty(timestamp)) {
+                                var value=json.data[node][timestamp];
+                                self.nodeData[node][self.nodeData[node].length] = {timestamp:timestamp,value:value};
+                            }
+                        }
+                    }
+                }
+                /*
+                for (var node in json.data) {
+                    if (json.data.hasOwnProperty(node)) {
+                        for (var timestamp in json.data[node]) {
+                            if (json.data[node].hasOwnProperty(timestamp)) {
+                                var value=json.data[node][timestamp];
+                                self.nodeData.push({id:node,timestamp:timestamp,value:value});
+                            }
+                        }
+                    }
+                }*/
+
+                if (myChart == null) {
+                    constructVG(self.nodeData);
+                }
+                drawGraphs(self.nodeData);
+            }, function(json) {
                 out("Yeah, that did not work, at all.");
-            }, function(response) {
+            }, function(json) {
                 out("What does this even do?");
             });
 
-            out("data outer :: " +nodeData);
+            out("data outer :: " +self.nodeData);
+
+            function dataToValues(nodeData){
+                var list = [];
+                for (var node in nodeData) {
+                    if (!nodeData.hasOwnProperty(node)) {
+                        continue;
+                    }
+                    list[list.length] = {
+                        name: 'Node ' + node,
+                        data: [nodeData[node]]
+                    }
+                }
+                return list;
+            }
 
             function constructVG(data) {
-                var svg = d3.select("div.value-graph")
+                out("CONSTRUCT STUFF: " +data);
+                setHighchartsTheme();
+                var chart_data = dataToValues(data);
+                myChart = Highcharts.chart('value-graph-container', {
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: 'Values over Time'
+                    },
+                    xAxis: {
+                        title: {
+                            text: 'time'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'values'
+                        }
+                    },
+                    series: chart_data
+                    /*[{
+                        name: 'Node 1',
+                        data: [1, 2.5, 2, 1.5, 2, 3, 2]
+                    }, {
+                        name: 'Node 2',
+                        data: [1.5, 2.5, 2, 1.5, 1, 2, 1.5]
+                    }, {
+                        name: 'Node 3',
+                        data: [1.75, 2.75, 2, 1.5, 3, 2, 1.5]
+                    }, {
+                        name: 'Node 4',
+                        data: [1, 2.5, 2, 1.5, 2, 2, 2.5]
+                    }]*/
+                });
+                d3.select("text.highcharts-credits").remove();
+
+                /*var svg = d3.select("div.value-graph")
                     .append("svg")
                     .attr("width", "100%")
                     .attr("height", "100%")
@@ -46,9 +130,9 @@ angular.
                 window.onresize = (function(){
                     width = vg.offsetWidth;
                     height = vg.offsetHeight;
-                    createSVGContent(svg,width,height,data,max);
+                    drawGraphs(null);
                     console.log("resize!");
-                });
+                });*/
 
                 /*var xScale = d3.scale.linear()
                     .domain([0,d3.max()])
@@ -56,11 +140,17 @@ angular.
                 var yScale = d3.scale.linear()
                     .domain()
                     .range();*/
-
-                createSVGContent(svg,width,height,data,max);
             }
 
-            function createSVGContent(svg, width, height, data, max) {
+            function drawGraphs(nodes) {
+                for (var node in nodes) {
+                    var d = [];
+                    for (var i = 0; i < nodes[node].length; i++) {
+                        d[i] = {timestamp:nodes[node][i].timestamp,value:nodes[node][i].value};
+                    }
+                    myChart.addPoint(d,true,true,true);
+                }
+
                 /*svg.selectAll("*").remove();
                 svg.append("rect").attr("width",width).attr("height",height).attr("fill","blue");
                 svg.selectAll("circle")
@@ -72,7 +162,7 @@ angular.
                     .attr("r", function(d){return d.value*30;})
                     .attr("fill", "white");
                 */
-                var lineFunction = d3.svg.line()
+                /*var lineFunction = d3.svg.line()
                     .x(function(d){return d.x;})
                     .y(function(d){return d.y;})
                     .interpolate("linear");
@@ -84,6 +174,75 @@ angular.
                     .attr("stroke", "black")
                     .attr("stroke-width", 2)
                     .attr("fill", "none");
+                */
+            }
+
+            function setHighchartsTheme() {
+                Highcharts.theme = {
+                    colors: ['#ffffff', '#fff3e2', '#ffcd83', '#ffad32', 'ffa51f', '#ff0066', '#eeaaee',
+                        '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+                    chart: {
+                        backgroundColor: 'transparent',
+                        style: {
+                            fontFamily: '\'Unica One\', sans-serif'
+                        },
+                        plotBorderColor: '#606063'
+                    },
+                    title: {
+                        style: {
+                            color: '#124',
+                            fontSize: '20px'
+                        }
+                    },
+                    subtitle: {
+                        style: {
+                            color: '#323d51'
+                        }
+                    },
+                    xAxis: {
+                        gridLineColor: '#323d51',
+                        labels: {
+                            style: {
+                                color: '#124'
+                            }
+                        },
+                        lineColor: '#323d51',
+                        minorGridLineColor: '#124',
+                        tickColor: '#323d51',
+                        title: {
+                            style: {
+                                color: '#124'
+
+                            }
+                        }
+                    },
+                    yAxis: {
+                        gridLineColor: '#323d51',
+                        labels: {
+                            style: {
+                                color: '#124'
+                            }
+                        },
+                        lineColor: '#323d51',
+                        minorGridLineColor: '#124',
+                        tickColor: '#323d51',
+                        tickWidth: 1,
+                        title: {
+                            style: {
+                                color: '#124'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#124',
+                        style: {
+                            color: '#F0F0F0'
+                        }
+                    }
+                };
+
+                // Apply the theme
+                Highcharts.setOptions(Highcharts.theme);
             }
 
             // I'm a lazy fuck.

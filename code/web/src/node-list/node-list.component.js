@@ -12,24 +12,121 @@ angular.
                 this.nodes = Node.query();
             }
         ]*/
-        controller: ['$http', function NodeListController($http) {
+        controller: ['$http','$scope','$interval', function NodeListController($http,$scope,$interval) {
             this.summary = [];
             this.otherNodes = [];
             var self = this;
+            self.nodes = [];
+            var touched = false;
+            var url = "http://192.168.99.100";
 
-            $http.get('nodes.json').then(function (response) {
-                self.nodes = response.data;
-                for (var x in self.nodes) {
-                    sortNode(x);
-                }
+            /*
+            $scope.intervalFunction = function(){
+                $timeout(function() {
+                    $scope.pollValues();
+                    $scope.intervalFunction();
+                }, 5000)
+            };
+
+            // Kick off the interval
+            $scope.intervalFunction();
+            */
+            var pollValues = function() {
+                $http.get(url+"/get_data/?limit=4").then(function (json) {
+                    /*self.nodes = response.data;
+                     for (var x in self.nodes) {
+                     sortNode(x);
+                     }*/
+                    touched = (touched != true);
+                    for (var node in json.data) {
+                        if (json.data.hasOwnProperty(node)) {
+                            for (var timestamp in json.data[node]) {
+                                if (json.data[node].hasOwnProperty(timestamp)) {
+                                    var value=json.data[node][timestamp];
+                                    var searchedIndex = searchIndex(node);
+                                    if (searchedIndex == -1) {
+                                        self.nodes.push({id:node,value:value,touched:touched});
+                                    } else {
+                                        self.nodes[searchedIndex].value = value;
+                                        self.nodes[searchedIndex].touched = touched;
+                                        console.log("UPDATED!");
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    for (var i = 0; i < self.nodes.length; i++) {
+                        if (self.nodes[i].touched != touched && self.nodes[i].id != 'summary') {
+                            self.nodes.splice(i,1);
+                        }
+                    }
+
+                    console.log(self.nodes.length);
+                    //self.nodes = json[];
+                    //self.summary = [];
+                    //self.otherNodes = [];
+                    sortNodes();
+                    /*for (var i = 0; i < self.nodes.length; i++) {
+                        console.log("i:"+i+",id:"+self.nodes[i].id+",value:"+self.nodes[i].value);
+                        sortNode(i);
+                    }*/
+                });
+            };
+
+            var promise = $interval(pollValues, 5000);
+            $scope.$on('$destroy',function(){
+                if(promise)
+                    $interval.cancel(promise);
             });
 
-            function sortNode(x) {
-                if (self.nodes[x].id == 'summary') {
+            /*$.getJSON(url+"/get_data/?limit=10").done(function (json) {
+                // do stuff
+                self.nodes = [];
+                for (var node in json) {
+                    if (json.hasOwnProperty(node)) {
+                        for (var timestamp in json[node]) {
+                            if (json[node].hasOwnProperty(timestamp)) {
+                                var value=json[node][timestamp];
+                                self.nodes.push({id:node,value:value});
+                                break;
+                            }
+                        }
+                    }
+                }
+                console.log(self.nodes.length);
+                //self.nodes = json[];
+                for (var i = 0; i < self.nodes.length; i++) {
+                    console.log("i:"+i+",id:"+self.nodes[i].id+",value:"+self.nodes[i].value);
+                    sortNode(i);
+                }
+            }).fail(console.error);*/
+
+            function sortNodes() {
+                /*if (self.nodes[x].id == 'summary') {
                     self.summary.push(self.nodes[x]);
                 } else {
                     self.otherNodes.push(self.nodes[x]);
+                }*/
+                for (var i = 0; i < self.nodes.length; i++) {
+                    if (self.nodes[i].id == 'summary') {
+                        for (var j = i-1; j > 0; j--) {
+                            var temp = self.nodes[j];
+                            self.nodes[j] = self.nodes[j+1];
+                            self.nodes[j+1] = temp;
+                        }
+                    }
                 }
+            }
+
+            function searchIndex(ele) {
+                for (var i = 0; i < self.nodes.length; i++) {
+                    if (self.nodes[i].id == ele) {
+                        return i;
+                    }
+                }
+                return -1;
             }
         }]
     });

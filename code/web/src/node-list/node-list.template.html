@@ -12,7 +12,7 @@
 </div>
 
 <!-- NOTE: for scaling nodes insert: onclick="handleNodeScaling(this)" -->
-<div ng-repeat="node in $ctrl.otherNodes"
+<div ng-repeat="node in $ctrl.nodes"
      class="node non-upscaled {{( node.leader == true) ? 'leader' : ''}}">
     <a href="#!/nodes/{{node.id}}">
         <div class="node-main">

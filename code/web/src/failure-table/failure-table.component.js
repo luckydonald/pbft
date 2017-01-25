@@ -12,15 +12,16 @@ angular.
             var svg = null;
             var svgWidth = 0;
             var svgHeight = 0;
-            var nW = 0;              // node width, will be set in method setupNodeElements
-            var nH = 50;              // node height
-            var nC = "red";              // node color
-            var gap = 0;             // gap between nodes, will be set in method setupNodeElements
+            var nW = 0;                 // node width, will be set in method setupNodeElements
+            var nH = 50;                // node height
+            var nC = "white";             // node color
+            var gap = 0;                // gap between nodes, will be set in method setupNodeElements
             var tlPositions = [];
             var yProgress = 0;
-            var arrowOffset = 18;   // offset for drawing arrowheads of lines correctly
-            var eHeight = 0;        // height that gets occupied by all elements contained in the svg
+            var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
+            var eHeight = 0;            // height that gets occupied by all elements contained in the svg
             var logInfoStore = [];
+            var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
 
             self.nodes = [{
                 "id": "1"    
@@ -110,7 +111,7 @@ angular.
                     .append("path")
                     .attr("class","norem")
                     .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill","blue");
+                    .attr("fill",colors[0]);
                 defs.append("marker")
                     .attr("id","proposeArrow")
                     .attr("markerWidth",7)
@@ -122,7 +123,7 @@ angular.
                     .append("path")
                     .attr("class","norem")
                     .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill","lime");
+                    .attr("fill",colors[1]);
                 defs.append("marker")
                     .attr("id","prevoteArrow")
                     .attr("markerWidth",7)
@@ -134,7 +135,7 @@ angular.
                     .append("path")
                     .attr("class","norem")
                     .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill","green");
+                    .attr("fill",colors[2]);
                 defs.append("marker")
                     .attr("id","voteArrow")
                     .attr("markerWidth",7)
@@ -146,7 +147,7 @@ angular.
                     .append("path")
                     .attr("class","norem")
                     .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill","darkgreen");
+                    .attr("fill",colors[3]);
             }
 
             function setupBackground(svgHeight) {
@@ -160,7 +161,7 @@ angular.
                         .attr("class","svgBg")
                         .attr("x",0).attr("y",0)
                         .attr("width",svgWidth).attr("height",svgHeight)
-                        .attr("fill","white");
+                        .attr("fill","transparent");
                 }
             }
 
@@ -182,15 +183,17 @@ angular.
                         var text = svg.append("text")
                             .text("Node " +self.nodes[i].id)
                             .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
-                            .attr("fill","white")
-                            .attr("font-family","Verdana");
+                            .attr("fill"," #124")
+                            .attr("font-family","Verdana")
+                            .attr("font-weight","bold");
                     } else {
                         txtW = getTextWidth(self.nodes[i].id);
                         var text = svg.append("text")
                             .text(self.nodes[i].id)
                             .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
-                            .attr("fill","white")
-                            .attr("font-family","Verdana");
+                            .attr("fill"," #124")
+                            .attr("font-family","Verdana")
+                            .attr("font-weight","bold");
                     }
 
                     tlPositions[self.nodes[i].id] = x+(nW/2);
@@ -207,7 +210,7 @@ angular.
                     .attr("class","nodeLine")
                     .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
                     .attr("x2",(x+(nW/2))).attr("y2",svg.attr("height"))
-                    .attr("stroke",nC).attr("stroke-width",3).attr("stroke-linecap","round").attr("stroke-dasharray","1,10");
+                    .attr("stroke",nC).attr("stroke-width",1).attr("stroke-linecap","round").attr("stroke-dasharray","1,5");
             }
 
             function handleTimelineInput(data) {
@@ -215,16 +218,16 @@ angular.
                 var arrow = null;
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].type === "init") {
-                        color = "blue";
+                        color = colors[0];
                         arrow = "initArrow";
                     } else if (data[i].type === "propose") {
-                        color = "lime";
+                        color = colors[1];
                         arrow = "proposeArrow";
                     } else if (data[i].type === "prevote") {
-                        color = "green";
+                        color = colors[2];
                         arrow = "prevoteArrow";
                     } else if (data[i].type === "vote") {
-                        color = "darkgreen";
+                        color = colors[3];
                         arrow = "voteArrow";
                     } else {
                         out("Well, that was unexpected. (BAD TYPE)")
@@ -271,16 +274,14 @@ angular.
                         );
                         svg.append("line")
                             .attr("x1",x1).attr("y1",yProgress)
-                            .attr("x2",actualX2)
-                            .attr("y2",y2)
-                            .attr("stroke",color).attr("stroke-width",3)
+                            .attr("x2",actualX2).attr("y2",y2)
+                            .attr("stroke",color).attr("stroke-width",2)
                             .attr("marker-end",("url(#"+arrow+")"));
 
                         yHeight = y2 - yProgress;
                     }
 
                     eHeight = eHeight + (yProgress-eHeight) + 28 + yHeight + 50;             // eHeight + (margin from last phase or nodes) + (span of two circles) + (y height of the lines) + (additional margin)
-
                     if(eHeight > parseInt(svg.attr("height"),10)) {
                         svg.attr("height",(eHeight+"px"));
                         setupBackground(eHeight);
@@ -301,57 +302,38 @@ angular.
             }
 
             function repositionSvgContent(oldWidth,newWidth) {
+                out("old width:"+oldWidth+" -> new width:"+newWidth);
                 if (oldWidth != newWidth) {
                     var perc = (newWidth/(oldWidth/100))/100; //percentage where 1.0 equals 100%, how many % is newWidth to oldWidth
                     gap = gap*perc;
-                    var content = svg.selectAll("rect:not(.svgBg)");
+                    var content = svg.selectAll("*:not(text)");
                     for (var i = 0; i < content[0].length; i++) {
-                        var rect = content[0][i];
-                        rect.x.baseVal.value = rect.x.baseVal.value * perc;
-                        rect.width.baseVal.value = rect.width.baseVal.value * perc;
-                        nW = rect.width.baseVal.value;
-                    }
-                    content = svg.selectAll("rect.svgBg");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var bg = content[0][i];
-                        bg.width.baseVal.value = bg.width.baseVal.value * perc;
-                    }
-                    var endps = svg.selectAll("circle.endp");     // end point circles before position shifting
-                    var beforeShift = [];
-                    for (var i = 0; i < endps[0].length; i++) {
-                        beforeShift[i] = endps[0][i].cx.baseVal.value;
-                    }
-                    content = svg.selectAll("circle");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var circle = content[0][i];
-                        circle.cx.baseVal.value = circle.cx.baseVal.value * perc;
-                    }
-                    endps = svg.selectAll("circle.endp");
-                    content = svg.selectAll("line.nodeLine");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var line = content[0][i];
-                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
-                        line.x2.baseVal.value = line.x2.baseVal.value * perc;
-                    }
-                    content = svg.selectAll("line:not(.nodeLine)");
-                    var endpCX = beforeShift[0];    // temp for checking if current line has same end point as previous line
-                    var j = 0;
-                    for (var i = 0; i < content[0].length; i++) {
-                        out("endps[0].length:"+endps[0].length);
-                        var line = content[0][i];
-                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
-                        out("i:"+i+"; j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; endpCX-arrowOffset:"+(endpCX-arrowOffset)+"; endpCX+arrowOffset:"+(endpCX+arrowOffset));
-                        if (!(line.x2.baseVal.value == endpCX-arrowOffset) && !(line.x2.baseVal.value == endpCX+arrowOffset)) {
-                            out("J++!");
-                            j++;
-                            endpCX = beforeShift[j];
+                        if (content[0][i].tagName === "rect") {
+                            if (content[0][i].attributes.class === undefined
+                                || !(content[0][i].attributes.class.nodeValue === "svgBg")) {
+                                var rect = content[0][i];
+                                rect.x.baseVal.value = rect.x.baseVal.value * perc;
+                                rect.width.baseVal.value = rect.width.baseVal.value * perc;
+                                nW = rect.width.baseVal.value;
+                            } else {
+                                var bg = content[0][i];
+                                bg.width.baseVal.value = bg.width.baseVal.value * perc;
+                            }
+                        } else if (content[0][i].tagName === "circle") {
+                            var circle = content[0][i];
+                            circle.cx.baseVal.value = circle.cx.baseVal.value * perc;
+                        } else if (content[0][i].tagName === "line") {
+                            if (content[0][i].attributes.class === undefined
+                                || !(content[0][i].attributes.class.nodeValue === "nodeLine")) {
+                                var line = content[0][i];
+                                line.x1.baseVal.value = line.x1.baseVal.value * perc;
+                                line.x2.baseVal.value = line.x2.baseVal.value * perc;
+                            } else {
+                                var line = content[0][i];
+                                line.x1.baseVal.value = line.x1.baseVal.value * perc;
+                                line.x2.baseVal.value = line.x2.baseVal.value * perc;
+                            }
                         }
-                        if (line.x2.baseVal.value == endpCX-arrowOffset) {  // line goes from left to right
-                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value-arrowOffset;
-                        } else {                                            //line goes from right to left
-                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value+arrowOffset;
-                        }
-                        out("   |_> j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; beforeShift[j]:"+beforeShift[j]+"; endps[0][j].cx.baseVal.value:"+endps[0][j].cx.baseVal.value);
                     }
                     content = svg.selectAll("text");
                     for (var i = 0; i < content[0].length; i++) {
@@ -366,6 +348,72 @@ angular.
                         var x = i*nW+(i+1)*gap;
                         text.x.baseVal[0].value = x+(nW/2-getTextWidth(text.innerHTML)/2);
                     }
+                    /*var content = svg.selectAll("rect:not(.svgBg)");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var rect = content[0][i];
+                        rect.x.baseVal.value = rect.x.baseVal.value * perc;
+                        rect.width.baseVal.value = rect.width.baseVal.value * perc;
+                        nW = rect.width.baseVal.value;
+                    }
+                    content = svg.selectAll("rect.svgBg");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var bg = content[0][i];
+                        bg.width.baseVal.value = bg.width.baseVal.value * perc;
+                    }
+                    var endps = svg.selectAll("circle.endp");     // end point circles before position shifting
+                    var beforeShift = [];
+                    out("beforeShift");
+                    for (var i = 0; i < endps[0].length; i++) {
+                        beforeShift[i] = endps[0][i].cx.baseVal.value;
+                    }
+                    content = svg.selectAll("circle");
+                    out("afterShift");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var circle = content[0][i];
+                        circle.cx.baseVal.value = circle.cx.baseVal.value * perc;
+                    }
+                    endps = svg.selectAll("circle.endp");
+                    content = svg.selectAll("line.nodeLine");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var line = content[0][i];
+                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
+                        line.x2.baseVal.value = line.x2.baseVal.value * perc;
+                    }
+                    content = svg.selectAll("line:not(.nodeLine)");
+                    var endpCX = beforeShift[0];    // temp for checking if current line has same end point as previous line
+                    var j = 0;
+                    out("endpCX");
+                    for (var i = 0; i < content[0].length; i++) {
+                        //out("endps[0].length:"+endps[0].length);
+                        var line = content[0][i];
+                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
+                        //out("i:"+i+"; j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; endpCX-arrowOffset:"+(endpCX-arrowOffset)+"; endpCX+arrowOffset:"+(endpCX+arrowOffset));
+                        if (!(line.x2.baseVal.value == endpCX-arrowOffset) && !(line.x2.baseVal.value == endpCX+arrowOffset)) {
+                            //out("J++!");
+                            j++;
+                            endpCX = beforeShift[j];
+                        }
+                        out("i:"+i);
+                        if (line.x2.baseVal.value == endpCX-arrowOffset) {  // line goes from left to right
+                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value-arrowOffset;
+                        } else {                                            //line goes from right to left
+                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value+arrowOffset;
+                        }
+                        //out("   |_> j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; beforeShift[j]:"+beforeShift[j]+"; endps[0][j].cx.baseVal.value:"+endps[0][j].cx.baseVal.value);
+                    }
+                    content = svg.selectAll("text");
+                    for (var i = 0; i < content[0].length; i++) {
+                        var text = content[0][i];
+                        //var x = i*nW+(i+1)*gap;
+                        //x+(nW/2-txtW/2)
+                        if (getTextWidth((text.innerHTML.length > 1 ? text.innerHTML : "Node "+text.innerHTML))+10 >= nW) {
+                            text.innerHTML = delFromString(text.innerHTML,"Node ");
+                        } else {
+                            text.innerHTML = (text.innerHTML.length > 1 ? text.innerHTML : "Node "+text.innerHTML);
+                        }
+                        var x = i*nW+(i+1)*gap;
+                        text.x.baseVal[0].value = x+(nW/2-getTextWidth(text.innerHTML)/2);
+                    }*/
                 }
             }
             
@@ -394,7 +442,7 @@ angular.
             function getTextWidth(str) {
                 var temp = d3.select("body")
                     .append("svg");
-                temp.append("text").text(str).attr("x",0).attr("y",20).attr("font-family","Verdana");
+                temp.append("text").text(str).attr("x",0).attr("y",20).attr("font-family","Verdana").attr("font-weight","bold");
                 var tW = temp.node().getBBox().width;
                 temp.remove();
 
