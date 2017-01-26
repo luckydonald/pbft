@@ -116,7 +116,7 @@ def get_value_v2():
 def get_data():
     node = request.args.getlist('node', None)
     limit = request.args.get('limit', 100)
-    assert str.isnumeric(limit)  # TODO: specify error message, on error  # like int("abc")
+    assert isinstance(limit, int) or str.isnumeric(limit)   # TODO: specify error message, on error  # like int("abc")
     limit = int(limit)
     if node:
         for i in node:
