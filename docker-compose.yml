@@ -29,7 +29,7 @@ services:
       file: api.docker-compose.yml
       service: api
     ports:
-      - "80:80"
+     - "80:80"
     restart: "no"
     command: ["python", "main_api.py"]
 

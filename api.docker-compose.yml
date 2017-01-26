@@ -24,8 +24,6 @@ services:
   postgres_browser:
     # image: jacksoncage/phppgadmin
     build: ./extras/phppgadmin-docker
-    ports:
-      - "8080:80"
     environment:
       POSTGRES_HOST: "postgres"  # service name
       POSTGRES_USER: "postgres"
