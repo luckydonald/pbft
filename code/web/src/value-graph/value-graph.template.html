@@ -3,7 +3,7 @@
         <a href="#!/nodes">
             <div class="node-main">
                 <h3 class="id-label">
-                    Node {{$ctrl.nodeid}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
+                    Node {{($ctrl.nodeid == undefined ? 'Summary' : $ctrl.nodeid)}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
                 </h3>
                 <div class="details">
                     <div id="value-graph-container" class="value-graph">
