@@ -18,7 +18,7 @@ angular.
             var self = this;
             self.nodes = [];
             var touched = false;
-            var url = "http://192.168.99.100";
+            var url = _SECRET_URL; // definiert in secret.js, die absichtlich nicht im Git vorhanden ist
 
             /*
             $scope.intervalFunction = function(){
@@ -32,15 +32,16 @@ angular.
             $scope.intervalFunction();
             */
             var pollValues = function() {
-                $http.get(url+"/get_data/?limit=4").then(function (json) {
+                $http.get(url+"/get_value/").then(function (json) {
                     /*self.nodes = response.data;
                      for (var x in self.nodes) {
                      sortNode(x);
                      }*/
+                    console.log("JSON DATA:",json.data);
                     touched = (touched != true);
                     for (var node in json.data) {
                         if (json.data.hasOwnProperty(node)) {
-                            for (var timestamp in json.data[node]) {
+                            /*for (var timestamp in json.data[node]) {
                                 if (json.data[node].hasOwnProperty(timestamp)) {
                                     var value=json.data[node][timestamp];
                                     var searchedIndex = searchIndex(node);
@@ -53,8 +54,32 @@ angular.
                                     }
                                     break;
                                 }
+                            }*/
+                            var value=json.data[node];
+                            if (node === 'summary') {
+                                var searchedIndex = searchIndex(self.summary,node);
+                                if (searchedIndex == -1) {
+                                    self.summary.push({id:node,value:value,touched:touched});
+                                } else {
+                                    self.summary[searchedIndex].value = value;
+                                    self.summary[searchedIndex].touched = touched;
+                                    console.log("UPDATED!");
+                                }
+                            } else {
+                                var searchedIndex = searchIndex(self.nodes,node);
+                                if (searchedIndex == -1) {
+                                    self.nodes.push({id:node,value:value,touched:touched});
+                                } else {
+                                    self.nodes[searchedIndex].value = value;
+                                    self.nodes[searchedIndex].touched = touched;
+                                    console.log("UPDATED!");
+                                }
                             }
                         }
+                    }
+
+                    if (self.summary[0].touched != touched) {
+                        self.summary.splice(0,1);
                     }
 
                     for (var i = 0; i < self.nodes.length; i++) {
@@ -120,9 +145,9 @@ angular.
                 }
             }
 
-            function searchIndex(ele) {
-                for (var i = 0; i < self.nodes.length; i++) {
-                    if (self.nodes[i].id == ele) {
+            function searchIndex(arr, ele) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].id == ele) {
                         return i;
                     }
                 }

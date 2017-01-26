@@ -10,55 +10,64 @@ angular.
         bindings: {
             nodeid: '='
         },
-        controller: ['$http', function ValueGraphController($http) {
+        controller: ['$http','$scope','$interval', function ValueGraphController($http,$scope,$interval) {
             var self = this;
             self.nodeData = {};
             var myChart = null;
-            var url = "http://192.168.99.100";
+            self.series = null;
+            var url = _SECRET_URL;
             if (self.nodeid == 'summary') {
                 url = url+"/get_data/?limit=40";
             } else {
                 url = url+"/get_data/?limit=10&node="+self.nodeid;
             }
-            
-            $http.get(url).then(function (json) {
-                /*var str = "### DATA :: ";
-                for (var i = 0; i < nodeData.length; i++) {
-                    str = str+ "(" +i+ ")->" +nodeData[i]+ " ";
-                }
-                out(str);*/
 
-                for (var node in json.data) {
-                    if (json.data.hasOwnProperty(node)) {
-                        self.nodeData[node] = [];
-                        for (var timestamp in json.data[node]) {
-                            if (json.data[node].hasOwnProperty(timestamp)) {
-                                var value=json.data[node][timestamp];
-                                self.nodeData[node][self.nodeData[node].length] = {timestamp:timestamp,value:value};
+            var pollGraphs = function() {
+                $http.get(url).then(function (json) {
+                    /*var str = "### DATA :: ";
+                     for (var i = 0; i < nodeData.length; i++) {
+                     str = str+ "(" +i+ ")->" +nodeData[i]+ " ";
+                     }
+                     out(str);*/
+
+                    for (var node in json.data) {
+                        if (json.data.hasOwnProperty(node)) {
+                            self.nodeData[node] = [];
+                            for (var timestamp in json.data[node]) {
+                                if (json.data[node].hasOwnProperty(timestamp)) {
+                                    var value=json.data[node][timestamp];
+                                    self.nodeData[node][self.nodeData[node].length] = {timestamp:timestamp,value:value};
+                                }
                             }
                         }
                     }
-                }
-                /*
-                for (var node in json.data) {
-                    if (json.data.hasOwnProperty(node)) {
-                        for (var timestamp in json.data[node]) {
-                            if (json.data[node].hasOwnProperty(timestamp)) {
-                                var value=json.data[node][timestamp];
-                                self.nodeData.push({id:node,timestamp:timestamp,value:value});
-                            }
-                        }
-                    }
-                }*/
+                    /*
+                     for (var node in json.data) {
+                     if (json.data.hasOwnProperty(node)) {
+                     for (var timestamp in json.data[node]) {
+                     if (json.data[node].hasOwnProperty(timestamp)) {
+                     var value=json.data[node][timestamp];
+                     self.nodeData.push({id:node,timestamp:timestamp,value:value});
+                     }
+                     }
+                     }
+                     }*/
 
-                if (myChart == null) {
-                    constructVG(self.nodeData);
-                }
-                drawGraphs(self.nodeData);
-            }, function(json) {
-                out("Yeah, that did not work, at all.");
-            }, function(json) {
-                out("What does this even do?");
+                    if (myChart == null) {
+                        constructVG(self.nodeData);
+                    }
+                    drawGraphs(self.nodeData);
+                }, function(json) {
+                    out("Yeah, that did not work, at all.");
+                }, function(json) {
+                    out("What does this even do?");
+                })
+            };
+
+            var promise = $interval(pollGraphs, 5000);
+            $scope.$on('$destroy',function(){
+                if(promise)
+                    $interval.cancel(promise);
             });
 
             out("data outer :: " +self.nodeData);
@@ -78,17 +87,23 @@ angular.
             }
 
             function constructVG(data) {
-                out("CONSTRUCT STUFF: " +data);
+                console.log("CONSTRUCT STUFF: ",data);
                 setHighchartsTheme();
                 var chart_data = dataToValues(data);
                 myChart = Highcharts.chart('value-graph-container', {
                     chart: {
-                        type: 'spline'
+                        type: 'spline',
+                        events: {
+                            load: function() {
+                                self.series = this.series;
+                            }
+                        }
                     },
                     title: {
                         text: 'Values over Time'
                     },
                     xAxis: {
+                        type: 'datetime',
                         title: {
                             text: 'time'
                         }
@@ -146,9 +161,14 @@ angular.
                 for (var node in nodes) {
                     var d = [];
                     for (var i = 0; i < nodes[node].length; i++) {
-                        d[i] = {timestamp:nodes[node][i].timestamp,value:nodes[node][i].value};
+                        var date = new Date(parseInt(nodes[node][i].timestamp,10)*1000);
+                        d[i] = [date, nodes[node][i].value];
                     }
-                    myChart.addPoint(d,true,true,true);
+                    for (var i = 0; i < self.series.length; i++) {
+                        if (self.series[i].name === 'Node ' + node) {
+                            self.series[i].update({data: d}, true);
+                        }
+                    }
                 }
 
                 /*svg.selectAll("*").remove();
