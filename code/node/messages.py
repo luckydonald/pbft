@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from luckydonaldUtils.logger import logging
 
-from .enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE
+from .enums import UNSET, INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -9,6 +9,9 @@ logger = logging.getLogger(__name__)
 
 class Message(object):
     def __init__(self, type, sequence_no):
+        if type is None:
+            type = UNSET
+        # end if
         assert isinstance(type, int)
         self.type = type
         self.sequence_no = sequence_no
@@ -17,11 +20,11 @@ class Message(object):
     def from_dict(cls, data):
         assert "type" in data
         type = data["type"]
-        assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE]
+        assert type in [UNSET, INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE]
         if type == INIT:
             return InitMessage.from_dict(data)
         # end def
-        if type == LEADER_CHANGE:
+        if type == LEADER_CHANGE: # pragma: no cover
             return LeaderChangeMessage.from_dict(data)
         # end def
         if type == PROPOSE:
@@ -50,9 +53,10 @@ class Message(object):
     # end def
 
     def __str__(self):
+        data = self.to_dict()
         return "{class_name}({values})".format(
             class_name=self.__class__.__name__,
-            values=", ".join(["{key}={value!r}".format(key=k, value=v) for k, v in self.to_dict().items()])
+            values=", ".join(["{key}={value!r}".format(key=k, value=data[k]) for k in sorted(data)])
         )
 # end class
 
@@ -83,7 +87,7 @@ class InitMessage(Message):
 # end class
 
 
-class LeaderChangeMessage(Message):
+class LeaderChangeMessage(Message):  # pragma: no cover
     def __init__(self, sequence_no, node_num, leader, P):
         raise NotImplementedError("LeaderChangeMessage")
         super(LeaderChangeMessage, self).__init__(LEADER_CHANGE, sequence_no)
@@ -206,7 +210,7 @@ class VoteMessage(Message):
 # end class
 
 
-class NewLeaderMessage(Message):
+class NewLeaderMessage(Message): # pragma: no cover
     def __init__(self, sequence_no, node, leader, value):
         super().__init__(VOTE, sequence_no)
         self.node = node
