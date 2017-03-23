@@ -9,11 +9,10 @@ python:
 # command to install dependencies
 install:
   - "pip install -r code/api/requirements.txt"
-  - "pip install -r code/node/requirements.txt"
 
 # command to run tests
 script:
-  - coverage run code/node/tests.py
+  - cd code && coverage run tests.py
 
 after_success:
   - coveralls

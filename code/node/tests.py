@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from luckydonaldUtils.logger import logging
 
-__author__ = 'luckydonald'
-logger = logging.getLogger(__name__)
-
 import unittest
 from .messages import Message, InitMessage, ProposeMessage, PrevoteMessage, VoteMessage, Acknowledge
 from .enums import UNSET, INIT, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE
+
+__author__ = 'luckydonald'
+__all__ = ["TestJsonToObject"]
+
+logger = logging.getLogger(__name__)
 
 
 class TestJsonToObject(unittest.TestCase):
