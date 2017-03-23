@@ -3,7 +3,7 @@ Implementation of the Peters Byzantine Fault Tolerant Algorithm
 
 
 ### API Server
-[![Build Status](https://travis-ci.org/luckydonald/pbft.svg?branch=master)](https://travis-ci.org/luckydonald/pbft) [![Coverage Status](https://coveralls.io/repos/github/luckydonald/pbft/badge.svg?branch=master)](https://coveralls.io/github/luckydonald/pbft?branch=master)
+[![Build Status](https://travis-ci.org/luckydonald/pbft.svg?branch=master)](https://travis-ci.org/luckydonald/pbft) [![Coverage Status](https://coveralls.io/repos/github/luckydonald/pbft/badge.svg?branch=master)](https://coveralls.io/github/luckydonald/pbft?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b83d3a038892446881d75a2dfcb590aa)](https://www.codacy.com/app/luckydonald/pbft?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=luckydonald/pbft&amp;utm_campaign=Badge_Grade)
 
 
 ### Java PBFT Node 
