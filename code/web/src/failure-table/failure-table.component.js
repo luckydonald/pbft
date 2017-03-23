@@ -22,7 +22,7 @@ angular.
             var yProgress = 0;
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
-            var scale = 0.001;
+            var scale = 1000;
 
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
@@ -263,16 +263,17 @@ angular.
                         break;
                 }
 
+                out("new startp circle for " +data.nodes.send+ ":: cx " +tlPositions[data.nodes.send]+ " cy " +((data.timestamps.send.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 1) {
                     svg.append("circle")
                         .classed("startp","true")
-                        .classed(("c_"+data.id.send),"true")
+                        .classed(("c_"+data.nodes.send),"true")
                         .classed("new","true")
                         .attr("cx",tlPositions[data.nodes.send])
                         .attr("cy",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
                         .attr("fill",color)
-                        .attr("ng-click","$ctrl.showLogInfo("+data.id.send+")");
+                        .attr("ng-click","$ctrl.showLogInfo("+data.nodes.send+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
                 //}
                 
@@ -301,16 +302,17 @@ angular.
                         break;
                 }
 
+                out("new endp circle for " +data.nodes.receive+ ":: cx " +tlPositions[data.nodes.receive]+ " cy " +((data.timestamps.receive.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 0) {
                     svg.append("circle")
                         .classed("endp","true")
-                        .classed(("c_"+data.id.receive),"true")
+                        .classed(("c_"+data.nodes.receive),"true")
                         .classed("new","true")
                         .attr("cx",tlPositions[data.nodes.receive])
                         .attr("cy",(data.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
                         .attr("fill",color)
-                        .attr("ng-click","$ctrl.showLogInfo("+data.id.receive+")");
+                        .attr("ng-click","$ctrl.showLogInfo("+data.nodes.receive+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
                     
                     var logInfoObj = {id:(""+data.id.receive), cx:tlPositions[data.nodes.receive], cy:(data.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamps.receive.string)};
@@ -322,12 +324,12 @@ angular.
                 // +18 when line will go from right to left, -18 otherwise
                 var actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
                 var y2 = calculateYCoordinate(
-                    {"x":x1,"y":(data.timestamps.send.unix-self.startstamp)*scale}, // starting point of line
-                    {"x":x2,"y":(data.timestamps.receive.unix-self.startstamp)*scale}, // ending point of line
+                    {"x":x1,"y":(data.timestamps.send.unix-self.startstamp)*scale+yProgress}, // starting point of line
+                    {"x":x2,"y":(data.timestamps.receive.unix-self.startstamp)*scale+yProgress}, // ending point of line
                     actualX2  // x value to determine corresponding y
                 );
                 svg.append("line")
-                    .attr("x1",x1).attr("y1", (data.timestamps.send.unix-self.startstamp)*scale)
+                    .attr("x1",x1).attr("y1", (data.timestamps.send.unix-self.startstamp)*scale+yProgress)
                     .attr("x2",actualX2).attr("y2",y2)
                     .attr("stroke",color).attr("stroke-width",2)
                     .attr("marker-end",("url(#"+arrow+")"));
