@@ -9,6 +9,7 @@ python:
 # command to install dependencies
 install:
   - "pip install -r code/api/requirements.txt"
+  - "pip install coverage coveralls"
 
 # command to run tests
 script:
