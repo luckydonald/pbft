@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from DictObject import DictObject
 from flask import Flask, request
 from luckydonaldUtils.logger import logging
 from pony import orm
 
+from .enums import JSON_TYPES
 from .utils import jsonify
-from .database import to_db, db, DBVoteMessage, DBMessage, DBInitMessage
+from .database import to_db, db, DBVoteMessage, DBMessage, DBInitMessage, DBPrevoteMessage, DBProposeMessage, DBAcknowledge
 from node.enums import INIT  # noqa # pylint: disable=unused-import
 
 __author__ = 'luckydonald'
@@ -109,6 +111,56 @@ def get_value_v2():
     return jsonify(data, allow_all_origin=True)
 # end def
 
+
+@app.route(API_V2+"/get_timeline")
+@app.route(API_V2+"/get_timeline/")
+def get_timeline():
+    result = {
+        "nodes": ["1", "2"],
+        "timestamps": {"min": "23428001", "max": "23428013"},
+        "events": []
+    }
+    node_events = DBMessage.select_by_sql("""
+      SELECT * FROM DBmessage
+      AND date >= NOW() - '10 seconds'::INTERVAL
+    """)
+    for node_event in node_events:
+        event_dict = DictObject.objectify({
+             "db_id": None,
+             "action": None,
+             "type": None,
+             "nodes": {},
+             "timestamps": {},
+             "data": {"value": "0.5"}
+         })
+        event_dict.nodes["send"] = 1
+        event_dict.timestamps["send"] = "23428001"
+        if isinstance(node_events, DBAcknowledge):
+            event_dict.action = "acknowledge"
+            event_dict.nodes["receive"] = 2
+            event_dict.timestamps["receive"] = "23428011"
+            event_dict.type = JSON_TYPES[type]
+            event_dict.data = {"value: 0.5"}
+        else:
+            event_dict.action = "send"
+            event_dict.type = JSON_TYPES[type]
+            event_dict.data = {"value: 0.5"}
+        # end if
+        result["events"].append(event_dict)
+    # end for
+    return jsonify(result, allow_all_origin=True)
+# end def
+
+
+def generate_node(node, origin, ):
+    return {
+        "node": "1",
+        "origin": "4",
+        "log": "This is a log. [VOTE]",
+        "value": "0.5",
+        "timestamp": "1"
+    }
+# end def
 
 @app.route(API_V1+"/get_data")
 @app.route(API_V1+"/get_data/")
