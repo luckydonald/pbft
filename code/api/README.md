@@ -1,7 +1,7 @@
 # The events
 
 
-| Type            | Message | Init | Propose | Prevote | Vote | Ack |
+| Type \ Class    | Message | Init | Propose | Prevote | Vote | Ack |
 | --------------- | ------- | ---- | ------- | ------- | ---- | --- |
 | **Sequence**    | X | X | X | X | X | X |
 | **Node**        | X | X | X | X | X | X |
@@ -10,7 +10,6 @@
 | **Value Store** | - | - | X | - | - | - | 
 | **Sender**      | - | - | - | - | - | X | 
 | **Raw**         | - | - | - | - | - | X | 
-
 
 
 

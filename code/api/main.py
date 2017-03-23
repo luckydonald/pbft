@@ -116,14 +116,14 @@ def get_value_v2():
 
 @app.route(API_V2+"/get_timeline")
 @app.route(API_V2+"/get_timeline/")
+@orm.db_session
 def get_timeline():
     node_list = set()
     event_list = list()
     date_min = None
     date_max = None
     node_events = DBMessage.select_by_sql("""
-      SELECT * FROM DBmessage
-      AND date >= NOW() - '10 seconds'::INTERVAL
+      SELECT * FROM DBmessage WHERE date >= NOW() - '10 seconds'::INTERVAL
     """)
     for node_event in node_events:
         event_dict = DictObject.objectify({
@@ -135,10 +135,10 @@ def get_timeline():
              "data": {}
          })
         node_list.add(node_event.node)  # update node list
-        if node_event.date < date_min:
+        if date_min is None or node_event.date < date_min:
             date_min = node_event.date
         # end if
-        if node_event.date > date_max:
+        if date_max is None or node_event.date > date_max:
             date_max = node_event.date
         # end if
         if isinstance(node_event, DBAcknowledge):
@@ -147,7 +147,7 @@ def get_timeline():
             event_dict.action = "acknowledge"
             event_dict.nodes["send"] = received_msg.node
             event_dict.nodes["receive"] = node_event.node
-            event_dict.timestamps["send"] = received_msg.date
+            event_dict.timestamps["receive"] = node_event.date
             event_dict.type = JSON_TYPES[received_msg.type]
             event_dict.data = generate_msg_data(received_msg)
             node_list.add(received_msg.node)  # update node list
@@ -159,24 +159,24 @@ def get_timeline():
                     node=received_msg.node
                 )
                 event_dict.id["send"] = db_received_msg.id
-                event_dict.timestamps["receive"] = db_received_msg.date
-                if db_received_msg.date < date_min:
+                event_dict.timestamps["send"] = db_received_msg.date
+                if date_min is None or db_received_msg.date < date_min:
                     date_min = node_event.date
                 # end if
-                if db_received_msg.date > date_max:
+                if date_max is None or db_received_msg.date > date_max:
                     date_max = node_event.date
                 # end if
             except orm.DatabaseError:
                 event_dict.id["send"] = None
-                event_dict.timestamps["receive"] = None
+                event_dict.timestamps["send"] = None
             # end try
         else:
             event_dict.action = "send"
             event_dict.id["send"] = node_event.id
             event_dict.nodes["send"] = node_event.node
             event_dict.timestamps["send"] = node_event.date
-            event_dict.type = JSON_TYPES[event_dict._discriminator_]
-            event_dict.data = generate_msg_data(event_dict)
+            event_dict.type = JSON_TYPES[node_event.type]
+            event_dict.data = generate_msg_data(node_event)
         # end if
         event_list.append(event_dict)
     # end for
@@ -190,13 +190,10 @@ def get_timeline():
 
 
 def generate_msg_data(msg):
-    return {
-        "node": "1",
-        "origin": "4",
-        "log": "This is a log. [VOTE]",
-        "value": "0.5",
-        "timestamp": "1"
-    }
+    if isinstance(msg, DBMessage):
+        msg = msg.from_db()
+    assert isinstance(msg, Message)
+    return msg.to_dict()
 # end def
 
 @app.route(API_V1+"/get_data")

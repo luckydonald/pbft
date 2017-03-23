@@ -87,7 +87,7 @@ class DBPrevoteMessage(DBMessage):
     # end def
 
     def from_db(self):
-        return messages.PrevoteMessage(sequence_no=self.sequence_no, node=self.node, leader=self.leader)
+        return messages.PrevoteMessage(sequence_no=self.sequence_no, node=self.node, leader=self.leader, value=self.value)
     # end def
 # end class
 
