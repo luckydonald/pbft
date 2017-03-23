@@ -3,7 +3,7 @@ from pony import orm
 import logging
 
 from node import messages
-from node.enums import UNSET, INIT, PROPOSE, PREVOTE, VOTE
+from node.enums import UNSET, INIT, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE
 from .env import POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASS, POSTGRES_DB
 
 __author__ = "luckydonald"
@@ -104,11 +104,32 @@ class DBVoteMessage(DBMessage):
 # end class
 
 
+class DBAcknowledge(DBMessage):
+    _discriminator_ = ACKNOWLEDGE
+
+    node = orm.Required(int)
+    sender = orm.Required(int)
+    raw = orm.Optional(orm.Json)
+
+    @classmethod
+    def to_db(cls, msg):
+        assert isinstance(msg, messages.Acknowledge)
+        return super().to_db(msg)
+    # end def
+
+    def from_db(self):
+        return messages.Acknowledge(sequence_no=self.sequence_no, node=self.node, sender=self.sender, raw=self.raw)
+    # end def
+# end class
+
+
 MSG_TYPE_CLASS_MAP = {
     INIT: DBInitMessage,
     PROPOSE: DBProposeMessage,
     PREVOTE: DBPrevoteMessage,
     VOTE: DBVoteMessage,
+    # ...
+    ACKNOWLEDGE: DBAcknowledge,
 }
 
 

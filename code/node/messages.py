@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from luckydonaldUtils.logger import logging
 
-from .enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE
+from .enums import INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ class Message(object):
     def from_dict(cls, data):
         assert "type" in data
         type = data["type"]
-        assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE]
+        assert type in [INIT, LEADER_CHANGE, PROPOSE, PREVOTE, VOTE, ACKNOWLEDGE]
         if type == INIT:
             return InitMessage.from_dict(data)
         # end def
@@ -32,6 +32,9 @@ class Message(object):
         # end def
         if type == VOTE:
             return VoteMessage.from_dict(data)
+        # end def
+        if type == ACKNOWLEDGE:
+            return Acknowledge.from_dict(data)
         # end def
         return cls(**{
             "type": data["type"],
@@ -209,5 +212,34 @@ class NewLeaderMessage(Message):
         self.node = node
         self.leader = leader
         self.value = value
+    # end def
+# end class
+
+
+class Acknowledge(Message):
+    def __init__(self, sequence_no, node, sender, raw):
+        super().__init__(ACKNOWLEDGE, sequence_no)
+        self.node = node
+        self.sender = sender
+        self.raw = raw
+    # end def
+
+    @classmethod
+    def from_dict(cls, data):
+        kwargs = {
+            "sequence_no": data["sequence_no"],
+            "node": data["node"],
+            "sender": data["sender"],
+            "raw": data["raw"],
+        }
+        return cls(**kwargs)
+    # end def
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["node"] = self.node
+        data["sender"] = self.sender
+        data["raw"] = self.raw
+        return data
     # end def
 # end class
