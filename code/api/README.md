@@ -1,15 +1,18 @@
 # The events
 
 
-| Message | Init | Propose | Prevote | Vote | Ack |
-| --- | --- | --- | --- | --- | --- |
-| Sequence | Sequence | Sequence | Sequence | Sequence | Sequence |
-| Node | Node | Node | Node | Node | Node |
-| - | Value | - | Value | Value | - | 
-| - | - | Leader | Leader | Leader | - | 
-| - | - | Value Store | - | - | - | 
-| - | - | - | - | - | Sender | 
-| - | - | - | - | - | Raw | 
+| Type            | Message | Init | Propose | Prevote | Vote | Ack |
+| --------------- | ------- | ---- | ------- | ------- | ---- | --- |
+| **Sequence**    | X | X | X | X | X | X |
+| **Node**        | X | X | X | X | X | X |
+| **Value**       | - | X | - | X | X | - | 
+| **Leader**      | - | - | X | X | X | - | 
+| **Value Store** | - | - | X | - | - | - | 
+| **Sender**      | - | - | - | - | - | X | 
+| **Raw**         | - | - | - | - | - | X | 
+
+
+
 
 
 
