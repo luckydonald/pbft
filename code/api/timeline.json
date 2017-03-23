@@ -3,35 +3,35 @@
     "timestamps": {"min": "23428001", "max": "23428013"},
     "events": [
         {
-            "db_id": 1,
+            "id": {"send": 1},
             "action": "send",
             "type": "init",
-            "nodes": {"send": 1},
+            "nodes": {"send": "1"},
             "timestamps": {"send": "23428001"},
             "data": {"value": "0.5"}
         },
         {
-            "db_id": 2,
+            "id": {"send": 1, "receive": 2},
             "action": "acknowledge",
             "type": "init",
-            "nodes": {"send": 1, "receive": 2},
+            "nodes": {"send": "1", "receive": "2"},
             "timestamps": {"send": "23428001", "receive": "23428011"},
             "data": {"value": "0.5"}
 
         },
         {
-            "db_id": 3,
+            "id": {"send": null, "receive": 3},
             "action": "acknowledge",
             "type": "init",
-            "nodes": {"send": 1, "receive": 3},
-            "timestamps": {"send": "23428001", "receive": "23428013"},
+            "nodes": {"send": "1", "receive": "3"},
+            "timestamps": {"send": null, "receive": "23428013"},
             "data": {"value": "0.5"}
         },
         {
-            "db_id": 4,
+            "id": {"send": 1, "receive": 4},
             "action": "acknowledge",
             "type": "init",
-            "nodes": {"send": 1, "receive": 3},
+            "nodes": {"send": "1", "receive": "3"},
             "timestamps": {"send": "23428001", "receive": "23428013"},
             "data": {"value": "0.5"}
         }

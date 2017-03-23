@@ -8,8 +8,10 @@ from pony import orm
 
 from .enums import JSON_TYPES
 from .utils import jsonify
-from .database import to_db, db, DBVoteMessage, DBMessage, DBInitMessage, DBPrevoteMessage, DBProposeMessage, DBAcknowledge
+from .database import to_db, db, DBVoteMessage, DBMessage, DBInitMessage, DBPrevoteMessage, DBProposeMessage, DBAcknowledge, \
+    MSG_TYPE_CLASS_MAP
 from node.enums import INIT  # noqa # pylint: disable=unused-import
+from node.messages import Message  # noqa # pylint: disable=unused-import
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
@@ -126,25 +128,42 @@ def get_timeline():
     """)
     for node_event in node_events:
         event_dict = DictObject.objectify({
-             "db_id": None,
-             "action": None,
+             "id": {},  # for deduplication in the GUI
+             "action": None, # "send" or "acknowledge"
              "type": None,
              "nodes": {},
              "timestamps": {},
-             "data": {"value": "0.5"}
+             "data": {}
          })
-        event_dict.nodes["send"] = 1
-        event_dict.timestamps["send"] = "23428001"
-        if isinstance(node_events, DBAcknowledge):
+        if isinstance(node_event, DBAcknowledge):
+            received_msg = Message.from_dict(node_event.raw)
+            event_dict.id["receive"] = node_event.id
             event_dict.action = "acknowledge"
-            event_dict.nodes["receive"] = 2
-            event_dict.timestamps["receive"] = "23428011"
-            event_dict.type = JSON_TYPES[type]
-            event_dict.data = {"value: 0.5"}
+            event_dict.nodes["send"] = received_msg.node
+            event_dict.nodes["receive"] = node_event.node
+            event_dict.timestamps["send"] = received_msg.date
+            event_dict.type = JSON_TYPES[received_msg.type]
+            event_dict.data = generate_msg_data(received_msg)
+            # additional DB query, to get sender
+            DBClazz = MSG_TYPE_CLASS_MAP[received_msg.type]
+            try:
+                db_received_msg = DBClazz.get(
+                    sequence_no=received_msg.sequence_no,
+                    node=received_msg.node
+                )
+                event_dict.id["send"] = db_received_msg.id
+                event_dict.timestamps["receive"] = db_received_msg.date
+            except orm.DatabaseError:
+                event_dict.id["send"] = None
+                event_dict.timestamps["receive"] = None
+            # end try
         else:
             event_dict.action = "send"
-            event_dict.type = JSON_TYPES[type]
-            event_dict.data = {"value: 0.5"}
+            event_dict.id["send"] = node_event.id
+            event_dict.nodes["send"] = node_event.node
+            event_dict.timestamps["send"] = node_event.date
+            event_dict.type = JSON_TYPES[event_dict._discriminator_]
+            event_dict.data = generate_msg_data(event_dict)
         # end if
         result["events"].append(event_dict)
     # end for
@@ -152,7 +171,7 @@ def get_timeline():
 # end def
 
 
-def generate_node(node, origin, ):
+def generate_msg_data(msg):
     return {
         "node": "1",
         "origin": "4",
