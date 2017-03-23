@@ -7,7 +7,7 @@ angular.
     module('failureTable').
     component('failureTable', {
         templateUrl: 'failure-table/failure-table.template.html',
-        controller: ['$http','$compile','$scope', function FailureTableController($http,$compile,$scope) {
+        controller: ['$http','$compile','$scope', '$interval', function FailureTableController($http,$compile,$scope,$interval) {
             var self = this;
             var svg = null;
             var svgWidth = 0;
@@ -17,14 +17,18 @@ angular.
             var nC = "white";             // node color
             var gap = 0;                // gap between nodes, will be set in method setupNodeElements
             var tlPositions = [];
+            var circleLog = [];         // logs at which position there have already been drawn circles to prevent stacking them
+            var startstamp = 0;         // first timestamp that appears in the timeline
             var yProgress = 0;
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
+            var scale = 1;
+            
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
 
             //TODO: Nodes dynamisch hinzufügen?
-            self.nodes = [{
+            self.nodes = [/*{
                 "id": "1"    
             }, {
                 "id": "2"
@@ -32,29 +36,34 @@ angular.
                 "id": "3"
             }, {
                 "id": "4"
-            }];
+            }*/];
 
             var tlData = null;
 
             //$http.get('test_timeline.json').then(function(response) {
             $http.get('test_timeline.json').success(function(response){
                 tlData = response;
-                var str = "### TL DATA :: ";
-                for (var i = 0; i < tlData.length; i++) {
-                    str = str+ "(" +i+ ")->[TYPE:"+tlData[i].type+"][DATA:";
-                    for (var j = 0; j < tlData[i].data.length; j++) {
-                        str = str+ "{node:" +tlData[i].data[j].node+ ";origin:" +tlData[i].data[j].origin+ ";value:" +tlData[i].data[j].value+ "}";
-                    }
-                    str = str+ "] "
-                }
-                out(str);
+                /*var str = "### TL DATA :: ";
+                 for (var i = 0; i < tlData.length; i++) {
+                 str = str+ "(" +i+ ")->[TYPE:"+tlData[i].type+"][DATA:";
+                 for (var j = 0; j < tlData[i].data.length; j++) {
+                 str = str+ "{node:" +tlData[i].data[j].node+ ";origin:" +tlData[i].data[j].origin+ ";value:" +tlData[i].data[j].value+ "}";
+                 }
+                 str = str+ "] "
+                 }
+                 out(str);*/
+
+                // TODO: self.nodes setzen!
+                self.nodes = tlData.nodes;
+
+                // TODO: startstamp setzen! -> Attribut timerange in response
 
                 self.setupTimeline(null,false);
             });
 
             self.setupTimeline = (function(data, help) {
                 d3.select("div#timeline").select("*").remove();
-                data = self.nodes;      // please remove later :X
+                data = self.nodes;
                 svg = d3.select("div#timeline")
                     .append("svg")
                     .attr("width","100%").attr("height","400px");
@@ -81,6 +90,10 @@ angular.
                 setupNodeElements(svgHeight);
                 handleTimelineInput(tlData);
             });
+
+            /*var pollTimeline = function() {
+
+            }*/
 
             // removes everything except the defs and arrows ^-^
             function clearSvg() {
@@ -209,87 +222,19 @@ angular.
                     .attr("x2",(x+(nW/2))).attr("y2",svg.attr("height"))
                     .attr("stroke",nC).attr("stroke-width",1).attr("stroke-linecap","round").attr("stroke-dasharray","1,5");
             }
-
+            
             //TODO: Circle-Generierung optimieren; geht sicher auch ohne logInfoStore!
             function handleTimelineInput(data) {
-                var color = null;
-                var arrow = null;
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].type === "init") {
-                        color = colors[0];
-                        arrow = "initArrow";
-                    } else if (data[i].type === "propose") {
-                        color = colors[1];
-                        arrow = "proposeArrow";
-                    } else if (data[i].type === "prevote") {
-                        color = colors[2];
-                        arrow = "prevoteArrow";
-                    } else if (data[i].type === "vote") {
-                        color = colors[3];
-                        arrow = "voteArrow";
+                for (var i = 0; i < data.events.length; i++) {
+                    var event = data.events[i];
+                    //var yHeight = 0;
+
+                    if (event.action === "acknowledge") {
+                        drawEndLine(event);
                     } else {
-                        out("Well, that was unexpected. (BAD TYPE)")
-                        return;
+                        drawStartingCircle(event);
                     }
-
-                    var lineData = data[i].data;
-                    var circleLog = [];
-                    var yHeight = 0;
-                    for (var j = 0; j < lineData.length; j++) {
-                        if (circleLog[lineData[j].origin] == null || circleLog[lineData[j].origin] == 1) {
-                            svg.append("circle")
-                                .classed("startp","true")
-                                .classed(("c_"+logInfoStore.length),"true")
-                                .classed("new","true")
-                                .attr("cx",tlPositions[lineData[j].origin])
-                                .attr("cy",yProgress)
-                                .attr("r",7)
-                                .attr("fill",color)
-                                .attr("ng-click","$ctrl.showLogInfo("+logInfoStore.length+")");
-                            circleLog[lineData[j].origin] = (circleLog[lineData[j].origin] == null ? 0 : 2);
-                            // maybe add else[...} to update log entry with every "double" circle?
-
-                            // highly dependent on the yProgress value! REMEMBER WHEN APPLYING CHANGES!
-                            var logInfoObj = {id:(""+logInfoStore.length), cx:tlPositions[lineData[j].origin], cy:yProgress, col:color, timestamp:(""+lineData[j].timestamp), log:(""+lineData[j].log)};
-                            logInfoStore.push(logInfoObj);
-                        }
-                        if (circleLog[lineData[j].node] == null || circleLog[lineData[j].node] == 0) {
-                            svg.append("circle")
-                                .classed("endp","true")
-                                .classed(("c_"+logInfoStore.length),"true")
-                                .classed("new","true")
-                                .attr("cx",tlPositions[lineData[j].node])
-                                .attr("cy",yProgress+100)
-                                .attr("r",7)
-                                .attr("fill",color)
-                                .attr("ng-click","$ctrl.showLogInfo("+logInfoStore.length+")");
-                            circleLog[lineData[j].node] = (circleLog[lineData[j].node] == null ? 1 : 2);
-                            // maybe add else[...} to update log entry with every "double" circle?
-
-                            // highly dependent on the yProgress value! REMEBER WHEN APPLYING CHANGES!
-                            var logInfoObj = {id:(""+logInfoStore.length), cx:tlPositions[lineData[j].node], cy:yProgress+100, col:color, timestamp:(""+lineData[j].timestamp), log:(""+lineData[j].log)};
-                            logInfoStore.push(logInfoObj);
-                        }
-
-                        var x1 = tlPositions[lineData[j].origin];
-                        var x2 = tlPositions[lineData[j].node];
-                        // +18 when line will go from right to left, -18 otherwise
-                        var actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
-                        var y2 = calculateYCoordinate(
-                            {"x":x1,"y":yProgress}, // starting point of line
-                            {"x":x2,"y":yProgress+100}, // ending point of line
-                            actualX2  // x value to determine corresponding y
-                        );
-                        svg.append("line")
-                            .attr("x1",x1).attr("y1",yProgress)
-                            .attr("x2",actualX2).attr("y2",y2)
-                            .attr("stroke",color).attr("stroke-width",2)
-                            .attr("marker-end",("url(#"+arrow+")"));
-
-                        yHeight = y2 - yProgress;
-                    }
-
-                    eHeight = eHeight + (yProgress-eHeight) + 28 + yHeight + 50;             // eHeight + (margin from last phase or nodes) + (span of two circles) + (y height of the lines) + (additional margin)
+                    
                     if(eHeight > parseInt(svg.attr("height"),10)) {
                         svg.attr("height",(eHeight+"px"));
                         setupBackground(eHeight);
@@ -299,8 +244,7 @@ angular.
                             line.y2.baseVal.value = eHeight;
                         }
                     }
-
-                    yProgress = yProgress+150;
+                    
                     circleLog = [];
                 }
 
@@ -312,6 +256,96 @@ angular.
                 }
                 circles.classed("new","false");
 
+            }
+
+            function drawStartingCircle(data) {
+                var color = "";
+                switch (data.type) {
+                    case "init":
+                        color = colors[0];
+                        break;
+                    case "propose":
+                        color = colors[1];
+                        break;
+                    case "prevote":
+                        color = colors[2];
+                        break;
+                    case "vote":
+                        color = colors[3];
+                        break;
+                }
+
+                //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 1) {
+                    svg.append("circle")
+                        .classed("startp","true")
+                        .classed(("c_"+data.id.send),"true")
+                        .classed("new","true")
+                        .attr("cx",tlPositions[data.nodes.send])
+                        .attr("cy",(Date.parse(data.timestamp.send)-startstamp)*scale+yProgress)
+                        .attr("r",7)
+                        .attr("fill",color)
+                        .attr("ng-click","$ctrl.showLogInfo("+data.id.send+")");
+                    //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
+                //}
+                
+                var logInfoObj = {id:(""+data.id.send), cx:tlPositions[data.nodes.send], cy:(Date.parse(data.timestamp.send)-startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamp.send)};
+                logInfoStore.push(logInfoObj);
+
+                // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
+                eHeight = eHeight + ((Date.parse(data.timestamp.send)-startstamp)*scale-eHeight) + 28 + 50;
+            }
+
+            function drawEndLine(data) {
+                var color = "";
+                var arrow = data.type+"Arrow";
+                switch (data.type) {
+                    case "init":
+                        color = colors[0];
+                        break;
+                    case "propose":
+                        color = colors[1];
+                        break;
+                    case "prevote":
+                        color = colors[2];
+                        break;
+                    case "vote":
+                        color = colors[3];
+                        break;
+                }
+
+                //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 0) {
+                    svg.append("circle")
+                        .classed("endp","true")
+                        .classed(("c_"+data.id.receive),"true")
+                        .classed("new","true")
+                        .attr("cx",tlPositions[data.nodes.receive])
+                        .attr("cy",(Date.parse(data.timestamp.receive)-startstamp)*scale+yProgress)
+                        .attr("r",7)
+                        .attr("fill",color)
+                        .attr("ng-click","$ctrl.showLogInfo("+data.id.receive+")");
+                    //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
+                    
+                    var logInfoObj = {id:(""+data.id.receive), cx:tlPositions[data.nodes.receive], cy:(Date.parse(data.timestamp.receive)-startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamp.receive)};
+                    logInfoStore.push(logInfoObj);
+                //}
+
+                var x1 = tlPositions[data.nodes.send];
+                var x2 = tlPositions[data.nodes.receive];
+                // +18 when line will go from right to left, -18 otherwise
+                var actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
+                var y2 = calculateYCoordinate(
+                    {"x":x1,"y":data.timestamp.send}, // starting point of line
+                    {"x":x2,"y":data.timestamp.receive}, // ending point of line
+                    actualX2  // x value to determine corresponding y
+                );
+                svg.append("line")
+                    .attr("x1",x1).attr("y1",data.timestamp.send-startstamp)
+                    .attr("x2",actualX2).attr("y2",y2)
+                    .attr("stroke",color).attr("stroke-width",2)
+                    .attr("marker-end",("url(#"+arrow+")"));
+
+                // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
+                eHeight = eHeight + ((Date.parse(data.timestamp.receive)-startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function repositionSvgContent(oldWidth,newWidth) {
@@ -369,72 +403,6 @@ angular.
                         var x = i*nW+(i+1)*gap;
                         text.x.baseVal[0].value = x+(nW/2-getTextWidth(text.innerHTML)/2);
                     }
-                    /*var content = svg.selectAll("rect:not(.svgBg)");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var rect = content[0][i];
-                        rect.x.baseVal.value = rect.x.baseVal.value * perc;
-                        rect.width.baseVal.value = rect.width.baseVal.value * perc;
-                        nW = rect.width.baseVal.value;
-                    }
-                    content = svg.selectAll("rect.svgBg");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var bg = content[0][i];
-                        bg.width.baseVal.value = bg.width.baseVal.value * perc;
-                    }
-                    var endps = svg.selectAll("circle.endp");     // end point circles before position shifting
-                    var beforeShift = [];
-                    out("beforeShift");
-                    for (var i = 0; i < endps[0].length; i++) {
-                        beforeShift[i] = endps[0][i].cx.baseVal.value;
-                    }
-                    content = svg.selectAll("circle");
-                    out("afterShift");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var circle = content[0][i];
-                        circle.cx.baseVal.value = circle.cx.baseVal.value * perc;
-                    }
-                    endps = svg.selectAll("circle.endp");
-                    content = svg.selectAll("line.nodeLine");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var line = content[0][i];
-                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
-                        line.x2.baseVal.value = line.x2.baseVal.value * perc;
-                    }
-                    content = svg.selectAll("line:not(.nodeLine)");
-                    var endpCX = beforeShift[0];    // temp for checking if current line has same end point as previous line
-                    var j = 0;
-                    out("endpCX");
-                    for (var i = 0; i < content[0].length; i++) {
-                        //out("endps[0].length:"+endps[0].length);
-                        var line = content[0][i];
-                        line.x1.baseVal.value = line.x1.baseVal.value * perc;
-                        //out("i:"+i+"; j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; endpCX-arrowOffset:"+(endpCX-arrowOffset)+"; endpCX+arrowOffset:"+(endpCX+arrowOffset));
-                        if (!(line.x2.baseVal.value == endpCX-arrowOffset) && !(line.x2.baseVal.value == endpCX+arrowOffset)) {
-                            //out("J++!");
-                            j++;
-                            endpCX = beforeShift[j];
-                        }
-                        out("i:"+i);
-                        if (line.x2.baseVal.value == endpCX-arrowOffset) {  // line goes from left to right
-                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value-arrowOffset;
-                        } else {                                            //line goes from right to left
-                            line.x2.baseVal.value = endps[0][j].cx.baseVal.value+arrowOffset;
-                        }
-                        //out("   |_> j:"+j+"; line.x2.baseVal.value:"+line.x2.baseVal.value+"; beforeShift[j]:"+beforeShift[j]+"; endps[0][j].cx.baseVal.value:"+endps[0][j].cx.baseVal.value);
-                    }
-                    content = svg.selectAll("text");
-                    for (var i = 0; i < content[0].length; i++) {
-                        var text = content[0][i];
-                        //var x = i*nW+(i+1)*gap;
-                        //x+(nW/2-txtW/2)
-                        if (getTextWidth((text.innerHTML.length > 1 ? text.innerHTML : "Node "+text.innerHTML))+10 >= nW) {
-                            text.innerHTML = delFromString(text.innerHTML,"Node ");
-                        } else {
-                            text.innerHTML = (text.innerHTML.length > 1 ? text.innerHTML : "Node "+text.innerHTML);
-                        }
-                        var x = i*nW+(i+1)*gap;
-                        text.x.baseVal[0].value = x+(nW/2-getTextWidth(text.innerHTML)/2);
-                    }*/
                 }
             }
             
