@@ -24,6 +24,9 @@ class DBMessage(db.Entity):
     node = orm.Optional(NODE_TYPE)
     value = orm.Optional(VALUE_TYPE)
     leader = orm.Optional(NODE_TYPE)
+    sender = orm.Optional(NODE_TYPE)
+    raw = orm.Optional(orm.Json)
+
     _discriminator_ = UNSET
 
     def from_db(self):
@@ -106,10 +109,6 @@ class DBVoteMessage(DBMessage):
 
 class DBAcknowledge(DBMessage):
     _discriminator_ = ACKNOWLEDGE
-
-    node = orm.Required(int)
-    sender = orm.Required(int)
-    raw = orm.Optional(orm.Json)
 
     @classmethod
     def to_db(cls, msg):
