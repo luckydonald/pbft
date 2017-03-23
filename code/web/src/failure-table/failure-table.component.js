@@ -23,6 +23,7 @@ angular.
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
 
+            //TODO: Nodes dynamisch hinzufügen?
             self.nodes = [{
                 "id": "1"    
             }, {
@@ -209,6 +210,7 @@ angular.
                     .attr("stroke",nC).attr("stroke-width",1).attr("stroke-linecap","round").attr("stroke-dasharray","1,5");
             }
 
+            //TODO: Circle-Generierung optimieren; geht sicher auch ohne logInfoStore!
             function handleTimelineInput(data) {
                 var color = null;
                 var arrow = null;
@@ -237,6 +239,8 @@ angular.
                         if (circleLog[lineData[j].origin] == null || circleLog[lineData[j].origin] == 1) {
                             svg.append("circle")
                                 .classed("startp","true")
+                                .classed(("c_"+logInfoStore.length),"true")
+                                .classed("new","true")
                                 .attr("cx",tlPositions[lineData[j].origin])
                                 .attr("cy",yProgress)
                                 .attr("r",7)
@@ -244,11 +248,16 @@ angular.
                                 .attr("ng-click","$ctrl.showLogInfo("+logInfoStore.length+")");
                             circleLog[lineData[j].origin] = (circleLog[lineData[j].origin] == null ? 0 : 2);
                             // maybe add else[...} to update log entry with every "double" circle?
-                            logInfoStore.push({id:""+logInfoStore.length,timestamp:""+lineData[j].timestamp,log:""+lineData[j].log});
+
+                            // highly dependent on the yProgress value! REMEMBER WHEN APPLYING CHANGES!
+                            var logInfoObj = {id:(""+logInfoStore.length), cx:tlPositions[lineData[j].origin], cy:yProgress, col:color, timestamp:(""+lineData[j].timestamp), log:(""+lineData[j].log)};
+                            logInfoStore.push(logInfoObj);
                         }
                         if (circleLog[lineData[j].node] == null || circleLog[lineData[j].node] == 0) {
                             svg.append("circle")
                                 .classed("endp","true")
+                                .classed(("c_"+logInfoStore.length),"true")
+                                .classed("new","true")
                                 .attr("cx",tlPositions[lineData[j].node])
                                 .attr("cy",yProgress+100)
                                 .attr("r",7)
@@ -256,7 +265,10 @@ angular.
                                 .attr("ng-click","$ctrl.showLogInfo("+logInfoStore.length+")");
                             circleLog[lineData[j].node] = (circleLog[lineData[j].node] == null ? 1 : 2);
                             // maybe add else[...} to update log entry with every "double" circle?
-                            logInfoStore.push({id:""+logInfoStore.length,timestamp:""+lineData[j].timestamp,log:""+lineData[j].log});
+
+                            // highly dependent on the yProgress value! REMEBER WHEN APPLYING CHANGES!
+                            var logInfoObj = {id:(""+logInfoStore.length), cx:tlPositions[lineData[j].node], cy:yProgress+100, col:color, timestamp:(""+lineData[j].timestamp), log:(""+lineData[j].log)};
+                            logInfoStore.push(logInfoObj);
                         }
 
                         var x1 = tlPositions[lineData[j].origin];
@@ -290,15 +302,20 @@ angular.
 
                     yProgress = yProgress+150;
                     circleLog = [];
-                    var circles = svg.selectAll("circle");
-                    for (var j = 0; j < circles[0].length; j++) {
-                        $compile(circles[0][j])($scope);
-                    }
                 }
+
+                var circles = svg.selectAll("circle.new");
+                for (var j = 0; j < circles[0].length; j++) {
+                    $compile(circles[0][j])($scope);
+                    /*var cls = getAttrValue(circles[0][j],"class").split(" ");
+                    setAttrValue(circles[0][j],"class",(cls[0]))*/
+                }
+                circles.classed("new","false");
+
             }
 
             function repositionSvgContent(oldWidth,newWidth) {
-                out("old width:"+oldWidth+" -> new width:"+newWidth);
+                //out("old width:"+oldWidth+" -> new width:"+newWidth);
                 if (oldWidth != newWidth) {
                     var perc = (newWidth/(oldWidth/100))/100; //percentage where 1.0 equals 100%, how many % is newWidth to oldWidth
                     gap = gap*perc;
@@ -318,6 +335,14 @@ angular.
                         } else if (content[0][i].tagName === "circle") {
                             var circle = content[0][i];
                             circle.cx.baseVal.value = circle.cx.baseVal.value * perc;
+                            // change cx value in log info store too!
+                            var classes = circle.attributes.class.nodeValue.split(" ");
+                            for (var j = 0; j < classes.length; j++) {
+                                if (classes[j][0] === "c") {
+                                    var cid = parseInt(classes[j].split("_")[1]);
+                                    logInfoStore[cid].cx = circle.cx.baseVal.value;
+                                }
+                            }
                         } else if (content[0][i].tagName === "line") {
                             if (content[0][i].attributes.class === undefined
                                 || !(content[0][i].attributes.class.nodeValue === "nodeLine")) {
@@ -421,19 +446,27 @@ angular.
                         break;
                     }
                 }
-                if (element = null) {
+                if (element === null) {
                     return;
                 }
-                alert("TIMESTAMP:"+element.timestamp+"; LOG:"+element.log);
+                //alert("cx:"+element.cx);
+
+                svg.append("rect")
+                    .classed(("r_"+element.id),"true")
+                    .attr("x",element.cx-50).attr("y",element.cy+10)
+                    .attr("width",100).attr("height",50)
+                    .attr("fill",element.col)
+                    .attr("ng-click","$ctrl.hideLogInfo("+element.id+");");
+                var rects = svg.selectAll("rect.r_"+element.id);
+                for (var i = 0; i < rects[0].length; i++) {
+                    $compile(rects[0][i])($scope);
+                }
+
             });
 
-            function hideLogInfo(infoClass) {
-
-            }
-
-            function drawOpenedLogInfos() {
-
-            }
+            self.hideLogInfo = (function(id) {
+                svg.select("rect.r_"+id).remove();
+            });
 
             function getTextWidth(str) {
                 var temp = d3.select("body")
@@ -443,6 +476,24 @@ angular.
                 temp.remove();
 
                 return tW;
+            }
+
+            function getAttrValue(elem,attr) {
+                for (var i = 0; i < elem.attributes.length; i++) {
+                    var splitted = elem.attributes[i].split("=");
+                    if (splitted[0] === attr) {
+                        return splitted[1];
+                    }
+                }
+                return "NOTFOUND";
+            }
+
+            function setAttrValue(elem,attr,val) {
+                for (var i = 0; i < elem.attributes.length; i++) {
+                    if (elem.attributes[i].split("=")[0] === attr) {
+                        elem.attributes[i].value = val;
+                    }
+                }
             }
 
             function setupHelpMeasurements(svgHeight) {
