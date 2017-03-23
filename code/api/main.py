@@ -117,11 +117,10 @@ def get_value_v2():
 @app.route(API_V2+"/get_timeline")
 @app.route(API_V2+"/get_timeline/")
 def get_timeline():
-    result = {
-        "nodes": ["1", "2"],
-        "timestamps": {"min": "23428001", "max": "23428013"},
-        "events": []
-    }
+    node_list = set()
+    event_list = list()
+    date_min = None
+    date_max = None
     node_events = DBMessage.select_by_sql("""
       SELECT * FROM DBmessage
       AND date >= NOW() - '10 seconds'::INTERVAL
@@ -135,6 +134,13 @@ def get_timeline():
              "timestamps": {},
              "data": {}
          })
+        node_list.add(node_event.node)  # update node list
+        if node_event.date < date_min:
+            date_min = node_event.date
+        # end if
+        if node_event.date > date_max:
+            date_max = node_event.date
+        # end if
         if isinstance(node_event, DBAcknowledge):
             received_msg = Message.from_dict(node_event.raw)
             event_dict.id["receive"] = node_event.id
@@ -144,6 +150,7 @@ def get_timeline():
             event_dict.timestamps["send"] = received_msg.date
             event_dict.type = JSON_TYPES[received_msg.type]
             event_dict.data = generate_msg_data(received_msg)
+            node_list.add(received_msg.node)  # update node list
             # additional DB query, to get sender
             DBClazz = MSG_TYPE_CLASS_MAP[received_msg.type]
             try:
@@ -153,6 +160,12 @@ def get_timeline():
                 )
                 event_dict.id["send"] = db_received_msg.id
                 event_dict.timestamps["receive"] = db_received_msg.date
+                if db_received_msg.date < date_min:
+                    date_min = node_event.date
+                # end if
+                if db_received_msg.date > date_max:
+                    date_max = node_event.date
+                # end if
             except orm.DatabaseError:
                 event_dict.id["send"] = None
                 event_dict.timestamps["receive"] = None
@@ -165,8 +178,13 @@ def get_timeline():
             event_dict.type = JSON_TYPES[event_dict._discriminator_]
             event_dict.data = generate_msg_data(event_dict)
         # end if
-        result["events"].append(event_dict)
+        event_list.append(event_dict)
     # end for
+    result = DictObject.objectify({
+        "nodes": node_list,
+        "timestamps": {"min": date_min, "max": date_max},
+        "events": event_list,
+    })
     return jsonify(result, allow_all_origin=True)
 # end def
 
