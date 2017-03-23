@@ -1,3 +1,18 @@
+# The events
+
+
+| Message | Init | Propose | Prevote | Vote | Ack |
+| --- | --- | --- | --- | --- | --- |
+| Sequence | Sequence | Sequence | Sequence | Sequence | Sequence |
+| Node | Node | Node | Node | Node | Node |
+| - | Value | - | Value | Value | - | 
+| - | - | Leader | Leader | Leader | - | 
+| - | - | Value Store | - | - | - | 
+| - | - | - | - | - | Sender | 
+| - | - | - | - | - | Raw | 
+
+
+
 # `GET /get_value`
 
 Returns the latest value the nodes decided on,
