@@ -147,7 +147,7 @@ def get_timeline():
             event_dict.action = "acknowledge"
             event_dict.nodes["send"] = received_msg.node
             event_dict.nodes["receive"] = node_event.node
-            event_dict.timestamps["receive"] = node_event.date
+            event_dict.timestamps["receive"] = generate_date_data(node_event.date)
             event_dict.type = JSON_TYPES[received_msg.type]
             event_dict.data = generate_msg_data(received_msg)
             node_list.add(received_msg.node)  # update node list
@@ -159,7 +159,7 @@ def get_timeline():
                     node=received_msg.node
                 )
                 event_dict.id["send"] = db_received_msg.id
-                event_dict.timestamps["send"] = db_received_msg.date
+                event_dict.timestamps["send"] = generate_date_data(db_received_msg.date)
                 if date_min is None or db_received_msg.date < date_min:
                     date_min = node_event.date
                 # end if
@@ -168,13 +168,13 @@ def get_timeline():
                 # end if
             except orm.DatabaseError:
                 event_dict.id["send"] = None
-                event_dict.timestamps["send"] = None
+                event_dict.timestamps["send"] = generate_date_data(None)
             # end try
         else:
             event_dict.action = "send"
             event_dict.id["send"] = node_event.id
             event_dict.nodes["send"] = node_event.node
-            event_dict.timestamps["send"] = node_event.date
+            event_dict.timestamps["send"] = generate_date_data(node_event.date)
             event_dict.type = JSON_TYPES[node_event.type]
             event_dict.data = generate_msg_data(node_event)
         # end if
@@ -182,10 +182,19 @@ def get_timeline():
     # end for
     result = DictObject.objectify({
         "nodes": node_list,
-        "timestamps": {"min": date_min, "max": date_max},
+        "timestamps": {"min": generate_date_data(date_min), "max": generate_date_data(date_max)},
         "events": event_list,
     })
     return jsonify(result, allow_all_origin=True)
+# end def
+
+
+def generate_date_data(datetime_obj):
+    if datetime_obj is None:
+        return {"string": "unknown", "unix": None}
+    # end if
+    assert isinstance(datetime_obj, datetime)
+    return {"string": datetime_obj, "unix": datetime_obj.timestamp()}
 # end def
 
 
@@ -193,8 +202,10 @@ def generate_msg_data(msg):
     if isinstance(msg, DBMessage):
         msg = msg.from_db()
     assert isinstance(msg, Message)
-    return msg.to_dict()
+    msg = msg.to_dict()
+    return msg
 # end def
+
 
 @app.route(API_V1+"/get_data")
 @app.route(API_V1+"/get_data/")

@@ -18,29 +18,19 @@ angular.
             var gap = 0;                // gap between nodes, will be set in method setupNodeElements
             var tlPositions = [];
             var circleLog = [];         // logs at which position there have already been drawn circles to prevent stacking them
-            var startstamp = 0;         // first timestamp that appears in the timeline
+            self.startstamp = 0;         // first timestamp that appears in the timeline
             var yProgress = 0;
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
-            var scale = 1;
-            
+            var scale = 0.001;
+
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
 
-            //TODO: Nodes dynamisch hinzufügen?
-            self.nodes = [/*{
-                "id": "1"    
-            }, {
-                "id": "2"
-            }, {
-                "id": "3"
-            }, {
-                "id": "4"
-            }*/];
+            self.nodes = [/*1, 2, 3, 4*/]; // Nodes are added dynamically.
 
             var tlData = null;
 
-            //$http.get('test_timeline.json').then(function(response) {
             $http.get('test_timeline.json').success(function(response){
                 tlData = response;
                 /*var str = "### TL DATA :: ";
@@ -53,10 +43,8 @@ angular.
                  }
                  out(str);*/
 
-                // TODO: self.nodes setzen!
                 self.nodes = tlData.nodes;
-
-                // TODO: startstamp setzen! -> Attribut timerange in response
+                self.startstamp = tlData.timestamps.min.unix;
 
                 self.setupTimeline(null,false);
             });
@@ -87,7 +75,7 @@ angular.
                 if (help) {
                     setupHelpMeasurements(svgHeight);
                 }
-                setupNodeElements(svgHeight);
+                self.setupNodeElements(svgHeight);
                 handleTimelineInput(tlData);
             });
 
@@ -175,7 +163,7 @@ angular.
                 }
             }
 
-            function setupNodeElements(svgHeight) {      //isAnim selects if node entry should be animated or not
+            self.setupNodeElements = function (svgHeight) {      //isAnim selects if node entry should be animated or not
                 var len = self.nodes.length;
                 nW = svgWidth/(len*len); // node width
                 gap = (svgWidth-(nW*len))/(len+1);  // one gap := (<width of svg> - <width of all nodes combined>) / (<number of gaps present in the svg>)
@@ -188,25 +176,25 @@ angular.
                         .attr("width",nW).attr("height",nH)
                         .attr("fill",nC);
 
-                    var txtW = getTextWidth("Node " +self.nodes[i].id);
+                    var txtW = getTextWidth("Node " +self.nodes);
                     if (nW > txtW+10) {
                         var text = svg.append("text")
-                            .text("Node " +self.nodes[i].id)
+                            .text("Node " +self.nodes)
                             .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
                             .attr("fill"," #124")
                             .attr("font-family","Verdana")
                             .attr("font-weight","bold");
                     } else {
-                        txtW = getTextWidth(self.nodes[i].id);
+                        txtW = getTextWidth(self.nodes[i]);
                         var text = svg.append("text")
-                            .text(self.nodes[i].id)
+                            .text(self.nodes[i])
                             .attr("x",x+(nW/2-txtW/2)).attr("y",(y+nH/2))
                             .attr("fill"," #124")
                             .attr("font-family","Verdana")
                             .attr("font-weight","bold");
                     }
 
-                    tlPositions[self.nodes[i].id] = x+(nW/2);
+                    tlPositions[self.nodes[i]] = x+(nW/2);
                     yProgress = y+nH+30;
 
                     drawNodeLine(x,y);
@@ -281,18 +269,18 @@ angular.
                         .classed(("c_"+data.id.send),"true")
                         .classed("new","true")
                         .attr("cx",tlPositions[data.nodes.send])
-                        .attr("cy",(Date.parse(data.timestamp.send)-startstamp)*scale+yProgress)
+                        .attr("cy",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
                         .attr("fill",color)
                         .attr("ng-click","$ctrl.showLogInfo("+data.id.send+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
                 //}
                 
-                var logInfoObj = {id:(""+data.id.send), cx:tlPositions[data.nodes.send], cy:(Date.parse(data.timestamp.send)-startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamp.send)};
+                var logInfoObj = {id:(""+data.id.send), cx:tlPositions[data.nodes.send], cy:(data.timestamps.send.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamps.send)};
                 logInfoStore.push(logInfoObj);
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
-                eHeight = eHeight + ((Date.parse(data.timestamp.send)-startstamp)*scale-eHeight) + 28 + 50;
+                eHeight = eHeight + ((data.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function drawEndLine(data) {
@@ -319,13 +307,13 @@ angular.
                         .classed(("c_"+data.id.receive),"true")
                         .classed("new","true")
                         .attr("cx",tlPositions[data.nodes.receive])
-                        .attr("cy",(Date.parse(data.timestamp.receive)-startstamp)*scale+yProgress)
+                        .attr("cy",(data.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
                         .attr("fill",color)
                         .attr("ng-click","$ctrl.showLogInfo("+data.id.receive+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
                     
-                    var logInfoObj = {id:(""+data.id.receive), cx:tlPositions[data.nodes.receive], cy:(Date.parse(data.timestamp.receive)-startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamp.receive)};
+                    var logInfoObj = {id:(""+data.id.receive), cx:tlPositions[data.nodes.receive], cy:(data.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamps.receive.string)};
                     logInfoStore.push(logInfoObj);
                 //}
 
@@ -334,18 +322,18 @@ angular.
                 // +18 when line will go from right to left, -18 otherwise
                 var actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
                 var y2 = calculateYCoordinate(
-                    {"x":x1,"y":data.timestamp.send}, // starting point of line
-                    {"x":x2,"y":data.timestamp.receive}, // ending point of line
+                    {"x":x1,"y":(data.timestamps.send.unix-self.startstamp)*scale}, // starting point of line
+                    {"x":x2,"y":(data.timestamps.receive.unix-self.startstamp)*scale}, // ending point of line
                     actualX2  // x value to determine corresponding y
                 );
                 svg.append("line")
-                    .attr("x1",x1).attr("y1",data.timestamp.send-startstamp)
+                    .attr("x1",x1).attr("y1", (data.timestamps.send.unix-self.startstamp)*scale)
                     .attr("x2",actualX2).attr("y2",y2)
                     .attr("stroke",color).attr("stroke-width",2)
                     .attr("marker-end",("url(#"+arrow+")"));
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
-                eHeight = eHeight + ((Date.parse(data.timestamp.receive)-startstamp)*scale-eHeight) + 28 + 50;
+                eHeight = eHeight + ((data.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function repositionSvgContent(oldWidth,newWidth) {
@@ -541,7 +529,16 @@ angular.
             function calculateYCoordinate(startP,endP,x) {
                 // y = m*x+b
                 var m = (endP.y-startP.y)/(endP.x-startP.x);
+                if (isNaN(m)) {
+                    console.log(NaN)
+                }
                 var b = startP.y - m*startP.x;
+                if (isNaN(b)) {
+                    console.log(NaN)
+                }
+                if (isNaN(m*x+b)) {
+                    console.log(NaN)
+                }
                 return (m*x+b);
             }
 
