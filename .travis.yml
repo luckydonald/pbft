@@ -25,7 +25,7 @@ notifications:
   # https://docs.travis-ci.com/user/notifications#Notifications
   webhooks:
     urls:
-      - "https://bot.proxy.bronies.link/travis/webhook/"
+      - "https://bot.proxy.bronies.link/travis/webhook/tfgDCtRoiTR4LPP1ZHMvjcdBWzuyhMgiotsTSRgg6Dc"
     on_success: always  # default: always
     on_failure: always  # default: always
     on_start: always    # default: never
