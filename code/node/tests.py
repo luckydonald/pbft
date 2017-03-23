@@ -254,15 +254,15 @@ class TestJsonToObject(unittest.TestCase):
 
     def test_Message_new(self):
         # data is inline
-        msg = Message(None, 12)
+        msg = Message(None, 12, 1)
         self.assertIsInstance(msg, Message)
         self.assertEqual(UNSET, msg.type)
         self.assertEqual(12, msg.sequence_no)
     # end def
 
-    def test_Message_new_toObject(self):
-        msg = Message(None, 12)
-        self.assertEqual("Message(sequence_no=12, type=0)", str(msg))
+    def test_Message_new_toString(self):
+        msg = Message(None, 12, 1)
+        self.assertEqual("Message(node=1, sequence_no=12, type=0)", str(msg))
     # end def
 
 # end class

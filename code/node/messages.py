@@ -8,13 +8,15 @@ logger = logging.getLogger(__name__)
 
 
 class Message(object):
-    def __init__(self, type, sequence_no):
+    def __init__(self, type, sequence_no, node):
         if type is None:
             type = UNSET
         # end if
         assert isinstance(type, int)
         self.type = type
         self.sequence_no = sequence_no
+        self.node = node  # i
+
 
     @classmethod
     def from_dict(cls, data):
@@ -42,6 +44,7 @@ class Message(object):
         return cls(**{
             "type": data["type"],
             "sequence_no": data["sequence_no"],
+            "node": data["node"]
         })
     # end def
 
@@ -49,6 +52,7 @@ class Message(object):
         return {
             "type": self.type,
             "sequence_no": self.sequence_no,
+            "node": self.node
         }
     # end def
 
@@ -63,8 +67,7 @@ class Message(object):
 
 class InitMessage(Message):
     def __init__(self, sequence_no, node, value):
-        super(InitMessage, self).__init__(INIT, sequence_no)
-        self.node = node  # i
+        super(InitMessage, self).__init__(INIT, sequence_no, node)
         self.value = value  # vi
     # end def
 
@@ -80,7 +83,6 @@ class InitMessage(Message):
 
     def to_dict(self):
         data = super().to_dict()
-        data["node"] = self.node
         data["value"] = self.value
         return data
     # end def
@@ -115,8 +117,7 @@ class LeaderChangeMessage(Message):  # pragma: no cover
 
 class ProposeMessage(Message):
     def __init__(self, sequence_no, node, leader, proposal, value_store):
-        super(ProposeMessage, self).__init__(PROPOSE, sequence_no)
-        self.node = node
+        super(ProposeMessage, self).__init__(PROPOSE, sequence_no, node)
         self.leader = leader
         self.proposal = proposal
         assert isinstance(value_store, list)
@@ -142,7 +143,6 @@ class ProposeMessage(Message):
 
     def to_dict(self):
         data = super().to_dict()
-        data["node"] = self.node
         data["leader"] = self.leader
         data["proposal"] = self.proposal
         data["value_store"] = [x.to_dict() if hasattr(x, "to_dict") else x for x in self.value_store]
@@ -153,8 +153,7 @@ class ProposeMessage(Message):
 
 class PrevoteMessage(Message):
     def __init__(self, sequence_no, node, leader, value):
-        super().__init__(PREVOTE, sequence_no)
-        self.node = node
+        super().__init__(PREVOTE, sequence_no, node)
         self.leader = leader
         self.value = value
     # end if
@@ -173,7 +172,6 @@ class PrevoteMessage(Message):
 
     def to_dict(self):
         data = super().to_dict()
-        data["node"] = self.node
         data["leader"] = self.leader
         data["value"] = self.value
         return data
@@ -183,8 +181,7 @@ class PrevoteMessage(Message):
 
 class VoteMessage(Message):
     def __init__(self, sequence_no, node, leader, value):
-        super().__init__(VOTE, sequence_no)
-        self.node = node
+        super().__init__(VOTE, sequence_no, node)
         self.leader = leader
         self.value = value
     # end def
@@ -202,7 +199,6 @@ class VoteMessage(Message):
 
     def to_dict(self):
         data = super().to_dict()
-        data["node"] = self.node
         data["leader"] = self.leader
         data["value"] = self.value
         return data
@@ -212,8 +208,7 @@ class VoteMessage(Message):
 
 class NewLeaderMessage(Message): # pragma: no cover
     def __init__(self, sequence_no, node, leader, value):
-        super().__init__(VOTE, sequence_no)
-        self.node = node
+        super().__init__(VOTE, sequence_no, node)
         self.leader = leader
         self.value = value
     # end def
@@ -222,8 +217,7 @@ class NewLeaderMessage(Message): # pragma: no cover
 
 class Acknowledge(Message):
     def __init__(self, sequence_no, node, sender, raw):
-        super().__init__(ACKNOWLEDGE, sequence_no)
-        self.node = node
+        super().__init__(ACKNOWLEDGE, sequence_no, node)
         self.sender = sender
         self.raw = raw
     # end def
@@ -241,7 +235,6 @@ class Acknowledge(Message):
 
     def to_dict(self):
         data = super().to_dict()
-        data["node"] = self.node
         data["sender"] = self.sender
         data["raw"] = self.raw
         return data

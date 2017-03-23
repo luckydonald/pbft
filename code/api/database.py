@@ -16,6 +16,10 @@ MSG_TYPE_TYPE = int
 NODE_TYPE = int
 SEQUENCE_TYPE = int
 
+# https://editor.ponyorm.com/user/luckydonald/pbft
+# Last permalink:
+# https://editor.ponyorm.com/user/luckydonald/pbft_2
+
 
 class DBMessage(db.Entity):
     type = orm.Discriminator(MSG_TYPE_TYPE)
