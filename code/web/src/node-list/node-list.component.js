@@ -134,9 +134,16 @@ angular.
                 } else {
                     self.otherNodes.push(self.nodes[x]);
                 }*/
-                for (var i = 0; i < self.nodes.length; i++) {
-                    if (self.nodes[i].id == 'summary') {
+                for (var i = 0; i < self.nodes.length-1; i++) {
+                    /*if (self.nodes[i].id == 'summary') {
                         for (var j = i-1; j > 0; j--) {
+                            var temp = self.nodes[j];
+                            self.nodes[j] = self.nodes[j+1];
+                            self.nodes[j+1] = temp;
+                        }
+                    }*/
+                    for (var j = 0; j < self.nodes.length-1; j++) {
+                        if (self.nodes[j].id > self.nodes[j+1].id) {
                             var temp = self.nodes[j];
                             self.nodes[j] = self.nodes[j+1];
                             self.nodes[j+1] = temp;
