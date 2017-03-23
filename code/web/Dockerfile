@@ -24,5 +24,6 @@ ADD bower.json /app
 RUN bower install --allow-root
 
 ADD ./src /app/src
-ENTRYPOINT ["http-server", "-p", "8000", "-c-1"]
-CMD ["/app/"]
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

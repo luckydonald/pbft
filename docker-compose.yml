@@ -1,19 +1,32 @@
 version: '2'
 services:
+  # # Python node
+  # node:
+  #   extends:
+  #     file: node.docker-compose.yml
+  #     service: node
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     NODE_DEBUGGER: "False"
+  #
+  #  # entrypoint: ["/bin/bash"]
+  #
+  #  #  docker run -ti --entrypoint /bin/bash 9b6a81855c06
+  #  #  d-c run --entrypoint /bin/bash node-3
+  #  #  NODE_ID=3 NODE_TOTAL=4 POSSIBLE_FAILURES=1 NODE_HOST=teamproject16_node-{i}_1 NODE_PORT=4458 python main_node.py
+
   node:
     extends:
-      file: node.docker-compose.yml
-      service: node
+      file: code/node_java/docker-compose.yml
+      service: node_java
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       NODE_DEBUGGER: "False"
-
-    # entrypoint: ["/bin/bash"]
-
-    #  docker run -ti --entrypoint /bin/bash 9b6a81855c06
-    #  d-c run --entrypoint /bin/bash node-3
-    #  NODE_ID=3 NODE_TOTAL=4 POSSIBLE_FAILURES=1 NODE_HOST=teamproject16_node-{i}_1 NODE_PORT=4458 python main_node.py
+      NODE_DEBUG: "False"
+      # API_HOST: "http://192.168.0.42"
+      API_HOST: ${API_HOST}
 
   api:
     extends:
@@ -31,6 +44,12 @@ services:
     extends:
       file: code/web/docker-compose.yml
       service: web
+    environment:
+      PORT: 8000
+      # API_HOST: "http://192.168.0.42"
+      API_HOST: ${API_HOST}
+    ports:
+     - "8000:8000"
 
   postgres:
     extends:
@@ -41,3 +60,5 @@ services:
     extends:
       file: api.docker-compose.yml
       service: postgres_browser
+    ports:
+     - "8080:80"
