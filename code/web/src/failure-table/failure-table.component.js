@@ -530,6 +530,7 @@ angular.
 
             function calculateYCoordinate(startP,endP,x) {
                 // y = m*x+b
+                out("start-x: " +startP.x+ "; start-y: " +startP.y+ "; end-x: " +endP.x+ "; end-y: " +endP.y);
                 var m = (endP.y-startP.y)/(endP.x-startP.x);
                 if (isNaN(m)) {
                     console.log(NaN)
