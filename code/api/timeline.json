@@ -2,10 +2,19 @@
     "nodes": ["1", "3", "4"],
     "data": [
         {
+            "action": "send",
+            "type": "init",
+            "nodes": {"send": 1},
+            "timestamp": {"send": "23428001"},
+            "data": {"value": "0.5"}
+        },
+        {
+            "action": "acknowledge",
             "type": "init",
             "nodes": {"send": 1, "receive": 2},
             "timestamp": {"send": "23428001", "receive": "23428002"},
             "data": {"value": "0.5"}
+
         }
     ]
 }
