@@ -9,6 +9,7 @@ angular.
         templateUrl: 'failure-table/failure-table.template.html',
         controller: ['$http','$compile','$scope', '$interval', function FailureTableController($http,$compile,$scope,$interval) {
             var self = this;
+            var url = _SECRET_URL;
             var svg = null;
             var svgWidth = 0;
             var svgHeight = 0;
@@ -23,7 +24,6 @@ angular.
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
             var scale = 1000;
-            var url = _SECRET_URL;
 
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
@@ -33,18 +33,8 @@ angular.
             var tlData = null;
 
             //$http.get('test_timeline.json').success(function(response){
-            $http.get(url+"/api/v2/get_timeline/").success(function(response){
+            $http.get(url + "/api/v2/get_timeline/").success(function(response){
                 tlData = response;
-                /*var str = "### TL DATA :: ";
-                 for (var i = 0; i < tlData.length; i++) {
-                 str = str+ "(" +i+ ")->[TYPE:"+tlData[i].type+"][DATA:";
-                 for (var j = 0; j < tlData[i].data.length; j++) {
-                 str = str+ "{node:" +tlData[i].data[j].node+ ";origin:" +tlData[i].data[j].origin+ ";value:" +tlData[i].data[j].value+ "}";
-                 }
-                 str = str+ "] "
-                 }
-                 out(str);*/
-                
                 self.nodes = tlData.nodes;
                 self.startstamp = tlData.timestamps.min.unix;
 
@@ -425,7 +415,7 @@ angular.
                     .attr("width","100%").attr("height","100px");
                 sym.append("circle");
             });
-            
+
             self.showLogInfo = (function(id) {
                 var element = null;
                 for (var i = 0; i < logInfoStore.length; i++) {
