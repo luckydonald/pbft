@@ -23,6 +23,7 @@ angular.
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
             var scale = 1000;
+            var url = _SECRET_URL;
 
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
@@ -31,7 +32,8 @@ angular.
 
             var tlData = null;
 
-            $http.get('test_timeline.json').success(function(response){
+            //$http.get('test_timeline.json').success(function(response){
+            $http.get(url+"/api/v2/get_timeline/").success(function(response){
                 tlData = response;
                 /*var str = "### TL DATA :: ";
                  for (var i = 0; i < tlData.length; i++) {
@@ -311,7 +313,8 @@ angular.
                         .attr("cx",tlPositions[data.nodes.receive])
                         .attr("cy",(data.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
-                        .attr("fill",color)
+                        .attr("fill",color).attr("fill-opacity","0.0")
+                        .attr("stroke",color).attr("stroke-width",3)
                         .attr("ng-click","$ctrl.showLogInfo("+data.nodes.receive+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
                     
@@ -415,6 +418,13 @@ angular.
                     }
                 }
             }
+
+            self.setupSymbology = (function() {
+                var sym = d3.select("div#timeline")
+                    .append("svg")
+                    .attr("width","100%").attr("height","100px");
+                sym.append("circle");
+            });
             
             self.showLogInfo = (function(id) {
                 var element = null;
