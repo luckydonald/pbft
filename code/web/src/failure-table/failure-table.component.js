@@ -322,17 +322,37 @@ angular.
                 var x1 = tlPositions[data.nodes.send];
                 var x2 = tlPositions[data.nodes.receive];
                 // +18 when line will go from right to left, -18 otherwise
-                var actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
-                var y2 = calculateYCoordinate(
-                    {"x":x1,"y":(data.timestamps.send.unix-self.startstamp)*scale+yProgress}, // starting point of line
-                    {"x":x2,"y":(data.timestamps.receive.unix-self.startstamp)*scale+yProgress}, // ending point of line
-                    actualX2  // x value to determine corresponding y
-                );
-                svg.append("line")
-                    .attr("x1",x1).attr("y1", (data.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                    .attr("x2",actualX2).attr("y2",y2)
-                    .attr("stroke",color).attr("stroke-width",2)
-                    .attr("marker-end",("url(#"+arrow+")"));
+                var actualX2 = 0;
+                var y2 = 0;
+                if (x1 == x2) {
+                    y2 = (data.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                    // create three lines that act as one line with two 90° angles
+                    svg.append("line")
+                        .attr("x1",x1).attr("y1",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x2",x1+30).attr("y2",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("stroke",color).attr("stroke-width",2);
+                    svg.append("line")
+                        .attr("x1",x1+30).attr("y1",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x2",x2+30).attr("y2",y2)
+                        .attr("stroke",color).attr("stroke-width",2);
+                    svg.append("line")
+                        .attr("x1",x1+30).attr("y1",y2)
+                        .attr("x2",x2+arrowOffset).attr("y2",y2)
+                        .attr("stroke",color).attr("stroke-width",2)
+                        .attr("marker-end",("url(#"+arrow+")"));
+                } else {
+                    actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
+                    y2 = calculateYCoordinate(
+                        {"x":x1,"y":(data.timestamps.send.unix-self.startstamp)*scale+yProgress}, // starting point of line
+                        {"x":x2,"y":(data.timestamps.receive.unix-self.startstamp)*scale+yProgress}, // ending point of line
+                        actualX2  // x value to determine corresponding y
+                    );
+                    svg.append("line")
+                        .attr("x1",x1).attr("y1",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x2",actualX2).attr("y2",y2)
+                        .attr("stroke",color).attr("stroke-width",2)
+                        .attr("marker-end",("url(#"+arrow+")"));
+                }
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
                 eHeight = eHeight + ((data.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
