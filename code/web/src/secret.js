@@ -7,4 +7,4 @@
 // _SECRET_URL is set to $JS_PATH.
 // WARNING
 
-var _SECRET_URL = "http://localhost";
+var _SECRET_URL = "http://192.168.99.100";

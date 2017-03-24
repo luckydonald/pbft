@@ -6,7 +6,7 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "8000:8000"
-    # command: ["sleep", "1231312462384628347623847"]
+    entrypoint: http-server -p 8000 -c-1 /app/
     # interactive: true
     #environment:
     #  DOCKER_CACHING_TIME: 5

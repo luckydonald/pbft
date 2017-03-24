@@ -42,7 +42,7 @@ angular.
                  str = str+ "] "
                  }
                  out(str);*/
-
+                
                 self.nodes = tlData.nodes;
                 self.startstamp = tlData.timestamps.min.unix;
 
