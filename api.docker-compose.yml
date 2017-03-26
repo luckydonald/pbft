@@ -14,8 +14,6 @@ services:
   postgres:
     image: postgres
     restart: "unless-stopped"
-    volumes:
-      - /data/postgres:/data/postgres
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "1234secure"
