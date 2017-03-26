@@ -24,6 +24,7 @@ ADD bower.json /app
 RUN bower install --allow-root
 
 ADD ./src /app/src
+ADD ./example /app/example
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
