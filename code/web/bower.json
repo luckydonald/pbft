@@ -16,7 +16,10 @@
     "bootstrap": "3.3.x",
     "jquery": "2.2.x",
     "d3": "~3.4",
-    "highcharts": "5.0.7"
+    "highcharts": "5.0.7",
+    "tooltipster": "4.2.3",
+    "svg.js": "2.5.0",
+    "svg.screenbbox.js": "0.1.2"
   },
   "resolutions": {
     "angular": "~1.5.0"

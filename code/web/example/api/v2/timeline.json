@@ -1,0 +1,5085 @@
+{
+  "events": [
+    {
+      "action": "send",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527264,
+        "type": 1,
+        "value": 9.19839096069336
+      },
+      "id": {
+        "send": 18721
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.101541
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 2.44514417648315
+      },
+      "id": {
+        "send": 18616
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.098748
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 8.36926746368408
+      },
+      "id": {
+        "send": 18617
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.133503
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 9.88897895812988
+      },
+      "id": {
+        "send": 18618
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.150057
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 2.4451441764831543
+      },
+      "id": {
+        "receive": 18619,
+        "send": 18616
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.159361
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.098748
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 2.4451441764831543
+      },
+      "id": {
+        "receive": 18620,
+        "send": 18616
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.174487
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.098748
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 2.4451441764831543
+      },
+      "id": {
+        "receive": 18621,
+        "send": 18616
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.186351
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.098748
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 2.4451441764831543
+      },
+      "id": {
+        "receive": 18622,
+        "send": 18616
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.198433
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.098748
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 8.369267463684082
+      },
+      "id": {
+        "receive": 18623,
+        "send": 18617
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.2174
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.133503
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 8.369267463684082
+      },
+      "id": {
+        "receive": 18624,
+        "send": 18617
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.233491
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.133503
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 8.369267463684082
+      },
+      "id": {
+        "receive": 18625,
+        "send": 18617
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.243613
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.133503
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 8.369267463684082
+      },
+      "id": {
+        "receive": 18626,
+        "send": 18617
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.252458
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.133503
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 9.888978958129883
+      },
+      "id": {
+        "receive": 18627,
+        "send": 18618
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.270606
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.150057
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 9.888978958129883
+      },
+      "id": {
+        "receive": 18628,
+        "send": 18618
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.27795
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.150057
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 9.888978958129883
+      },
+      "id": {
+        "receive": 18629,
+        "send": 18618
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.289218
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.150057
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 1,
+        "value": 9.888978958129883
+      },
+      "id": {
+        "receive": 18630,
+        "send": 18618
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.296773
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.150057
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 4.14406585693359,
+        "sequence_no": 1490527259,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 2,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 5.510113716125488
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 4.130497455596924
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526416,
+            "type": 1,
+            "value": 4.144065856933594
+          }
+        ]
+      },
+      "id": {
+        "send": 18631
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.326364
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 4.144065856933594,
+        "sequence_no": 1490527259,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 2,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 5.510113716125488
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 4.130497455596924
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526416,
+            "type": 1,
+            "value": 4.144065856933594
+          }
+        ]
+      },
+      "id": {
+        "receive": 18632,
+        "send": 18631
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.36574
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.326364
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 4.144065856933594,
+        "sequence_no": 1490527259,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 2,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 5.510113716125488
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 4.130497455596924
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526416,
+            "type": 1,
+            "value": 4.144065856933594
+          }
+        ]
+      },
+      "id": {
+        "receive": 18633,
+        "send": 18631
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.37974
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.326364
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 4.144065856933594,
+        "sequence_no": 1490527259,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 2,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 5.510113716125488
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 4.130497455596924
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526416,
+            "type": 1,
+            "value": 4.144065856933594
+          }
+        ]
+      },
+      "id": {
+        "receive": 18634,
+        "send": 18631
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.390546
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.326364
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.14406585693359
+      },
+      "id": {
+        "send": 18635
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.397324
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.93168067932129
+      },
+      "id": {
+        "send": 18636
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.418317
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 9.27248191833496
+      },
+      "id": {
+        "send": 18637
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.448292
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.144065856933594
+      },
+      "id": {
+        "receive": 18638,
+        "send": 18635
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.473239
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.397324
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 4.144065856933594,
+        "sequence_no": 1490527259,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 2,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 5.510113716125488
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526415,
+            "type": 1,
+            "value": 4.130497455596924
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526416,
+            "type": 1,
+            "value": 4.144065856933594
+          }
+        ]
+      },
+      "id": {
+        "receive": 18639,
+        "send": 18631
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.489652
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.326364
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.144065856933594
+      },
+      "id": {
+        "receive": 18640,
+        "send": 18635
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.498927
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.397324
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.144065856933594
+      },
+      "id": {
+        "receive": 18641,
+        "send": 18635
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.508926
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.397324
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.931680679321289
+      },
+      "id": {
+        "receive": 18642,
+        "send": 18636
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.530186
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.418317
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.144065856933594
+      },
+      "id": {
+        "receive": 18643,
+        "send": 18635
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.54729
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.397324
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.931680679321289
+      },
+      "id": {
+        "receive": 18644,
+        "send": 18636
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.583119
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.418317
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.931680679321289
+      },
+      "id": {
+        "receive": 18645,
+        "send": 18636
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.604904
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.418317
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 9.272481918334961
+      },
+      "id": {
+        "receive": 18646,
+        "send": 18637
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.634582
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.448292
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 4.931680679321289
+      },
+      "id": {
+        "receive": 18647,
+        "send": 18636
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.657897
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.418317
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 9.272481918334961
+      },
+      "id": {
+        "receive": 18648,
+        "send": 18637
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.678347
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.448292
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 9.272481918334961
+      },
+      "id": {
+        "receive": 18649,
+        "send": 18637
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.725267
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.448292
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527259,
+        "type": 3,
+        "value": 9.272481918334961
+      },
+      "id": {
+        "receive": 18650,
+        "send": 18637
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.823791
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+          "unix": 1490527259.448292
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 1,
+        "value": 1.97280645370483
+      },
+      "id": {
+        "send": 18651
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.093781
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 1,
+        "value": 1.972806453704834
+      },
+      "id": {
+        "receive": 18652,
+        "send": 18651
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.119473
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.093781
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 1,
+        "value": 1.972806453704834
+      },
+      "id": {
+        "receive": 18653,
+        "send": 18651
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.13724
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.093781
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 1,
+        "value": 1.972806453704834
+      },
+      "id": {
+        "receive": 18654,
+        "send": 18651
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.143667
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.093781
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 1,
+        "value": 1.972806453704834
+      },
+      "id": {
+        "receive": 18655,
+        "send": 18651
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.150005
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.093781
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 3,
+        "value": 6.12265872955322
+      },
+      "id": {
+        "send": 18656
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.160526
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 3,
+        "value": 6.122658729553223
+      },
+      "id": {
+        "receive": 18657,
+        "send": 18656
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.191945
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.160526
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 3,
+        "value": 6.122658729553223
+      },
+      "id": {
+        "receive": 18658,
+        "send": 18656
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.206702
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.160526
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 3,
+        "value": 6.122658729553223
+      },
+      "id": {
+        "receive": 18659,
+        "send": 18656
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.214203
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.160526
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527260,
+        "type": 3,
+        "value": 6.122658729553223
+      },
+      "id": {
+        "receive": 18660,
+        "send": 18656
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.221863
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:00 GMT",
+          "unix": 1490527260.160526
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 6.04182624816895
+      },
+      "id": {
+        "send": 18661
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.048015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 1.59501683712006
+      },
+      "id": {
+        "send": 18662
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.069549
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 6.041826248168945
+      },
+      "id": {
+        "receive": 18663,
+        "send": 18661
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.084335
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.048015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 6.041826248168945
+      },
+      "id": {
+        "receive": 18664,
+        "send": 18661
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.093132
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.048015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 6.041826248168945
+      },
+      "id": {
+        "receive": 18665,
+        "send": 18661
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.111979
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.048015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 6.041826248168945
+      },
+      "id": {
+        "receive": 18666,
+        "send": 18661
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.121404
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.048015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 3.38467884063721
+      },
+      "id": {
+        "send": 18667
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.12921
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 1.5950168371200562
+      },
+      "id": {
+        "receive": 18668,
+        "send": 18662
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.138698
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.069549
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 1.5950168371200562
+      },
+      "id": {
+        "receive": 18669,
+        "send": 18662
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.14709
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.069549
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 1.5950168371200562
+      },
+      "id": {
+        "receive": 18670,
+        "send": 18662
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.166569
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.069549
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 1.5950168371200562
+      },
+      "id": {
+        "receive": 18671,
+        "send": 18662
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.178523
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.069549
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 3.384678840637207
+      },
+      "id": {
+        "receive": 18672,
+        "send": 18667
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.18898
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.12921
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 3.384678840637207
+      },
+      "id": {
+        "receive": 18673,
+        "send": 18667
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.196835
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.12921
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 3.384678840637207
+      },
+      "id": {
+        "receive": 18674,
+        "send": 18667
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.215788
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.12921
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 1,
+        "value": 3.384678840637207
+      },
+      "id": {
+        "receive": 18675,
+        "send": 18667
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.224594
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.12921
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 6.00010919570923,
+        "sequence_no": 1490527261,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 4,
+            "sequence_no": 1490526418,
+            "type": 1,
+            "value": 4.121288776397705
+          },
+          {
+            "node": 2,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.0001091957092285
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.6626667976379395
+          }
+        ]
+      },
+      "id": {
+        "send": 18676
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.230967
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 6.0001091957092285,
+        "sequence_no": 1490527261,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 4,
+            "sequence_no": 1490526418,
+            "type": 1,
+            "value": 4.121288776397705
+          },
+          {
+            "node": 2,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.0001091957092285
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.6626667976379395
+          }
+        ]
+      },
+      "id": {
+        "receive": 18677,
+        "send": 18676
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.25334
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.230967
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527264,
+        "type": 1,
+        "value": 9.19839096069336
+      },
+      "id": {
+        "receive": 18722,
+        "send": 18721
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.12207
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.101541
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527264,
+        "type": 1,
+        "value": 9.19839096069336
+      },
+      "id": {
+        "receive": 18723,
+        "send": 18721
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.131194
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.101541
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 6.0001091957092285,
+        "sequence_no": 1490527261,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 4,
+            "sequence_no": 1490526418,
+            "type": 1,
+            "value": 4.121288776397705
+          },
+          {
+            "node": 2,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.0001091957092285
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.6626667976379395
+          }
+        ]
+      },
+      "id": {
+        "receive": 18678,
+        "send": 18676
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.266961
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.230967
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 6.0001091957092285,
+        "sequence_no": 1490527261,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 4,
+            "sequence_no": 1490526418,
+            "type": 1,
+            "value": 4.121288776397705
+          },
+          {
+            "node": 2,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.0001091957092285
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.6626667976379395
+          }
+        ]
+      },
+      "id": {
+        "receive": 18679,
+        "send": 18676
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.27775
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.230967
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 6.00010919570923
+      },
+      "id": {
+        "send": 18680
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.286944
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.68811726570129
+      },
+      "id": {
+        "send": 18681
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.308201
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.99549508094788
+      },
+      "id": {
+        "send": 18682
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.325615
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 6.0001091957092285
+      },
+      "id": {
+        "receive": 18683,
+        "send": 18680
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.352114
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.286944
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 6.0001091957092285,
+        "sequence_no": 1490527261,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 4,
+            "sequence_no": 1490526418,
+            "type": 1,
+            "value": 4.121288776397705
+          },
+          {
+            "node": 2,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.0001091957092285
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526419,
+            "type": 1,
+            "value": 6.6626667976379395
+          }
+        ]
+      },
+      "id": {
+        "receive": 18684,
+        "send": 18676
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.36018
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.230967
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 6.0001091957092285
+      },
+      "id": {
+        "receive": 18685,
+        "send": 18680
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.402055
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.286944
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.688117265701294
+      },
+      "id": {
+        "receive": 18686,
+        "send": 18681
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.41464
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.308201
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 6.0001091957092285
+      },
+      "id": {
+        "receive": 18687,
+        "send": 18680
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.440548
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.286944
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 6.0001091957092285
+      },
+      "id": {
+        "receive": 18688,
+        "send": 18680
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.459067
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.286944
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.995495080947876
+      },
+      "id": {
+        "receive": 18689,
+        "send": 18682
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.471138
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.325615
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.688117265701294
+      },
+      "id": {
+        "receive": 18690,
+        "send": 18681
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.477302
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.308201
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.688117265701294
+      },
+      "id": {
+        "receive": 18691,
+        "send": 18681
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.499149
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.308201
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.688117265701294
+      },
+      "id": {
+        "receive": 18692,
+        "send": 18681
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.524526
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.308201
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.995495080947876
+      },
+      "id": {
+        "receive": 18693,
+        "send": 18682
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.547768
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.325615
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.995495080947876
+      },
+      "id": {
+        "receive": 18694,
+        "send": 18682
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.571666
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.325615
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527261,
+        "type": 3,
+        "value": 3.995495080947876
+      },
+      "id": {
+        "receive": 18695,
+        "send": 18682
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.628215
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:01 GMT",
+          "unix": 1490527261.325615
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 1,
+        "value": 1.41063976287842
+      },
+      "id": {
+        "send": 18696
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.093509
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 1,
+        "value": 1.410639762878418
+      },
+      "id": {
+        "receive": 18697,
+        "send": 18696
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.112726
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.093509
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 1,
+        "value": 1.410639762878418
+      },
+      "id": {
+        "receive": 18698,
+        "send": 18696
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.124152
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.093509
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 1,
+        "value": 1.410639762878418
+      },
+      "id": {
+        "receive": 18699,
+        "send": 18696
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.130684
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.093509
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 1,
+        "value": 1.410639762878418
+      },
+      "id": {
+        "receive": 18700,
+        "send": 18696
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.136597
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.093509
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 3,
+        "value": 2.28803658485413
+      },
+      "id": {
+        "send": 18701
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.156902
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 3,
+        "value": 2.288036584854126
+      },
+      "id": {
+        "receive": 18702,
+        "send": 18701
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.168744
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.156902
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 3,
+        "value": 2.288036584854126
+      },
+      "id": {
+        "receive": 18703,
+        "send": 18701
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.184723
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.156902
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 3,
+        "value": 2.288036584854126
+      },
+      "id": {
+        "receive": 18704,
+        "send": 18701
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.201357
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.156902
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527262,
+        "type": 3,
+        "value": 2.288036584854126
+      },
+      "id": {
+        "receive": 18705,
+        "send": 18701
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.213038
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:02 GMT",
+          "unix": 1490527262.156902
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 4.62575387954712
+      },
+      "id": {
+        "send": 18706
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.033162
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 9.09979915618896
+      },
+      "id": {
+        "send": 18707
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.05404
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 0.401109725236893
+      },
+      "id": {
+        "send": 18708
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.063902
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 4.625753879547119
+      },
+      "id": {
+        "receive": 18709,
+        "send": 18706
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.075759
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.033162
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 4.625753879547119
+      },
+      "id": {
+        "receive": 18710,
+        "send": 18706
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.084289
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.033162
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 4.625753879547119
+      },
+      "id": {
+        "receive": 18711,
+        "send": 18706
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.093181
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.033162
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 4.625753879547119
+      },
+      "id": {
+        "receive": 18712,
+        "send": 18706
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.101651
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.033162
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 9.099799156188965
+      },
+      "id": {
+        "receive": 18713,
+        "send": 18707
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.109897
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.05404
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 9.099799156188965
+      },
+      "id": {
+        "receive": 18714,
+        "send": 18707
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.118921
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.05404
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 9.099799156188965
+      },
+      "id": {
+        "receive": 18715,
+        "send": 18707
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.131907
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.05404
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 9.099799156188965
+      },
+      "id": {
+        "receive": 18716,
+        "send": 18707
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.143886
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.05404
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 0.4011097252368927
+      },
+      "id": {
+        "receive": 18717,
+        "send": 18708
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.163307
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.063902
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 0.4011097252368927
+      },
+      "id": {
+        "receive": 18718,
+        "send": 18708
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.172552
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.063902
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 0.4011097252368927
+      },
+      "id": {
+        "receive": 18719,
+        "send": 18708
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.178251
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.063902
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527263,
+        "type": 1,
+        "value": 0.4011097252368927
+      },
+      "id": {
+        "receive": 18720,
+        "send": 18708
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.184002
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:03 GMT",
+          "unix": 1490527263.063902
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527264,
+        "type": 1,
+        "value": 9.19839096069336
+      },
+      "id": {
+        "receive": 18724,
+        "send": 18721
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.138921
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.101541
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527264,
+        "type": 1,
+        "value": 9.19839096069336
+      },
+      "id": {
+        "receive": 18725,
+        "send": 18721
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.148254
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:04 GMT",
+          "unix": 1490527264.101541
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 4.80408048629761
+      },
+      "id": {
+        "send": 18726
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.038272
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 5.27154397964478
+      },
+      "id": {
+        "send": 18727
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.061974
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 4.804080486297607
+      },
+      "id": {
+        "receive": 18728,
+        "send": 18726
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.074296
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.038272
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 4.804080486297607
+      },
+      "id": {
+        "receive": 18729,
+        "send": 18726
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.083255
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.038272
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 7.13114833831787
+      },
+      "id": {
+        "send": 18730
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.098015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 4.804080486297607
+      },
+      "id": {
+        "receive": 18731,
+        "send": 18726
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.107438
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.038272
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 4.804080486297607
+      },
+      "id": {
+        "receive": 18732,
+        "send": 18726
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.115965
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.038272
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 5.271543979644775
+      },
+      "id": {
+        "receive": 18733,
+        "send": 18727
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.13084
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.061974
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 5.271543979644775
+      },
+      "id": {
+        "receive": 18734,
+        "send": 18727
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.141161
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.061974
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 5.271543979644775
+      },
+      "id": {
+        "receive": 18735,
+        "send": 18727
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.149683
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.061974
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 5.271543979644775
+      },
+      "id": {
+        "receive": 18736,
+        "send": 18727
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.158195
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.061974
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 7.131148338317871
+      },
+      "id": {
+        "receive": 18737,
+        "send": 18730
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.172837
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.098015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 7.131148338317871
+      },
+      "id": {
+        "receive": 18738,
+        "send": 18730
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.180535
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.098015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 7.131148338317871
+      },
+      "id": {
+        "receive": 18739,
+        "send": 18730
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.187263
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.098015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 1,
+        "value": 7.131148338317871
+      },
+      "id": {
+        "receive": 18740,
+        "send": 18730
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.192881
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.098015
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 7.34814214706421,
+        "sequence_no": 1490527265,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 3,
+            "sequence_no": 1490526421,
+            "type": 1,
+            "value": 7.348142147064209
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526422,
+            "type": 1,
+            "value": 9.89095687866211
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526423,
+            "type": 1,
+            "value": 6.224136829376221
+          }
+        ]
+      },
+      "id": {
+        "send": 18741
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.207542
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 7.348142147064209,
+        "sequence_no": 1490527265,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 3,
+            "sequence_no": 1490526421,
+            "type": 1,
+            "value": 7.348142147064209
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526422,
+            "type": 1,
+            "value": 9.89095687866211
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526423,
+            "type": 1,
+            "value": 6.224136829376221
+          }
+        ]
+      },
+      "id": {
+        "receive": 18742,
+        "send": 18741
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.235413
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.207542
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 7.348142147064209,
+        "sequence_no": 1490527265,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 3,
+            "sequence_no": 1490526421,
+            "type": 1,
+            "value": 7.348142147064209
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526422,
+            "type": 1,
+            "value": 9.89095687866211
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526423,
+            "type": 1,
+            "value": 6.224136829376221
+          }
+        ]
+      },
+      "id": {
+        "receive": 18743,
+        "send": 18741
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.260221
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.207542
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 7.348142147064209,
+        "sequence_no": 1490527265,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 3,
+            "sequence_no": 1490526421,
+            "type": 1,
+            "value": 7.348142147064209
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526422,
+            "type": 1,
+            "value": 9.89095687866211
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526423,
+            "type": 1,
+            "value": 6.224136829376221
+          }
+        ]
+      },
+      "id": {
+        "receive": 18744,
+        "send": 18741
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.275301
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.207542
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 7.34814214706421
+      },
+      "id": {
+        "send": 18745
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.283006
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.32509732246399
+      },
+      "id": {
+        "send": 18746
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.311814
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.03821706771851
+      },
+      "id": {
+        "send": 18747
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.337134
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 7.348142147064209
+      },
+      "id": {
+        "receive": 18748,
+        "send": 18745
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.366676
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.283006
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "proposal": 7.348142147064209,
+        "sequence_no": 1490527265,
+        "type": 2,
+        "value_store": [
+          {
+            "node": 3,
+            "sequence_no": 1490526421,
+            "type": 1,
+            "value": 7.348142147064209
+          },
+          {
+            "node": 4,
+            "sequence_no": 1490526422,
+            "type": 1,
+            "value": 9.89095687866211
+          },
+          {
+            "node": 3,
+            "sequence_no": 1490526423,
+            "type": 1,
+            "value": 6.224136829376221
+          }
+        ]
+      },
+      "id": {
+        "receive": 18749,
+        "send": 18741
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.3794
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.207542
+        }
+      },
+      "type": "propose"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 7.348142147064209
+      },
+      "id": {
+        "receive": 18750,
+        "send": 18745
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.387993
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.283006
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 7.348142147064209
+      },
+      "id": {
+        "receive": 18751,
+        "send": 18745
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.406385
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.283006
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.3250973224639893
+      },
+      "id": {
+        "receive": 18752,
+        "send": 18746
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.416979
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.311814
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 1,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 7.348142147064209
+      },
+      "id": {
+        "receive": 18753,
+        "send": 18745
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.431934
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.283006
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.3250973224639893
+      },
+      "id": {
+        "receive": 18754,
+        "send": 18746
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.442064
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.311814
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.3250973224639893
+      },
+      "id": {
+        "receive": 18755,
+        "send": 18746
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.464963
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.311814
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.0382170677185059
+      },
+      "id": {
+        "receive": 18756,
+        "send": 18747
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.482818
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.337134
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 3,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.3250973224639893
+      },
+      "id": {
+        "receive": 18757,
+        "send": 18746
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.488281
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.311814
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.0382170677185059
+      },
+      "id": {
+        "receive": 18758,
+        "send": 18747
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.507318
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.337134
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.0382170677185059
+      },
+      "id": {
+        "receive": 18759,
+        "send": 18747
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.522111
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.337134
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 2,
+        "sequence_no": 1490527265,
+        "type": 3,
+        "value": 1.0382170677185059
+      },
+      "id": {
+        "receive": 18760,
+        "send": 18747
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.541546
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:05 GMT",
+          "unix": 1490527265.337134
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 1,
+        "value": 1.63881039619446
+      },
+      "id": {
+        "send": 18761
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.013378
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 1,
+        "value": 1.638810396194458
+      },
+      "id": {
+        "receive": 18762,
+        "send": 18761
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.033559
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.013378
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 1,
+        "value": 1.638810396194458
+      },
+      "id": {
+        "receive": 18763,
+        "send": 18761
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.04427
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.013378
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 1,
+        "value": 1.638810396194458
+      },
+      "id": {
+        "receive": 18764,
+        "send": 18761
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.050588
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.013378
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 3,
+        "value": 1.66982316970825
+      },
+      "id": {
+        "send": 18765
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.056695
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 3,
+        "value": 1.669823169708252
+      },
+      "id": {
+        "receive": 18766,
+        "send": 18765
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.083577
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.056695
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 3,
+        "value": 1.669823169708252
+      },
+      "id": {
+        "receive": 18767,
+        "send": 18765
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.089199
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.056695
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 3,
+        "value": 1.669823169708252
+      },
+      "id": {
+        "receive": 18768,
+        "send": 18765
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.102104
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.056695
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 1,
+        "value": 1.638810396194458
+      },
+      "id": {
+        "receive": 18769,
+        "send": 18761
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.112642
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.013378
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "leader": 1,
+        "node": 4,
+        "sequence_no": 1490527266,
+        "type": 3,
+        "value": 1.669823169708252
+      },
+      "id": {
+        "receive": 18770,
+        "send": 18765
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.143056
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:06 GMT",
+          "unix": 1490527266.056695
+        }
+      },
+      "type": "prevote"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 1.90006184577942
+      },
+      "id": {
+        "send": 18771
+      },
+      "nodes": {
+        "send": 2
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.066172
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 6.34875011444092
+      },
+      "id": {
+        "send": 18772
+      },
+      "nodes": {
+        "send": 1
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.111994
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 4.74836540222168
+      },
+      "id": {
+        "send": 18773
+      },
+      "nodes": {
+        "send": 3
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.130109
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 1.900061845779419
+      },
+      "id": {
+        "receive": 18774,
+        "send": 18771
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.141202
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.066172
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 1.900061845779419
+      },
+      "id": {
+        "receive": 18775,
+        "send": 18771
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.15049
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.066172
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 1.900061845779419
+      },
+      "id": {
+        "receive": 18776,
+        "send": 18771
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.160961
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.066172
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 2,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 1.900061845779419
+      },
+      "id": {
+        "receive": 18777,
+        "send": 18771
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 2
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.171465
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.066172
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 6.348750114440918
+      },
+      "id": {
+        "receive": 18778,
+        "send": 18772
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.18274
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.111994
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 6.348750114440918
+      },
+      "id": {
+        "receive": 18779,
+        "send": 18772
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.198425
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.111994
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 6.348750114440918
+      },
+      "id": {
+        "receive": 18780,
+        "send": 18772
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.215163
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.111994
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 1,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 6.348750114440918
+      },
+      "id": {
+        "receive": 18781,
+        "send": 18772
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 1
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.225859
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.111994
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 4.74836540222168
+      },
+      "id": {
+        "receive": 18782,
+        "send": 18773
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.245679
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.130109
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 4.74836540222168
+      },
+      "id": {
+        "receive": 18783,
+        "send": 18773
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.25373
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.130109
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 4.74836540222168
+      },
+      "id": {
+        "receive": 18784,
+        "send": 18773
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.262811
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.130109
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 3,
+        "sequence_no": 1490527267,
+        "type": 1,
+        "value": 4.74836540222168
+      },
+      "id": {
+        "receive": 18785,
+        "send": 18773
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 3
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.272236
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:07 GMT",
+          "unix": 1490527267.130109
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "send",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527268,
+        "type": 1,
+        "value": 1.03464484214783
+      },
+      "id": {
+        "send": 18786
+      },
+      "nodes": {
+        "send": 4
+      },
+      "timestamps": {
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.085383
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527268,
+        "type": 1,
+        "value": 1.0346448421478271
+      },
+      "id": {
+        "receive": 18787,
+        "send": 18786
+      },
+      "nodes": {
+        "receive": 3,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.154944
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.085383
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527268,
+        "type": 1,
+        "value": 1.0346448421478271
+      },
+      "id": {
+        "receive": 18788,
+        "send": 18786
+      },
+      "nodes": {
+        "receive": 2,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.182644
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.085383
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527268,
+        "type": 1,
+        "value": 1.0346448421478271
+      },
+      "id": {
+        "receive": 18789,
+        "send": 18786
+      },
+      "nodes": {
+        "receive": 4,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.216026
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.085383
+        }
+      },
+      "type": "init"
+    },
+    {
+      "action": "acknowledge",
+      "data": {
+        "node": 4,
+        "sequence_no": 1490527268,
+        "type": 1,
+        "value": 1.0346448421478271
+      },
+      "id": {
+        "receive": 18790,
+        "send": 18786
+      },
+      "nodes": {
+        "receive": 1,
+        "send": 4
+      },
+      "timestamps": {
+        "receive": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.240679
+        },
+        "send": {
+          "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+          "unix": 1490527268.085383
+        }
+      },
+      "type": "init"
+    }
+  ],
+  "nodes": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamps": {
+    "max": {
+      "string": "Sun, 26 Mar 2017 11:21:08 GMT",
+      "unix": 1490527268.240679
+    },
+    "min": {
+      "string": "Sun, 26 Mar 2017 11:20:59 GMT",
+      "unix": 1490527259.098748
+    }
+  }
+}

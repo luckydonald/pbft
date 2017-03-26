@@ -193,7 +193,7 @@ angular.
                 }
 
                 eHeight = nH + y;
-            }
+            };
 
             function drawNodeLine(x,y) {
                 svg.append("line")
@@ -276,10 +276,10 @@ angular.
                 eHeight = eHeight + ((data.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
-            function drawEndLine(data) {
+            function drawEndLine(event) {
                 var color = "";
-                var arrow = data.type+"Arrow";
-                switch (data.type) {
+                var arrow = event.type+"Arrow";
+                switch (event.type) {
                     case "init":
                         color = colors[0];
                         break;
@@ -294,38 +294,44 @@ angular.
                         break;
                 }
 
-                out("new endp circle for " +data.nodes.receive+ ":: cx " +tlPositions[data.nodes.receive]+ " cy " +((data.timestamps.receive.unix-self.startstamp)*scale+yProgress));
+                out("new endp circle for " +event.nodes.receive+ ":: cx " +tlPositions[event.nodes.receive]+ " cy " +((event.timestamps.receive.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 0) {
-                    svg.append("circle")
+                    var circle = svg.append("circle")
                         .classed("endp","true")
-                        .classed(("c_"+data.nodes.receive),"true")
+                        .classed(("c_"+event.nodes.receive),"true")
                         .classed("new","true")
-                        .attr("cx",tlPositions[data.nodes.receive])
-                        .attr("cy",(data.timestamps.receive.unix-self.startstamp)*scale+yProgress)
+                        .classed("tooltip","true")
+                        .attr("cx",tlPositions[event.nodes.receive])
+                        .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
                         .attr("fill",color).attr("fill-opacity","0.0")
                         .attr("stroke",color).attr("stroke-width",3)
-                        .attr("ng-click","$ctrl.showLogInfo("+data.nodes.receive+")");
+                        .attr("ng-click","$ctrl.showLogInfo("+event.nodes.receive+")")
+                        .attr("data-meta", JSON.stringify(event))
+                    ;
+                    console.log("end_circle", circle, $(circle));
+                    // $(circle).tooltipster({functionFormat: tooltipFormat});
+                    $(circle).tooltipster({functionInit: tooltipContent, interactive: true});
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
                     
-                    var logInfoObj = {id:(""+data.id.receive), cx:tlPositions[data.nodes.receive], cy:(data.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamps.receive.string)};
+                    var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+event.timestamps.receive.string)};
                     logInfoStore.push(logInfoObj);
                 //}
 
-                var x1 = tlPositions[data.nodes.send];
-                var x2 = tlPositions[data.nodes.receive];
+                var x1 = tlPositions[event.nodes.send];
+                var x2 = tlPositions[event.nodes.receive];
                 // +18 when line will go from right to left, -18 otherwise
                 var actualX2 = 0;
                 var y2 = 0;
                 if (x1 == x2) {
-                    y2 = (data.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                    y2 = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
                     // create three lines that act as one line with two 90° angles
                     svg.append("line")
-                        .attr("x1",x1).attr("y1",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                        .attr("x2",x1+30).attr("y2",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x1",x1).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x2",x1+30).attr("y2",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("stroke",color).attr("stroke-width",2);
                     svg.append("line")
-                        .attr("x1",x1+30).attr("y1",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x1",x1+30).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("x2",x2+30).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2);
                     svg.append("line")
@@ -336,19 +342,19 @@ angular.
                 } else {
                     actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
                     y2 = calculateYCoordinate(
-                        {"x":x1,"y":(data.timestamps.send.unix-self.startstamp)*scale+yProgress}, // starting point of line
-                        {"x":x2,"y":(data.timestamps.receive.unix-self.startstamp)*scale+yProgress}, // ending point of line
+                        {"x":x1,"y":(event.timestamps.send.unix-self.startstamp)*scale+yProgress}, // starting point of line
+                        {"x":x2,"y":(event.timestamps.receive.unix-self.startstamp)*scale+yProgress}, // ending point of line
                         actualX2  // x value to determine corresponding y
                     );
                     svg.append("line")
-                        .attr("x1",x1).attr("y1",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("x1",x1).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("x2",actualX2).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2)
                         .attr("marker-end",("url(#"+arrow+")"));
                 }
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
-                eHeight = eHeight + ((data.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
+                eHeight = eHeight + ((event.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function repositionSvgContent(oldWidth,newWidth) {

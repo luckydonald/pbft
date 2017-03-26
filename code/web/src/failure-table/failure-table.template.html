@@ -1,4 +1,4 @@
-<div id="failure-table">
+<div id="failure-table" xmlns="http://www.w3.org/1999/html">
     <h3>Timeline for Message Flow of Nodes</h3>
     <!--<span  style="color: black;">
         <button type="button" ng-click="$ctrl.setupTimeline(null,true)">Scale ON</button>
@@ -10,6 +10,68 @@
     <div id="timeline">
         <!-- TIMELINE SLOT -->
     </div>
+    <script>
+    var tooltipFormat = function(instance, helper, content){
+        var event = {
+            "action": "acknowledge",
+            "type": "init",
+            "data": {
+                "node": 1,
+                "sequence_no": 1490527259,
+                "type": 1,
+                "value": 9.888978958129883
+            },
+            "id": {"receive": 18630, "send": 18618},
+            "nodes": {"receive": 1, "send": 1},
+            "timestamps": {
+                "receive": {"string": "Sun, 26 Mar 2017 11:20:59 GMT", "unix": 1490527259.296773},
+                "send": {"string": "Sun, 26 Mar 2017 11:20:59 GMT", "unix": 1490527259.150057}
+            }
+        };
+        var $origin = $(helper.origin);
+        var dataOptions = $origin.attr('data-meta');
+        if (dataOptions) {
+            data = JSON.parse(dataOptions);
+        }
+
+        var html = "<div class='node-tooltip action-" + event.action + " type-" + event.type + "'>";
+        function add_data(data, title, key, data_wrap, data_class) {
+            var element = data;
+            if (data.hasOwnProperty(key)) {
+                element = data[key];
+            }
+            var clazz = "";
+            if (data_class) {
+                clazz = " class='" + data_class + "'"
+            }
+            var wrap_open = "<span" + clazz + ">", wrap_close = "</span>";
+            if (data_wrap) {
+                wrap_open = "<" + data_wrap + clazz + ">";
+                wrap_close = "</" + data_wrap + ">";
+            }
+            console.log("data_wrap", data_wrap, ",", wrap_open, wrap_close);
+
+            html += "<p class='" + key + "'><label>" + title + " " + wrap_open + data[key] + wrap_close + "</label></p>";
+        }
+        // values every node has:
+        add_data(event.timestamps.receive.string, "Received", "receive", null, "timestamp");
+        add_data(event.data, "Node", "node", "code");  // "<p><label class='name'>Node <span>" + content + "</span></label></p>" +
+        add_data(event.data, "Sequence", "sequence_no", "code");  // "<p><label class='sequence_no'>Sequence <span>" + data.sequence_no + "</span></label></p>" +
+        // add_data(event.data, "Type", "type");  // "<p><label class='type'>Type <span>" + data.type + "</span></label></p>";
+
+        // some node have:
+        add_data(event.data, "Value", "value", "code");
+        add_data(event.data, "Leader", "leader", "code");
+        add_data(event.data, "Received Values", "value_store", "pre");
+
+        html += "</div>";
+        return html;
+    };
+    var tooltipContent = function (instance, helper) {
+        instance.content($(tooltipFormat(instance, helper, null)));
+    };
+
+    </script>
     <div id="fillin">
         <!-- FILL IN SPACE -->
     </div>
