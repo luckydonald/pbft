@@ -373,30 +373,39 @@ input {
 .node-tooltip {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-variant: normal;
-  .type-init {
-    background-color: @msg-init;
-  }
-  .type-propose {
-    background-color: @msg-propose;
-  }
-  .type-prevote {
-    background-color: @msg-prevote;
-  }
-  .type-vote {
-    background-color: @msg-vote;
-  }
 }
 
 .tooltipster-sidetip.tooltipster-punk {
   &.tooltipster-punk-acknowledge-init,
   &.tooltipster-punk-send-init {
-    &.tooltipster-top {
+    &.tooltipster-top,
+    &.tooltipster-bottom {
+      .tooltipster-box {
+        border-left: 0 none #2a2a2a;
+        border-right: 0 none #2a2a2a;
+        border-bottom: 3px solid @msg-init;
+        border-top: 3px solid @msg-init;
+      }
       .tooltipster-arrow-border {
+        border-bottom-color: @msg-init;
         border-top-color: @msg-init;
       }
     }
-    .tooltipster-box {
-      border-bottom-color: @msg-init;
+    &.tooltipster-left,
+    &.tooltipster-right {
+      .tooltipster-box {
+        border-top: 0 none #2a2a2a;
+        border-bottom: 0 none #2a2a2a;
+        border-left: 3px solid @msg-init;
+        border-right: 3px solid @msg-init;
+      }
+      .tooltipster-arrow-border {
+        border-left-color: @msg-init;
+        border-right-color: @msg-init;
+      }
+    }
+    .tooltipster-content {
+      color: @msg-init;
     }
   }
 
