@@ -335,6 +335,9 @@ input {
   font-weight: bold;
   text-transform: capitalize;
 }
+.tooltipster-content p.value_store label span .node.different {
+  text-decoration: line-through;
+}
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-init.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init.tooltipster-bottom .tooltipster-box,

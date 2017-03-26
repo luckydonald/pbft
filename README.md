@@ -44,6 +44,15 @@ However, because some services need longer to start it is best to start them in 
     $ docker-compose up -d node
     ```
     
+6. Stop & reset everything
+    ```shell
+    $ docker-compose down
+    ```
+    - [Remove unused containers](http://stackoverflow14.com/a/32723127):
+        ```shell
+        $ docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+        ```
+
 ## Standart Ports and URLs
 Assuming your docker is publishing it's ports on `localhost`.
  

@@ -35,7 +35,7 @@
         }
 
         var html = "<div class='node-tooltip action-" + event.action + " type-" + event.type + "'>";
-        function add_data(data, title, key, data_wrap, data_class) {
+        function add_data(data, title, key, data_wrap, data_class, newline) {
             var element = data, orig_key = key;
             var tree = key.split(".");
             for (var i = 0; i < tree.length; i++) {
@@ -56,9 +56,13 @@
                 wrap_open = "<" + data_wrap + clazz + ">";
                 wrap_close = "</" + data_wrap + ">";
             }
+            var new_line = " ";
+            if (newline) {
+                new_line = ":<br>"
+            }
             console.log("data_wrap", data_wrap, ",", wrap_open, wrap_close);
 
-            html += "<p class='" + key + "'><label>" + title + " " + wrap_open + element + wrap_close + "</label></p>";
+            html += "<p class='" + key + "'><label>" + title + new_line + wrap_open + element + wrap_close + "</label></p>";
         }
         // values every node has:
         html += "<div class='type'><label><span>" + event.type + "</span> (<span>"+ event.action + "</span>)</div>";
@@ -68,9 +72,18 @@
         html += "<p class='nodes'><label>Node <code>" + event.nodes.send + " &rArr; " + event.nodes.receive + "</code></label></p>";
 
         // some node have:
-        add_data(event.data, "Value", "value", "code");
+        add_data(event.data, "Value", "value", "code", null, true);
+        add_data(event.data, "Proposal", "proposal", "code", null, true);
         add_data(event.data, "Leader", "leader", "code");
-        add_data(event.data, "Received Values", "value_store", "pre");
+
+        if (event.data.hasOwnProperty("value_store")) {
+            html += "<p class='value_store'><label>Received Values:<span>" +
+                    event.data.value_store.map(function(e){
+                        var different_sequence_no = e.sequence_no !== event.data.sequence_no;
+                        return "<br><code class='node" + (different_sequence_no? " different" : "") + "' title='Node "+ e.node + (different_sequence_no? " - Sequence " + e.sequence_no : "") + "'>" + e.value + "</code>";
+                    }).join(", ") +
+                    "</span></label></p>";
+        }
 
         html += "</div>";
         return html;

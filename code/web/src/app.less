@@ -450,40 +450,43 @@ input {
       text-transform: capitalize;
     }
   }
+  p.value_store label span .node.different {
+    text-decoration: line-through;
+  }
 }
 // THEME
 .makro_tooltipster_color(@color) {
   &.tooltipster-top,
-    &.tooltipster-bottom {
-      .tooltipster-box {
-        border-left: 0 none #2a2a2a;
-        border-right: 0 none #2a2a2a;
-        border-bottom: 3px solid @color;
-        border-top: 3px solid @color;
-      }
-      .tooltipster-arrow-border {
-        border-bottom-color: @color;
-        border-top-color: @color;
-      }
+  &.tooltipster-bottom {
+    .tooltipster-box {
+      border-left: 0 none #2a2a2a;
+      border-right: 0 none #2a2a2a;
+      border-bottom: 3px solid @color;
+      border-top: 3px solid @color;
     }
-    &.tooltipster-left,
-    &.tooltipster-right {
-      .tooltipster-box {
-        border-top: 0 none #2a2a2a;
-        border-bottom: 0 none #2a2a2a;
-        border-left: 3px solid @color;
-        border-right: 3px solid @color;
-      }
-      .tooltipster-arrow-border {
-        border-left-color: @color;
-        border-right-color: @color;
-      }
+    .tooltipster-arrow-border {
+      border-bottom-color: @color;
+      border-top-color: @color;
     }
-    .tooltipster-content {
-      color: @color;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      font-variant: normal;
+  }
+  &.tooltipster-left,
+  &.tooltipster-right {
+    .tooltipster-box {
+      border-top: 0 none #2a2a2a;
+      border-bottom: 0 none #2a2a2a;
+      border-left: 3px solid @color;
+      border-right: 3px solid @color;
     }
+    .tooltipster-arrow-border {
+      border-left-color: @color;
+      border-right-color: @color;
+    }
+  }
+  .tooltipster-content {
+    color: @color;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-variant: normal;
+  }
 }
 .tooltipster-sidetip.tooltipster-punk {
   &.tooltipster-punk-acknowledge-init,
