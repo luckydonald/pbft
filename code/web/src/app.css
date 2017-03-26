@@ -281,21 +281,41 @@ input {
   top: 0;
   left: 0;
 }
+#failure-table #timeline svg .arrow.type-init,
+#failure-table #timeline svg circle.type-init {
+  stroke: #7cf1cb;
+}
+#failure-table #timeline svg .arrow.type-prevote,
+#failure-table #timeline svg circle.type-prevote {
+  stroke: #ffcd83;
+}
+#failure-table #timeline svg .arrow.type-propose,
+#failure-table #timeline svg circle.type-propose {
+  stroke: #85b9f0;
+}
+#failure-table #timeline svg .arrow.type-vote,
+#failure-table #timeline svg circle.type-vote {
+  stroke: #ffad83;
+}
 #failure-table #timeline svg .arrow {
   stroke-width: 2px;
   fill: none;
 }
-#failure-table #timeline svg .arrow.type-init {
-  stroke: #7cf1cb;
+#failure-table #timeline svg circle.action-acknowledge.type-init {
+  fill: #7cf1cb;
 }
-#failure-table #timeline svg .arrow.type-prevote {
-  stroke: #ffcd83;
+#failure-table #timeline svg circle.action-acknowledge.type-prevote {
+  fill: #ffcd83;
 }
-#failure-table #timeline svg .arrow.type-propose {
-  stroke: #85b9f0;
+#failure-table #timeline svg circle.action-acknowledge.type-propose {
+  fill: #85b9f0;
 }
-#failure-table #timeline svg .arrow.type-vote {
-  stroke: #ffad83;
+#failure-table #timeline svg circle.action-acknowledge.type-vote {
+  fill: #ffad83;
+}
+#failure-table #timeline svg circle.action-send {
+  fill-opacity: 0.0;
+  stroke-width: 3;
 }
 #failure-table #fillin {
   float: left;

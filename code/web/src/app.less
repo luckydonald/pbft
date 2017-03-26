@@ -386,10 +386,7 @@ input {
     }
 
     svg {
-      .arrow {
-        stroke-width: 2px;
-        fill: none;
-
+      .arrow, circle {
         &.type-init {
           stroke: @msg-init;
         }
@@ -401,6 +398,30 @@ input {
         }
         &.type-vote {
           stroke: @msg-vote;
+        }
+      }
+      .arrow {
+        stroke-width: 2px;
+        fill: none;
+      }
+      circle {
+        &.action-acknowledge {
+          &.type-init {
+            fill: @msg-init;
+          }
+          &.type-prevote {
+            fill: @msg-prevote;
+          }
+          &.type-propose {
+            fill: @msg-propose;
+          }
+          &.type-vote {
+            fill: @msg-vote;
+          }
+        }
+        &.action-send {
+          fill-opacity: 0.0;
+          stroke-width: 3;
         }
       }
     }

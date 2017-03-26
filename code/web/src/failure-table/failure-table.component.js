@@ -207,66 +207,31 @@ angular.
 
             }
 
-            function drawStartingCircle(data) {
-                var color = "";
-                switch (data.type) {
-                    case "init":
-                        color = colors[0];
-                        break;
-                    case "propose":
-                        color = colors[1];
-                        break;
-                    case "prevote":
-                        color = colors[2];
-                        break;
-                    case "vote":
-                        color = colors[3];
-                        break;
-                }
-
-                out("new startp circle for " +data.nodes.send+ ":: cx " +tlPositions[data.nodes.send]+ " cy " +((data.timestamps.send.unix-self.startstamp)*scale+yProgress));
+            function drawStartingCircle(event) {
+                out("new startp circle for " +event.nodes.send+ ":: cx " +tlPositions[event.nodes.send]+ " cy " +((event.timestamps.send.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 1) {
                     svg.append("circle")
                         .classed("startp","true")
                         .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                        .classed(("c_"+data.nodes.send),"true")
+                        .classed(("c_"+event.nodes.send),"true")
                         .classed("new","true")
-                        .attr("cId",data.id.send)
-                        .attr("cx",tlPositions[data.nodes.send])
-                        .attr("cy",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                        .attr("r",7)
-                        // .attr("fill",color)
-                        .attr("fill",color).attr("fill-opacity","0.0")
-                        .attr("stroke",color).attr("stroke-width",3)
-                        // end
-                        .attr("ng-click","$ctrl.showLogInfo("+data.nodes.send+")");
+                        .attr("cId",event.id.send)
+                        .attr("cx",tlPositions[event.nodes.send])
+                        .attr("cy",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("r",7);
+                        //.attr("ng-click","$ctrl.showLogInfo("+event.nodes.send+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
                 //}
                 
-                var logInfoObj = {id:(""+data.id.send), cx:tlPositions[data.nodes.send], cy:(data.timestamps.send.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+data.timestamps.send)};
+                var logInfoObj = {id:(""+event.id.send), cx:tlPositions[event.nodes.send], cy:(event.timestamps.send.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.send)};
                 logInfoStore.push(logInfoObj);
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
-                eHeight = eHeight + ((data.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
+                eHeight = eHeight + ((event.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function drawEndLine(event) {
-                var color = "";
                 var arrow = event.type+"Arrow";
-                switch (event.type) {
-                    case "init":
-                        color = colors[0];
-                        break;
-                    case "propose":
-                        color = colors[1];
-                        break;
-                    case "prevote":
-                        color = colors[2];
-                        break;
-                    case "vote":
-                        color = colors[3];
-                        break;
-                }
 
                 out("new endp circle for " +event.nodes.receive+ ":: cx " +tlPositions[event.nodes.receive]+ " cy " +((event.timestamps.receive.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[event.nodes.send] == null || circleLog[event.nodes.send] == 0) {
@@ -280,9 +245,6 @@ angular.
                         .attr("cx",tlPositions[event.nodes.receive])
                         .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
-                        //.attr("fill",color).attr("fill-opacity","0.0")
-                        //.attr("stroke",color).attr("stroke-width",3)
-                        .attr("fill",color)
                         // end
                         .attr("ng-click","$ctrl.showLogInfo("+event.nodes.receive+")")
                         .attr("data-meta", JSON.stringify(event))
@@ -292,7 +254,7 @@ angular.
                     $(circle).tooltipster({functionInit: tooltipContent, interactive: true, theme: ['tooltipster-punk', 'tooltipster-punk-' + event.action + '-' + event.type], trigger: 'click'});
                     //circleLog[event.nodes.send] = (circleLog[event.nodes.send] == null ? 1 : 2);
                     
-                    var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+event.timestamps.receive.string)};
+                    var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.receive.string)};
                     logInfoStore.push(logInfoObj);
                 //}
 
