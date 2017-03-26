@@ -50,11 +50,15 @@ services:
       API_HOST: ${API_HOST}
     ports:
      - "8000:8000"
+    entrypoint: ["/entrypoint.sh"]
 
   postgres:
     extends:
       file: api.docker-compose.yml
       service: postgres
+    #volumes:
+    #  - /data/postgres:/data/postgres
+
 
   postgres_browser:
     extends:
