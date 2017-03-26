@@ -219,7 +219,6 @@ angular.
                         .attr("cx",tlPositions[event.nodes.send])
                         .attr("cy",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7);
-                        //.attr("ng-click","$ctrl.showLogInfo("+event.nodes.send+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
                 //}
                 
@@ -246,11 +245,9 @@ angular.
                         .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
                         // end
-                        .attr("ng-click","$ctrl.showLogInfo("+event.nodes.receive+")")
                         .attr("data-meta", JSON.stringify(event))
                     ;
                     console.log("end_circle", circle, $(circle));
-                    // $(circle).tooltipster({functionFormat: tooltipFormat});
                     $(circle).tooltipster({functionInit: tooltipContent, interactive: true, theme: ['tooltipster-punk', 'tooltipster-punk-' + event.action + '-' + event.type], trigger: 'click'});
                     //circleLog[event.nodes.send] = (circleLog[event.nodes.send] == null ? 1 : 2);
                     
@@ -260,7 +257,6 @@ angular.
 
                 var x_send = tlPositions[event.nodes.send];
                 var x_receive = tlPositions[event.nodes.receive];
-                // +18 when line will go from right to left, -18 otherwise
                 var y_send = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
                 var y_receive = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
                 if (x_send == x_receive) {
@@ -276,16 +272,11 @@ angular.
                         .classed("arrow", true).classed("type-" + event.type, true)
                         .attr("marker-end",("url(#"+arrow+")"));
                 } else {
-                    var y2 = calculateYCoordinate(
-                        {"x":x_send,"y":y_send}, // starting point of line
-                        {"x":x_receive,"y":y_receive}, // ending point of line
-                        x_receive  // x value to determine corresponding y
-                    );
                     svg.append("line")
                         .classed("arrow", true).classed("type-" + event.type, true)
                         .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
                         .attr("x1",x_send).attr("y1",y_send)
-                        .attr("x2",x_receive).attr("y2",y2)
+                        .attr("x2",x_receive).attr("y2",y_receive)
                         .attr("marker-end",("url(#"+arrow+")"));
                 }
 
@@ -323,16 +314,33 @@ angular.
                                 }
                             }
                         } else if (content[0][i].tagName === "line") {
+                            var line = content[0][i];
                             if (content[0][i].attributes.class === undefined
                                 || !(content[0][i].attributes.class.nodeValue === "nodeLine")) {
-                                var line = content[0][i];
                                 line.x1.baseVal.value = line.x1.baseVal.value * perc;
                                 line.x2.baseVal.value = line.x2.baseVal.value * perc;
                             } else {
-                                var line = content[0][i];
                                 line.x1.baseVal.value = line.x1.baseVal.value * perc;
                                 line.x2.baseVal.value = line.x2.baseVal.value * perc;
                             }
+                        } else if (content[0][i].tagName === "polyline") {
+                            var polyline = content[0][i];
+                            //var classes = polyline.attributes.class.nodeValue.split(" ");
+                            var points = polyline.attributes.points.nodeValue.split(" ");
+                            var new_points = [];
+                            for (var j = 0; j < points.length; j++) {
+                                var coords = points[j].split(",");
+                                if (coords[0].length == 0) {
+                                    continue;
+                                }
+                                var new_x = parseFloat(coords[0]) * perc;
+                                if (new_x == 0 || isNaN(new_x)) {
+                                    console.log("new_x", new_x)
+                                }
+                                coords[0] = "" + (new_x);  // change x coordinate
+                                new_points.push(coords.join(","));
+                            }
+                            polyline.attributes.points.nodeValue = new_points.join(" ");
                         }
                     }
                     content = svg.selectAll("text");
@@ -377,36 +385,6 @@ angular.
                 }
                 // INIT
             });*/
-
-            self.showLogInfo = (function(id) {
-                var element = null;
-                for (var i = 0; i < logInfoStore.length; i++) {
-                    if (logInfoStore[i].id === ""+id) {
-                        element = logInfoStore[i];
-                        break;
-                    }
-                }
-                if (element === null) {
-                    return;
-                }
-                //alert("cx:"+element.cx);
-
-                svg.append("rect")
-                    .classed(("r_"+element.id),"true")
-                    .attr("x",element.cx-50).attr("y",element.cy+10)
-                    .attr("width",100).attr("height",50)
-                    .attr("fill",element.col)
-                    .attr("ng-click","$ctrl.hideLogInfo("+element.id+");");
-                var rects = svg.selectAll("rect.r_"+element.id);
-                for (var i = 0; i < rects[0].length; i++) {
-                    $compile(rects[0][i])($scope);
-                }
-
-            });
-
-            self.hideLogInfo = (function(id) {
-                svg.select("rect.r_"+id).remove();
-            });
 
             function deOverflow(id) {
                 if (idLog.length < EL_MAX) {
