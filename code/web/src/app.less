@@ -439,8 +439,19 @@ input {
 
 // TOOLTIPS
 
-
-
+.tooltipster-content {
+  p.type, div.type {
+    text-align: center;
+    font-size: 0.5em;
+    margin-bottom: -0.5em;
+    margin-top: 0;
+    span {
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  }
+}
+// THEME
 .makro_tooltipster_color(@color) {
   &.tooltipster-top,
     &.tooltipster-bottom {

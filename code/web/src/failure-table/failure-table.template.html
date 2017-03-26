@@ -36,10 +36,17 @@
 
         var html = "<div class='node-tooltip action-" + event.action + " type-" + event.type + "'>";
         function add_data(data, title, key, data_wrap, data_class) {
-            var element = data;
-            if (data.hasOwnProperty(key)) {
-                element = data[key];
+            var element = data, orig_key = key;
+            var tree = key.split(".");
+            for (var i = 0; i < tree.length; i++) {
+                key = tree[i];
+                if (data.hasOwnProperty(key)) {
+                    element = data[key];
+                } else {
+                    return;
+                }
             }
+            key = tree.join("-");
             var clazz = "";
             if (data_class) {
                 clazz = " class='" + data_class + "'"
@@ -51,10 +58,12 @@
             }
             console.log("data_wrap", data_wrap, ",", wrap_open, wrap_close);
 
-            html += "<p class='" + key + "'><label>" + title + " " + wrap_open + data[key] + wrap_close + "</label></p>";
+            html += "<p class='" + key + "'><label>" + title + " " + wrap_open + element + wrap_close + "</label></p>";
         }
         // values every node has:
-        add_data(event.timestamps.receive.string, "Received", "receive", null, "timestamp");
+        html += "<div class='type'><label><span>" + event.type + "</span> (<span>"+ event.action + "</span>)</div>";
+
+        add_data(event, "Received", "timestamps.receive.string", null, "timestamp");
         add_data(event.data, "Sequence", "sequence_no", "code");  // "<p><label class='sequence_no'>Sequence <span>" + data.sequence_no + "</span></label></p>" +
         html += "<p class='nodes'><label>Node <code>" + event.nodes.send + " &rArr; " + event.nodes.receive + "</code></label></p>";
 

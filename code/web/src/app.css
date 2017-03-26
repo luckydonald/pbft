@@ -323,6 +323,18 @@ input {
   height: 70vh;
   margin: 0 0 0 auto;
 }
+.tooltipster-content p.type,
+.tooltipster-content div.type {
+  text-align: center;
+  font-size: 0.5em;
+  margin-bottom: -0.5em;
+  margin-top: 0;
+}
+.tooltipster-content p.type span,
+.tooltipster-content div.type span {
+  font-weight: bold;
+  text-transform: capitalize;
+}
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-init.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init.tooltipster-bottom .tooltipster-box,
