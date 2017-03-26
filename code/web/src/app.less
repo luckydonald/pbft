@@ -375,20 +375,18 @@ input {
   font-variant: normal;
 }
 
-.tooltipster-sidetip.tooltipster-punk {
-  &.tooltipster-punk-acknowledge-init,
-  &.tooltipster-punk-send-init {
-    &.tooltipster-top,
+.makro_tooltipster_color(@color) {
+  &.tooltipster-top,
     &.tooltipster-bottom {
       .tooltipster-box {
         border-left: 0 none #2a2a2a;
         border-right: 0 none #2a2a2a;
-        border-bottom: 3px solid @msg-init;
-        border-top: 3px solid @msg-init;
+        border-bottom: 3px solid @color;
+        border-top: 3px solid @color;
       }
       .tooltipster-arrow-border {
-        border-bottom-color: @msg-init;
-        border-top-color: @msg-init;
+        border-bottom-color: @color;
+        border-top-color: @color;
       }
     }
     &.tooltipster-left,
@@ -396,52 +394,36 @@ input {
       .tooltipster-box {
         border-top: 0 none #2a2a2a;
         border-bottom: 0 none #2a2a2a;
-        border-left: 3px solid @msg-init;
-        border-right: 3px solid @msg-init;
+        border-left: 3px solid @color;
+        border-right: 3px solid @color;
       }
       .tooltipster-arrow-border {
-        border-left-color: @msg-init;
-        border-right-color: @msg-init;
+        border-left-color: @color;
+        border-right-color: @color;
       }
     }
     .tooltipster-content {
-      color: @msg-init;
+      color: @color;
     }
+}
+.tooltipster-sidetip.tooltipster-punk {
+  &.tooltipster-punk-acknowledge-init,
+  &.tooltipster-punk-send-init {
+    .makro_tooltipster_color(@msg-init);
   }
 
   &.tooltipster-punk-acknowledge-propose,
   &.tooltipster-punk-send-propose {
-    &.tooltipster-top {
-      .tooltipster-arrow-border {
-        border-top-color: @msg-propose;
-      }
-    }
-    .tooltipster-box {
-      border-bottom-color: @msg-propose;
-    }
+    .makro_tooltipster_color(@msg-propose);
   }
 
   &.tooltipster-punk-acknowledge-prevote,
   &.tooltipster-punk-send-prevote {
-    &.tooltipster-top {
-      .tooltipster-arrow-border {
-        border-top-color: @msg-prevote;
-      }
-    }
-    .tooltipster-box {
-      border-bottom-color: @msg-prevote;
-    }
+    .makro_tooltipster_color(@msg-prevote);
   }
 
   &.tooltipster-punk-acknowledge-vote,
   &.tooltipster-punk-send-vote {
-    &.tooltipster-top {
-      .tooltipster-arrow-border {
-        border-top-color: @msg-vote;
-      }
-    }
-    .tooltipster-box {
-      border-bottom-color: @msg-vote;
-    }
+    .makro_tooltipster_color(@msg-vote);
   }
 }

@@ -303,27 +303,111 @@ input {
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-init .tooltipster-content {
   color: #7cf1cb;
 }
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-top .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-top .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-bottom .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-bottom .tooltipster-box {
+  border-left: 0 none #2a2a2a;
+  border-right: 0 none #2a2a2a;
+  border-bottom: 3px solid #85b9f0;
+  border-top: 3px solid #85b9f0;
+}
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-top .tooltipster-arrow-border,
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-top .tooltipster-arrow-border {
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-top .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-bottom .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-bottom .tooltipster-arrow-border {
+  border-bottom-color: #85b9f0;
   border-top-color: #85b9f0;
 }
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose .tooltipster-box,
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose .tooltipster-box {
-  border-bottom-color: #85b9f0;
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-left .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-left .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-right .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-right .tooltipster-box {
+  border-top: 0 none #2a2a2a;
+  border-bottom: 0 none #2a2a2a;
+  border-left: 3px solid #85b9f0;
+  border-right: 3px solid #85b9f0;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-left .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-left .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-right .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-right .tooltipster-arrow-border {
+  border-left-color: #85b9f0;
+  border-right-color: #85b9f0;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose .tooltipster-content,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose .tooltipster-content {
+  color: #85b9f0;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-top .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-top .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-bottom .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-bottom .tooltipster-box {
+  border-left: 0 none #2a2a2a;
+  border-right: 0 none #2a2a2a;
+  border-bottom: 3px solid #ffcd83;
+  border-top: 3px solid #ffcd83;
 }
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-top .tooltipster-arrow-border,
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-top .tooltipster-arrow-border {
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-top .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-bottom .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-bottom .tooltipster-arrow-border {
+  border-bottom-color: #ffcd83;
   border-top-color: #ffcd83;
 }
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote .tooltipster-box,
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote .tooltipster-box {
-  border-bottom-color: #ffcd83;
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-left .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-left .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-right .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-right .tooltipster-box {
+  border-top: 0 none #2a2a2a;
+  border-bottom: 0 none #2a2a2a;
+  border-left: 3px solid #ffcd83;
+  border-right: 3px solid #ffcd83;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-left .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-left .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-right .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-right .tooltipster-arrow-border {
+  border-left-color: #ffcd83;
+  border-right-color: #ffcd83;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote .tooltipster-content,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote .tooltipster-content {
+  color: #ffcd83;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-top .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-top .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-bottom .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-bottom .tooltipster-box {
+  border-left: 0 none #2a2a2a;
+  border-right: 0 none #2a2a2a;
+  border-bottom: 3px solid #ffad83;
+  border-top: 3px solid #ffad83;
 }
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-top .tooltipster-arrow-border,
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-top .tooltipster-arrow-border {
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-top .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-bottom .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-bottom .tooltipster-arrow-border {
+  border-bottom-color: #ffad83;
   border-top-color: #ffad83;
 }
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote .tooltipster-box,
-.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote .tooltipster-box {
-  border-bottom-color: #ffad83;
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-left .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-left .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-right .tooltipster-box,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-right .tooltipster-box {
+  border-top: 0 none #2a2a2a;
+  border-bottom: 0 none #2a2a2a;
+  border-left: 3px solid #ffad83;
+  border-right: 3px solid #ffad83;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-left .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-left .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-right .tooltipster-arrow-border,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-right .tooltipster-arrow-border {
+  border-left-color: #ffad83;
+  border-right-color: #ffad83;
+}
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote .tooltipster-content,
+.tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote .tooltipster-content {
+  color: #ffad83;
 }
