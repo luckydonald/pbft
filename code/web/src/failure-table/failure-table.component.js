@@ -19,11 +19,13 @@ angular.
             var gap = 0;                // gap between nodes, will be set in method setupNodeElements
             var tlPositions = [];
             var circleLog = [];         // logs at which position there have already been drawn circles to prevent stacking them
+            var idLog = [];
             self.startstamp = 0;         // first timestamp that appears in the timeline
             var yProgress = 0;
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
             var scale = 1000;
+            var EL_MAX = 50;
 
             var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
@@ -33,7 +35,7 @@ angular.
             var tlData = null;
 
             //$http.get('test_timeline.json').success(function(response){
-            $http.get(url + "/api/v2/get_timeline/").success(function(response){
+            $http.get(url+"/api/v2/get_timeline/").success(function(response){
                 tlData = response;
                 self.nodes = tlData.nodes;
                 self.startstamp = tlData.timestamps.min.unix;
@@ -210,7 +212,9 @@ angular.
                     //var yHeight = 0;
 
                     if (event.action === "acknowledge") {
-                        drawEndLine(event);
+                        if (((event.timestamps.send.unix-self.startstamp)*scale+yProgress) >= yProgress) {
+                            drawEndLine(event);
+                        }
                     } else {
                         drawStartingCircle(event);
                     }
@@ -261,6 +265,7 @@ angular.
                         .classed("startp","true")
                         .classed(("c_"+data.nodes.send),"true")
                         .classed("new","true")
+                        .attr("cId",data.id.send)
                         .attr("cx",tlPositions[data.nodes.send])
                         .attr("cy",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
@@ -301,6 +306,7 @@ angular.
                         .classed(("c_"+event.nodes.receive),"true")
                         .classed("new","true")
                         .classed("tooltip","true")
+                        .attr("cId",event.id.receive)
                         .attr("cx",tlPositions[event.nodes.receive])
                         .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
@@ -327,14 +333,17 @@ angular.
                     y2 = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
                     // create three lines that act as one line with two 90° angles
                     svg.append("line")
+                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
                         .attr("x1",x1).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("x2",x1+30).attr("y2",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("stroke",color).attr("stroke-width",2);
                     svg.append("line")
+                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
                         .attr("x1",x1+30).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("x2",x2+30).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2);
                     svg.append("line")
+                        .attr("sId","i"+data.id.send).attr("rId","i"+data.id.receive)
                         .attr("x1",x1+30).attr("y1",y2)
                         .attr("x2",x2+arrowOffset).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2)
@@ -347,6 +356,7 @@ angular.
                         actualX2  // x value to determine corresponding y
                     );
                     svg.append("line")
+                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
                         .attr("x1",x1).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("x2",actualX2).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2)
@@ -451,6 +461,24 @@ angular.
             self.hideLogInfo = (function(id) {
                 svg.select("rect.r_"+id).remove();
             });
+
+            function deOverflow(id) {
+                if (idLog.length < EL_MAX) {
+                    idLog.push("i"+id);
+                } else {
+                    var delId1 = idLog.shift();
+                    var lines = svg.selectAll("[sId="+delId1+"]");
+                    if (lines[0].length > 0) {
+                        for (var i = 0; i < lines[0].length; i++) {
+                            svg.selectAll("[cId="+lines[0][i].attributes[1].value+"]").remove();
+                            lines[0][i].remove();
+                            idLog.shift();
+                        }
+                    }
+                    svg.selectAll("[cId="+delId1+"]").remove();
+                    idLog.push("i"+id);
+                }
+            }
 
             function getTextWidth(str) {
                 var temp = d3.select("body")
