@@ -346,12 +346,31 @@ input {
   }
 
   #symbology {
+    float:left;
+    width: 8%;
+    padding: 2%;
+    height: 70vh;
+    margin: 0;
+    vertical-align: top;
 
+    div.circle {
+      width: 50px;
+      height: 50px;
+      -moz-border-radius: 25px;
+      -webkit-border-radius: 25px;
+      border-radius: 25px;
+    }
+
+    div.ringHole {
+      width: 25px;
+
+    }
   }
 
   #timeline {
     //display: inline-block;
-    position: relative;
+    //position: relative;
+    float: left;
     width: 80%;
     height: 70vh;
     margin: 0 auto;
@@ -367,7 +386,10 @@ input {
   }
 
   #fillin {
-
+    float: left;
+    width: 10%;
+    height: 70vh;
+    margin: 0 0 0 auto;
   }
 }
 

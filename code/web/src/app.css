@@ -249,8 +249,26 @@ input {
   min-height: 30px;
   border-bottom: 1px solid white;
 }
+#failure-table #symbology {
+  float: left;
+  width: 8%;
+  padding: 2%;
+  height: 70vh;
+  margin: 0;
+  vertical-align: top;
+}
+#failure-table #symbology div.circle {
+  width: 50px;
+  height: 50px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+}
+#failure-table #symbology div.ringHole {
+  width: 25px;
+}
 #failure-table #timeline {
-  position: relative;
+  float: left;
   width: 80%;
   height: 70vh;
   margin: 0 auto;
@@ -412,6 +430,13 @@ input {
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote .tooltipster-content,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote .tooltipster-content {
   color: #ffad83;
+#failure-table #fillin {
+  float: left;
+  width: 10%;
+  height: 70vh;
+  margin: 0 0 0 auto;
+}
+.node-tooltip {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-variant: normal;
 }

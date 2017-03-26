@@ -39,7 +39,7 @@ angular.
                 tlData = response;
                 self.nodes = tlData.nodes;
                 self.startstamp = tlData.timestamps.min.unix;
-
+                //self.setupSymbology();
                 self.setupTimeline(null,false);
             });
 
@@ -86,7 +86,7 @@ angular.
                 svg.selectAll("path:not(.norem)").remove();
             }
 
-            function setupSvgDefs() {
+            function setupSvgDefs(svg) {
                 // I know that the following is extremely bad code, but
                 // as of now it's not possible to reference the fill color
                 // of the element from within the marker declaration
@@ -425,12 +425,32 @@ angular.
                 }
             }
 
-            self.setupSymbology = (function() {
-                var sym = d3.select("div#timeline")
+            /*self.setupSymbology = (function() {
+                var sym = d3.select("div#symbology")
                     .append("svg")
-                    .attr("width","100%").attr("height","100px");
-                sym.append("circle");
-            });
+                    .attr("width","100%").attr("height","300px");
+                var arrows = ["init","propose","prevote","vote"];
+                setupSvgDefs(sym);
+                for (var i = 1; i < 5; i++) {
+                    sym.append("circle")
+                        .attr("cx",20)
+                        .attr("cy",30*i*2)
+                        .attr("r",14)
+                        .attr("fill",colors[i]);
+                    sym.append("circle")
+                        .attr("cx",50)
+                        .attr("cy",30*i*2)
+                        .attr("r",11)
+                        .attr("fill",colors[i]).attr("fill-opacity","0.0")
+                        .attr("stroke",colors[i]).attr("stroke-width",6);
+                    sym.append("line")
+                        .attr("x1",70).attr("y1",30*i*2)
+                        .attr("x2",86).attr("y2",30*i*2)
+                        .attr("stroke",colors[i]).attr("stroke-width",2)
+                        .attr("marker-end",("url(#"+arrows[i]+"Arrow)"));
+                }
+                // INIT
+            });*/
 
             self.showLogInfo = (function(id) {
                 var element = null;
