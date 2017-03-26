@@ -382,6 +382,27 @@ input {
       position: absolute;
       top: 0;
       left: 0;
+
+    }
+
+    svg {
+      .arrow {
+        stroke-width: 2px;
+        fill: none;
+
+        &.type-init {
+          stroke: @msg-init;
+        }
+        &.type-prevote {
+          stroke: @msg-prevote;
+        }
+        &.type-propose {
+          stroke: @msg-propose;
+        }
+        &.type-vote {
+          stroke: @msg-vote;
+        }
+      }
     }
   }
 
@@ -392,6 +413,14 @@ input {
     margin: 0 0 0 auto;
   }
 }
+
+
+
+
+
+// TOOLTIPS
+
+
 
 .makro_tooltipster_color(@color) {
   &.tooltipster-top,

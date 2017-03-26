@@ -87,60 +87,25 @@ angular.
             }
 
             function setupSvgDefs(svg) {
-                // I know that the following is extremely bad code, but
                 // as of now it's not possible to reference the fill color
                 // of the element from within the marker declaration
-
-                var defs = svg.append("defs");
-                defs.append("marker")
-                    .attr("id","initArrow")
-                    .attr("markerWidth",7)
-                    .attr("markerHeight",7)
-                    .attr("refX",0)
-                    .attr("refY",2)
-                    .attr("orient","auto")
-                    .attr("markerUnits","strokeWidth")
+                // http://bl.ocks.org/mbostock/1153292
+                var lel = {init: 0, propose: 1, prevote: 2, vote: 3};
+                svg.append("defs").selectAll("marker")
+                  .data(Object.keys(lel))
+                    .enter().append("marker")
+                      .attr("id", function(d) { return d + "Arrow"; })
+                      .attr("viewBox", "0 -5 10 10")
+                      .attr("refX", 15)
+                      .attr("refY", 0)
+                      .attr("markerWidth", 6)
+                      .attr("markerHeight", 6)
+                      .attr("orient", "auto")
                     .append("path")
-                    .attr("class","norem")
-                    .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill",colors[0]);
-                defs.append("marker")
-                    .attr("id","proposeArrow")
-                    .attr("markerWidth",7)
-                    .attr("markerHeight",7)
-                    .attr("refX",0)
-                    .attr("refY",2)
-                    .attr("orient","auto")
-                    .attr("markerUnits","strokeWidth")
-                    .append("path")
-                    .attr("class","norem")
-                    .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill",colors[1]);
-                defs.append("marker")
-                    .attr("id","prevoteArrow")
-                    .attr("markerWidth",7)
-                    .attr("markerHeight",7)
-                    .attr("refX",0)
-                    .attr("refY",2)
-                    .attr("orient","auto")
-                    .attr("markerUnits","strokeWidth")
-                    .append("path")
-                    .attr("class","norem")
-                    .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill",colors[2]);
-                defs.append("marker")
-                    .attr("id","voteArrow")
-                    .attr("markerWidth",7)
-                    .attr("markerHeight",7)
-                    .attr("refX",0)
-                    .attr("refY",2)
-                    .attr("orient","auto")
-                    .attr("markerUnits","strokeWidth")
-                    .append("path")
-                    .attr("class","norem")
-                    .attr("d","M0,0 L0,4 L4,2 z")
-                    .attr("fill",colors[3]);
+                      .attr("d", "M0,-5L10,0L0,5")
+                      .attr("fill", function(d) { return colors[lel[d]]; });
             }
+
 
             function setupBackground(svgHeight) {
                 out("### SVG HEIGHT FOR BG: " +svgHeight);
@@ -263,13 +228,17 @@ angular.
                 //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 1) {
                     svg.append("circle")
                         .classed("startp","true")
+                        .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
                         .classed(("c_"+data.nodes.send),"true")
                         .classed("new","true")
                         .attr("cId",data.id.send)
                         .attr("cx",tlPositions[data.nodes.send])
                         .attr("cy",(data.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
-                        .attr("fill",color)
+                        // .attr("fill",color)
+                        .attr("fill",color).attr("fill-opacity","0.0")
+                        .attr("stroke",color).attr("stroke-width",3)
+                        // end
                         .attr("ng-click","$ctrl.showLogInfo("+data.nodes.send+")");
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
                 //}
@@ -303,6 +272,7 @@ angular.
                 //if (circleLog[event.nodes.send] == null || circleLog[event.nodes.send] == 0) {
                     var circle = svg.append("circle")
                         .classed("endp","true")
+                        .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
                         .classed(("c_"+event.nodes.receive),"true")
                         .classed("new","true")
                         .classed("tooltip","true")
@@ -310,8 +280,10 @@ angular.
                         .attr("cx",tlPositions[event.nodes.receive])
                         .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
-                        .attr("fill",color).attr("fill-opacity","0.0")
-                        .attr("stroke",color).attr("stroke-width",3)
+                        //.attr("fill",color).attr("fill-opacity","0.0")
+                        //.attr("stroke",color).attr("stroke-width",3)
+                        .attr("fill",color)
+                        // end
                         .attr("ng-click","$ctrl.showLogInfo("+event.nodes.receive+")")
                         .attr("data-meta", JSON.stringify(event))
                     ;
@@ -324,42 +296,34 @@ angular.
                     logInfoStore.push(logInfoObj);
                 //}
 
-                var x1 = tlPositions[event.nodes.send];
-                var x2 = tlPositions[event.nodes.receive];
+                var x_send = tlPositions[event.nodes.send];
+                var x_receive = tlPositions[event.nodes.receive];
                 // +18 when line will go from right to left, -18 otherwise
-                var actualX2 = 0;
-                var y2 = 0;
-                if (x1 == x2) {
-                    y2 = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                var y_send = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
+                var y_receive = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                if (x_send == x_receive) {
                     // create three lines that act as one line with two 90° angles
-                    svg.append("line")
+                    svg.append("polyline")
+                        .attr("points",
+                            (x_send   ) +","+ y_send +" "+
+                            (x_send+30) +","+ y_send +" "+
+                            (x_send+30) +","+ y_receive +" "+
+                            (x_send   ) +","+ y_receive +" "
+                        )
                         .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
-                        .attr("x1",x1).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                        .attr("x2",x1+30).attr("y2",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                        .attr("stroke",color).attr("stroke-width",2);
-                    svg.append("line")
-                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
-                        .attr("x1",x1+30).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                        .attr("x2",x2+30).attr("y2",y2)
-                        .attr("stroke",color).attr("stroke-width",2);
-                    svg.append("line")
-                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
-                        .attr("x1",x1+30).attr("y1",y2)
-                        .attr("x2",x2+arrowOffset).attr("y2",y2)
-                        .attr("stroke",color).attr("stroke-width",2)
+                        .classed("arrow", true).classed("type-" + event.type, true)
                         .attr("marker-end",("url(#"+arrow+")"));
                 } else {
-                    actualX2 = (x1 > x2 ? x2+arrowOffset : x2-arrowOffset);
-                    y2 = calculateYCoordinate(
-                        {"x":x1,"y":(event.timestamps.send.unix-self.startstamp)*scale+yProgress}, // starting point of line
-                        {"x":x2,"y":(event.timestamps.receive.unix-self.startstamp)*scale+yProgress}, // ending point of line
-                        actualX2  // x value to determine corresponding y
+                    var y2 = calculateYCoordinate(
+                        {"x":x_send,"y":y_send}, // starting point of line
+                        {"x":x_receive,"y":y_receive}, // ending point of line
+                        x_receive  // x value to determine corresponding y
                     );
                     svg.append("line")
+                        .classed("arrow", true).classed("type-" + event.type, true)
                         .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
-                        .attr("x1",x1).attr("y1",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
-                        .attr("x2",actualX2).attr("y2",y2)
-                        .attr("stroke",color).attr("stroke-width",2)
+                        .attr("x1",x_send).attr("y1",y_send)
+                        .attr("x2",x_receive).attr("y2",y2)
                         .attr("marker-end",("url(#"+arrow+")"));
                 }
 
