@@ -300,7 +300,7 @@ angular.
                 }
 
                 out("new endp circle for " +event.nodes.receive+ ":: cx " +tlPositions[event.nodes.receive]+ " cy " +((event.timestamps.receive.unix-self.startstamp)*scale+yProgress));
-                //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 0) {
+                //if (circleLog[event.nodes.send] == null || circleLog[event.nodes.send] == 0) {
                     var circle = svg.append("circle")
                         .classed("endp","true")
                         .classed(("c_"+event.nodes.receive),"true")
@@ -318,7 +318,7 @@ angular.
                     console.log("end_circle", circle, $(circle));
                     // $(circle).tooltipster({functionFormat: tooltipFormat});
                     $(circle).tooltipster({functionInit: tooltipContent, interactive: true, theme: ['tooltipster-punk', 'tooltipster-punk-' + event.action + '-' + event.type], trigger: 'click'});
-                    //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
+                    //circleLog[event.nodes.send] = (circleLog[event.nodes.send] == null ? 1 : 2);
                     
                     var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+event.timestamps.receive.string)};
                     logInfoStore.push(logInfoObj);
@@ -343,7 +343,7 @@ angular.
                         .attr("x2",x2+30).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2);
                     svg.append("line")
-                        .attr("sId","i"+data.id.send).attr("rId","i"+data.id.receive)
+                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
                         .attr("x1",x1+30).attr("y1",y2)
                         .attr("x2",x2+arrowOffset).attr("y2",y2)
                         .attr("stroke",color).attr("stroke-width",2)

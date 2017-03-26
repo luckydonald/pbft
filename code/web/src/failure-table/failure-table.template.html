@@ -31,7 +31,7 @@
         var $origin = $(helper.origin);
         var dataOptions = $origin.attr('data-meta');
         if (dataOptions) {
-            data = JSON.parse(dataOptions);
+            event = JSON.parse(dataOptions);
         }
 
         var html = "<div class='node-tooltip action-" + event.action + " type-" + event.type + "'>";

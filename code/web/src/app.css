@@ -263,10 +263,6 @@ input {
   top: 0;
   left: 0;
 }
-.node-tooltip {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-variant: normal;
-}
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-init.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init.tooltipster-bottom .tooltipster-box,
@@ -302,6 +298,8 @@ input {
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-init .tooltipster-content,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-init .tooltipster-content {
   color: #7cf1cb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-variant: normal;
 }
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose.tooltipster-top .tooltipster-box,
@@ -338,6 +336,8 @@ input {
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-propose .tooltipster-content,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-propose .tooltipster-content {
   color: #85b9f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-variant: normal;
 }
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote.tooltipster-top .tooltipster-box,
@@ -374,6 +374,8 @@ input {
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-prevote .tooltipster-content,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-prevote .tooltipster-content {
   color: #ffcd83;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-variant: normal;
 }
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote.tooltipster-top .tooltipster-box,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote.tooltipster-top .tooltipster-box,
@@ -410,4 +412,6 @@ input {
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-acknowledge-vote .tooltipster-content,
 .tooltipster-sidetip.tooltipster-punk.tooltipster-punk-send-vote .tooltipster-content {
   color: #ffad83;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-variant: normal;
 }
