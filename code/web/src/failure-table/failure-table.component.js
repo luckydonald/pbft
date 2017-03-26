@@ -317,7 +317,7 @@ angular.
                     ;
                     console.log("end_circle", circle, $(circle));
                     // $(circle).tooltipster({functionFormat: tooltipFormat});
-                    $(circle).tooltipster({functionInit: tooltipContent, interactive: true});
+                    $(circle).tooltipster({functionInit: tooltipContent, interactive: true, theme: ['tooltipster-punk', 'tooltipster-punk-' + event.action + '-' + event.type]});
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 1 : 2);
                     
                     var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, col:color, timestamp:(""+event.timestamps.receive.string)};
