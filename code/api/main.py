@@ -123,7 +123,7 @@ def get_timeline():
     date_min = None
     date_max = None
     node_events = DBMessage.select_by_sql("""
-      SELECT * FROM DBmessage WHERE date >= NOW() - '10 seconds'::INTERVAL
+      SELECT * FROM DBmessage WHERE date >= NOW() - '60 seconds'::INTERVAL
     """)
     for node_event in node_events:
         event_dict = DictObject.objectify({
