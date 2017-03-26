@@ -55,9 +55,8 @@
         }
         // values every node has:
         add_data(event.timestamps.receive.string, "Received", "receive", null, "timestamp");
-        add_data(event.data, "Node", "node", "code");  // "<p><label class='name'>Node <span>" + content + "</span></label></p>" +
         add_data(event.data, "Sequence", "sequence_no", "code");  // "<p><label class='sequence_no'>Sequence <span>" + data.sequence_no + "</span></label></p>" +
-        // add_data(event.data, "Type", "type");  // "<p><label class='type'>Type <span>" + data.type + "</span></label></p>";
+        html += "<p class='nodes'><label>Node <code>" + event.nodes.send + " - " + event.nodes.receive + "</code></label></p>";
 
         // some node have:
         add_data(event.data, "Value", "value", "code");
