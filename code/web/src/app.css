@@ -317,12 +317,6 @@ input {
   fill-opacity: 0.0;
   stroke-width: 3;
 }
-#failure-table #fillin {
-  float: left;
-  width: 10%;
-  height: 70vh;
-  margin: 0 0 0 auto;
-}
 .tooltipster-content p.type,
 .tooltipster-content div.type {
   text-align: center;
