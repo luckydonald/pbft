@@ -27,7 +27,7 @@ angular.
             var scale = 1000;
             var EL_MAX = 50;
 
-            var logInfoStore = [];
+            //var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
 
             self.nodes = [/*1, 2, 3, 4*/]; // Nodes are added dynamically.
@@ -175,13 +175,15 @@ angular.
                 for (var i = 0; i < data.events.length; i++) {
                     var event = data.events[i];
                     //var yHeight = 0;
-
                     if (event.action === "acknowledge") {
-                        if (((event.timestamps.send.unix-self.startstamp)*scale+yProgress) >= yProgress) {
+                        if (((event.timestamps.send.unix-self.startstamp)*scale+yProgress) >= yProgress
+                            && !(isIn(idLog,event.id.send,event.id.receive))) {
                             drawEndLine(event);
                         }
                     } else {
-                        drawStartingCircle(event);
+                        if (!(isIn(idLog,event.id.send))) {
+                            drawStartingCircle(event);
+                        }
                     }
                     
                     if(eHeight > parseInt(svg.attr("height"),10)) {
@@ -196,34 +198,44 @@ angular.
                     
                     circleLog = [];
                 }
+                /* ### JUST FOR CHECKING IF CIRCLE IDS GET CAUGHT CORRECTLY (not they don't) ###
+                var allCs = svg.selectAll("circle");
+                for (var i = 0; i < allCs[0].length; i++) {
+                    out("[" +i+ "] circle id:" +allCs[0][i].attributes[1].value);
+                    if (i < idLog.length) {
+                        out(" | idLog: " +idLog[i]);
+                    } else {
+                        out(" | idLog: -");
+                    }
+                }*/
 
-                var circles = svg.selectAll("circle.new");
+                /*var circles = svg.selectAll("circle.new");
                 for (var j = 0; j < circles[0].length; j++) {
                     $compile(circles[0][j])($scope);
-                    /*var cls = getAttrValue(circles[0][j],"class").split(" ");
-                    setAttrValue(circles[0][j],"class",(cls[0]))*/
+                    //var cls = getAttrValue(circles[0][j],"class").split(" ");
+                    //setAttrValue(circles[0][j],"class",(cls[0]))
                 }
-                circles.classed("new","false");
+                circles.classed("new","false");*/
 
             }
 
             function drawStartingCircle(event) {
-                out("new startp circle for " +event.nodes.send+ ":: cx " +tlPositions[event.nodes.send]+ " cy " +((event.timestamps.send.unix-self.startstamp)*scale+yProgress));
+                //out("new startp circle for " +event.nodes.send+ ":: cx " +tlPositions[event.nodes.send]+ " cy " +((event.timestamps.send.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 1) {
                     svg.append("circle")
-                        .classed("startp","true")
+                        //.classed("startp","true")
                         .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                        .classed(("c_"+event.nodes.send),"true")
-                        .classed("new","true")
-                        .attr("cId",event.id.send)
+                        //.classed(("c_"+event.nodes.send),"true")
+                        //.classed("new","true")
+                        .attr("cId","i"+event.id.send)
                         .attr("cx",tlPositions[event.nodes.send])
                         .attr("cy",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7);
                     //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
                 //}
-                
-                var logInfoObj = {id:(""+event.id.send), cx:tlPositions[event.nodes.send], cy:(event.timestamps.send.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.send)};
-                logInfoStore.push(logInfoObj);
+                // TODO: deOverflow(event.id.send);
+                //var logInfoObj = {id:(""+event.id.send), cx:tlPositions[event.nodes.send], cy:(event.timestamps.send.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.send)};
+                //logInfoStore.push(logInfoObj);
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
                 eHeight = eHeight + ((event.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
@@ -235,12 +247,12 @@ angular.
                 out("new endp circle for " +event.nodes.receive+ ":: cx " +tlPositions[event.nodes.receive]+ " cy " +((event.timestamps.receive.unix-self.startstamp)*scale+yProgress));
                 //if (circleLog[event.nodes.send] == null || circleLog[event.nodes.send] == 0) {
                     var circle = svg.append("circle")
-                        .classed("endp","true")
+                        //.classed("endp","true")
                         .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                        .classed(("c_"+event.nodes.receive),"true")
-                        .classed("new","true")
+                        //.classed(("c_"+event.nodes.receive),"true")
+                        //.classed("new","true")
                         .classed("tooltip","true")
-                        .attr("cId",event.id.receive)
+                        .attr("cId","i"+event.id.receive)
                         .attr("cx",tlPositions[event.nodes.receive])
                         .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7)
@@ -251,8 +263,8 @@ angular.
                     $(circle).tooltipster({functionInit: tooltipContent, interactive: true, theme: ['tooltipster-punk', 'tooltipster-punk-' + event.action + '-' + event.type], trigger: 'click'});
                     //circleLog[event.nodes.send] = (circleLog[event.nodes.send] == null ? 1 : 2);
                     
-                    var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.receive.string)};
-                    logInfoStore.push(logInfoObj);
+                    //var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.receive.string)};
+                    //logInfoStore.push(logInfoObj);
                 //}
 
                 var x_send = tlPositions[event.nodes.send];
@@ -280,6 +292,7 @@ angular.
                         .attr("marker-end",("url(#"+arrow+")"));
                 }
 
+                // TODO: deOverflow(event.id.send);
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
                 eHeight = eHeight + ((event.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
@@ -387,20 +400,26 @@ angular.
             });*/
 
             function deOverflow(id) {
+                //out("idLog.length: "+idLog.length);
                 if (idLog.length < EL_MAX) {
-                    idLog.push("i"+id);
+                    if (!isIn(idLog,"i"+id)) {
+                        idLog.push("i"+id);
+                    }
                 } else {
+                    //out("=> do some shifting");
                     var delId1 = idLog.shift();
                     var lines = svg.selectAll("[sId="+delId1+"]");
                     if (lines[0].length > 0) {
                         for (var i = 0; i < lines[0].length; i++) {
                             svg.selectAll("[cId="+lines[0][i].attributes[1].value+"]").remove();
+                            svg.selectAll("[cId="+lines[0][i].attributes[2].value+"]").remove();
                             lines[0][i].remove();
                             idLog.shift();
                         }
                     }
-                    svg.selectAll("[cId="+delId1+"]").remove();
+                    //svg.selectAll("[cId="+delId1+"]").remove();
                     idLog.push("i"+id);
+                    //out("new idLog.length: "+idLog.length);
                 }
             }
 
@@ -521,6 +540,27 @@ angular.
                     console.log(NaN)
                 }
                 return (m*x+b);
+            }
+
+            function isIn(arr,val) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i] === val) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function isIn(arr,val1,val2) {
+                var bool1, bool2;
+                for (var i = 0; i < arr.length; i++) {
+                    bool1 = (arr[i] === val1);
+                    bool2 = (arr[i] === val2);
+                    if (bool1 && bool2) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             function maxVal(n1,n2) {

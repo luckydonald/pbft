@@ -353,17 +353,110 @@ input {
     margin: 0;
     vertical-align: top;
 
-    div.circle {
-      width: 50px;
-      height: 50px;
-      -moz-border-radius: 25px;
-      -webkit-border-radius: 25px;
-      border-radius: 25px;
+    div.sym-section {
+      width: 100%;
+      float: left;
+      margin-bottom: 5px;
+
+      div.circle {
+        margin-right: 5px;
+        float: left;
+        width: 40px;
+        height: 40px;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+
+        &.type-init {
+          background: @msg-init;
+        }
+
+        &.type-propose {
+          background: @msg-propose;
+        }
+
+        &.type-prevote {
+          background: @msg-prevote;
+        }
+
+        &.type-vote {
+          background: @msg-vote;
+        }
+
+        div.ringHole {
+          margin: 10px;
+          width: 20px;
+          height: 20px;
+          -moz-border-radius: 10px;
+          -webkit-border-radius: 10px;
+          border-radius: 10px;
+          background: @bg-color;
+        }
+      }
+
+      div.arrow {
+        float: left;
+        width: 40px;
+        height: 40px;
+
+        div.head {
+          float: left;
+          margin: 10px 0;
+          width: 0;
+          height: 0;
+          border-top: 10px solid transparent;
+          border-bottom: 10px solid transparent;
+
+          &.type-init {
+            border-left: 20px solid @msg-init;
+          }
+
+          &.type-propose {
+            border-left: 20px solid @msg-propose;
+          }
+
+          &.type-prevote {
+            border-left: 20px solid @msg-prevote;
+          }
+
+          &.type-vote {
+            border-left: 20px solid @msg-vote;
+          }
+        }
+        div.shaft {
+          float: left;
+          margin: 17px 0;
+          width: 20px;
+          height: 6px;
+
+          &.type-init {
+            background: @msg-init;
+          }
+
+          &.type-propose {
+            background: @msg-propose;
+          }
+
+          &.type-prevote {
+            background: @msg-prevote;
+          }
+
+          &.type-vote {
+            background: @msg-vote;
+          }
+        }
+      }
     }
 
-    div.ringHole {
-      width: 25px;
+    div.top-label {
+      width: 100%;
+      font-variant: small-caps;
+      font-size: 2em;
+    }
 
+    div.sym-label {
+      width: 100%;
+      font-variant: small-caps;
     }
   }
 
