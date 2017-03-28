@@ -265,11 +265,11 @@ input {
 #failure-table #symbology div.sym-section div.circle {
   margin-right: 5px;
   float: left;
-  width: 40px;
-  height: 40px;
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
+  width: 24px;
+  height: 24px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
 }
 #failure-table #symbology div.sym-section div.circle.type-init {
   background: #7cf1cb;
@@ -284,44 +284,44 @@ input {
   background: #ffad83;
 }
 #failure-table #symbology div.sym-section div.circle div.ringHole {
-  margin: 10px;
-  width: 20px;
-  height: 20px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  margin: 6px;
+  width: 12px;
+  height: 12px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
   background: #124;
 }
 #failure-table #symbology div.sym-section div.arrow {
   float: left;
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
 }
 #failure-table #symbology div.sym-section div.arrow div.head {
   float: left;
-  margin: 10px 0;
+  margin: 6px 0;
   width: 0;
   height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
 #failure-table #symbology div.sym-section div.arrow div.head.type-init {
-  border-left: 20px solid #7cf1cb;
+  border-left: 12px solid #7cf1cb;
 }
 #failure-table #symbology div.sym-section div.arrow div.head.type-propose {
-  border-left: 20px solid #85b9f0;
+  border-left: 12px solid #85b9f0;
 }
 #failure-table #symbology div.sym-section div.arrow div.head.type-prevote {
-  border-left: 20px solid #ffcd83;
+  border-left: 12px solid #ffcd83;
 }
 #failure-table #symbology div.sym-section div.arrow div.head.type-vote {
-  border-left: 20px solid #ffad83;
+  border-left: 12px solid #ffad83;
 }
 #failure-table #symbology div.sym-section div.arrow div.shaft {
   float: left;
-  margin: 17px 0;
-  width: 20px;
-  height: 6px;
+  margin: 10px 0;
+  width: 12px;
+  height: 4px;
 }
 #failure-table #symbology div.sym-section div.arrow div.shaft.type-init {
   background: #7cf1cb;
@@ -338,7 +338,7 @@ input {
 #failure-table #symbology div.top-label {
   width: 100%;
   font-variant: small-caps;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 #failure-table #symbology div.sym-label {
   width: 100%;

@@ -361,11 +361,11 @@ input {
       div.circle {
         margin-right: 5px;
         float: left;
-        width: 40px;
-        height: 40px;
-        -moz-border-radius: 20px;
-        -webkit-border-radius: 20px;
-        border-radius: 20px;
+        width: 24px;
+        height: 24px;
+        -moz-border-radius: 12px;
+        -webkit-border-radius: 12px;
+        border-radius: 12px;  // half of width and height -> circle
 
         &.type-init {
           background: @msg-init;
@@ -383,51 +383,51 @@ input {
           background: @msg-vote;
         }
 
-        div.ringHole {
-          margin: 10px;
-          width: 20px;
-          height: 20px;
-          -moz-border-radius: 10px;
-          -webkit-border-radius: 10px;
-          border-radius: 10px;
+        div.ringHole {    // a circle contained in another circle to give the illusion of a ring
+          margin: 6px;
+          width: 12px;
+          height: 12px;
+          -moz-border-radius: 6px;
+          -webkit-border-radius: 6px;
+          border-radius: 6px;
           background: @bg-color;
         }
       }
 
       div.arrow {
         float: left;
-        width: 40px;
-        height: 40px;
+        width: 24px;  // full space the arrow occupies
+        height: 24px; // "
 
-        div.head {
+        div.head {    // head of an arrow
           float: left;
-          margin: 10px 0;
+          margin: 6px 0;    // top and bottom margin = (arrowAreaHeight - borderLeftHeight)/2
           width: 0;
           height: 0;
-          border-top: 10px solid transparent;
-          border-bottom: 10px solid transparent;
+          border-top: 6px solid transparent;
+          border-bottom: 6px solid transparent;
 
           &.type-init {
-            border-left: 20px solid @msg-init;
+            border-left: 12px solid @msg-init;  // arrow shall be half as big as the circles
           }
 
           &.type-propose {
-            border-left: 20px solid @msg-propose;
+            border-left: 12px solid @msg-propose;
           }
 
           &.type-prevote {
-            border-left: 20px solid @msg-prevote;
+            border-left: 12px solid @msg-prevote;
           }
 
           &.type-vote {
-            border-left: 20px solid @msg-vote;
+            border-left: 12px solid @msg-vote;
           }
         }
-        div.shaft {
+        div.shaft {   // shaft / "stick" of an arrow
           float: left;
-          margin: 17px 0;
-          width: 20px;
-          height: 6px;
+          margin: 10px 0; // top and bottom margin = (arrowAreaHeight - shaftHeight)/2
+          width: 12px;  // half of the total arrow area
+          height: 4px;  // doesn't follow any particular rule, tried out what looks best
 
           &.type-init {
             background: @msg-init;
@@ -451,7 +451,7 @@ input {
     div.top-label {
       width: 100%;
       font-variant: small-caps;
-      font-size: 2em;
+      font-size: 1.5em;         // I think it looks good this way..
     }
 
     div.sym-label {
