@@ -26,6 +26,7 @@ angular.
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
             var scale = 1000;
             var EL_MAX = 100;           // maximum of how many elements can be present in the svg at the same time
+            var isSetup = false;
 
             //var logInfoStore = [];
             var colors = ["#7cf1cb","#85b9f0","#ffcd83","#ffad83"];
@@ -34,13 +35,23 @@ angular.
 
             var tlData = null;
 
-            //$http.get('test_timeline.json').success(function(response){
-            $http.get(url+"/api/v2/get_timeline/").success(function(response){
-                tlData = response;
-                self.nodes = tlData.nodes;
-                self.startstamp = tlData.timestamps.min.unix;
-                //self.setupSymbology();
-                self.setupTimeline(null,false);
+            var pollValues = function() {
+                //$http.get('test_timeline.json').success(function(response){
+                $http.get(url+"/api/v2/get_timeline/").success(function(response){
+                    tlData = response;
+                    self.startstamp = tlData.timestamps.min.unix;
+                    if (!isSetup) {
+                        self.nodes = tlData.nodes;
+                        self.setupTimeline(null,false);
+                    }
+                    handleTimelineInput(tlData);
+                });
+            }
+
+            var promise = $interval(pollValues, 10000);
+            $scope.$on('$destroy',function(){
+                if(promise)
+                    $interval.cancel(promise);
             });
 
             self.setupTimeline = (function(data, help) {
@@ -70,7 +81,7 @@ angular.
                     setupHelpMeasurements(svgHeight);
                 }
                 self.setupNodeElements(svgHeight);
-                handleTimelineInput(tlData);
+                isSetup = true;
             });
 
             /*var pollTimeline = function() {
@@ -164,7 +175,7 @@ angular.
 
             function drawNodeLine(x,y) {
                 svg.append("line")
-                    .attr("class","nodeLine")
+                    .classed("nodeLine","true")
                     .attr("x1",(x+(nW/2))).attr("y1",y+(nH/2))
                     .attr("x2",(x+(nW/2))).attr("y2",svg.attr("height"))
                     .attr("stroke",nC).attr("stroke-width",1).attr("stroke-linecap","round").attr("stroke-dasharray","1,5");
@@ -186,19 +197,24 @@ angular.
                         }
                     }
                     
-                    if(eHeight > parseInt(svg.attr("height"),10)) {
-                        svg.attr("height",(eHeight+"px"));
-                        setupBackground(eHeight);
-                        var content = svg.selectAll("line.nodeLine");
-                        for (var k = 0; k < self.nodes.length; k++) {
-                            var line = content[0][k];
-                            line.y2.baseVal.value = eHeight;
-                        }
-                    }
-                    
                     circleLog = [];
                 }
                 printIdLog();
+                deOverflow();
+
+                var circles = svg.selectAll("circle");
+                eHeight = circles[0][circles[0].length-1].cy.baseVal.value + 28 + 50;
+                // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
+                //eHeight = eHeight + ((data.events[data.events.length-1].timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
+                if(eHeight > parseInt(svg.attr("height"),10)) {
+                    svg.attr("height",(eHeight+"px"));
+                    setupBackground(eHeight);
+                    var content = svg.selectAll("line.nodeLine");
+                    for (var k = 0; k < self.nodes.length; k++) {
+                        var line = content[0][k];
+                        line.y2.baseVal.value = eHeight;
+                    }
+                }
 
                 /*var circles = svg.selectAll("circle.new");
                 for (var j = 0; j < circles[0].length; j++) {
@@ -212,80 +228,72 @@ angular.
 
             function drawStartingCircle(event) {
                 out("new startp circle with id " +event.id.send);
-                //if (circleLog[data.nodes.send] == null || circleLog[data.nodes.send] == 1) {
+                if (!(isIn(idLog,"i"+event.id.send))) {
                     svg.append("circle")
-                        //.classed("startp","true")
                         .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                        //.classed(("c_"+event.nodes.send),"true")
-                        //.classed("new","true")
                         .attr("cId","i"+event.id.send)
+                        .attr("tSt","t"+event.timestamps.send.unix)
                         .attr("cx",tlPositions[event.nodes.send])
                         .attr("cy",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
                         .attr("r",7);
-                    //circleLog[data.nodes.send] = (circleLog[data.nodes.send] == null ? 0 : 2);
-                //}
-                deOverflow(event.id.send);
+
+                    idLog.push("i"+event.id.send);
+                }
+
                 //var logInfoObj = {id:(""+event.id.send), cx:tlPositions[event.nodes.send], cy:(event.timestamps.send.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.send)};
                 //logInfoStore.push(logInfoObj);
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
-                eHeight = eHeight + ((event.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
+                //eHeight = eHeight + ((event.timestamps.send.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function drawEndLine(event) {
                 var arrow = event.type+"Arrow";
 
                 out("new endp circle with id " +event.id.receive);
-                //if (circleLog[event.nodes.send] == null || circleLog[event.nodes.send] == 0) {
+                if (!(isIn(idLog,"i"+event.id.receive))) {
                     var circle = svg.append("circle")
-                        //.classed("endp","true")
-                        .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                        //.classed(("c_"+event.nodes.receive),"true")
-                        //.classed("new","true")
-                        .classed("tooltip","true")
-                        .attr("cId","i"+event.id.receive)
-                        .attr("cx",tlPositions[event.nodes.receive])
-                        .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
-                        .attr("r",7)
-                        // end
-                        .attr("data-meta", JSON.stringify(event))
-                    ;
-                    //console.log("end_circle", circle, $(circle));
+                            .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
+                            .classed("tooltip","true")
+                            .attr("cId","i"+event.id.receive)
+                            .attr("tSt","t"+event.timestamps.receive.unix)
+                            .attr("cx",tlPositions[event.nodes.receive])
+                            .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
+                            .attr("r",7)
+                            // end
+                            .attr("data-meta", JSON.stringify(event));
                     $(circle).tooltipster({functionInit: tooltipContent, interactive: true, theme: ['tooltipster-punk', 'tooltipster-punk-' + event.action + '-' + event.type], trigger: 'click'});
-                    //circleLog[event.nodes.send] = (circleLog[event.nodes.send] == null ? 1 : 2);
-                    
-                    //var logInfoObj = {id:(""+event.id.receive), cx:tlPositions[event.nodes.receive], cy:(event.timestamps.receive.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.receive.string)};
-                    //logInfoStore.push(logInfoObj);
-                //}
 
-                var x_send = tlPositions[event.nodes.send];
-                var x_receive = tlPositions[event.nodes.receive];
-                var y_send = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
-                var y_receive = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
-                if (x_send == x_receive) {
-                    // create three lines that act as one line with two 90° angles
-                    svg.append("polyline")
-                        .attr("points",
-                            (x_send   ) +","+ y_send +" "+
-                            (x_send+30) +","+ y_send +" "+
-                            (x_send+30) +","+ y_receive +" "+
-                            (x_send   ) +","+ y_receive +" "
-                        )
-                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
-                        .classed("arrow", true).classed("type-" + event.type, true)
-                        .attr("marker-end",("url(#"+arrow+")"));
-                } else {
-                    svg.append("line")
-                        .classed("arrow", true).classed("type-" + event.type, true)
-                        .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
-                        .attr("x1",x_send).attr("y1",y_send)
-                        .attr("x2",x_receive).attr("y2",y_receive)
-                        .attr("marker-end",("url(#"+arrow+")"));
+                    var x_send = tlPositions[event.nodes.send];
+                    var x_receive = tlPositions[event.nodes.receive];
+                    var y_send = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
+                    var y_receive = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                    if (x_send == x_receive) {
+                        // create three lines that act as one line with two 90° angles
+                        svg.append("polyline")
+                            .attr("points",
+                                (x_send   ) +","+ y_send +" "+
+                                (x_send+30) +","+ y_send +" "+
+                                (x_send+30) +","+ y_receive +" "+
+                                (x_send   ) +","+ y_receive +" "
+                            )
+                            .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
+                            .classed("arrow", true).classed("type-" + event.type, true)
+                            .attr("marker-end",("url(#"+arrow+")"));
+                    } else {
+                        svg.append("line")
+                            .classed("arrow", true).classed("type-" + event.type, true)
+                            .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
+                            .attr("x1",x_send).attr("y1",y_send)
+                            .attr("x2",x_receive).attr("y2",y_receive)
+                            .attr("marker-end",("url(#"+arrow+")"));
+                    }
+
+                    idLog.push("i"+event.id.receive);
                 }
 
-                deOverflow(event.id.receive);
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
-                eHeight = eHeight + ((event.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
+                //eHeight = eHeight + ((event.timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
             }
 
             function repositionSvgContent(oldWidth,newWidth) {
@@ -363,12 +371,10 @@ angular.
                 }
             }
 
-            function deOverflow(id) {
+            function deOverflow() {
                 out("idLog length " +idLog.length);
                 if (idLog.length < EL_MAX) {
-                    if (!(isIn(idLog,"i"+id))) {
-                        idLog.push("i"+id);
-                    }
+                    return;
                 } else {
                     do {
                         var delId = idLog.shift();
@@ -385,27 +391,30 @@ angular.
                         }
                     } while (idLog.length >= EL_MAX);
 
-                    if (!(isIn(idLog,"i"+id))) {
-                        idLog.push("i"+id);
-                    }
-
-                    /*var circles = svg.selectAll("circles");
-                    var nonpoly = svg.selectAll("line");
+                    var circles = svg.selectAll("circle");
+                    var nonpoly = svg.selectAll("line:not(.nodeLine)");
                     var poly = svg.selectAll("polyline");
                     var len = maxVal(maxVal(circles[0].length,nonpoly[0].length),poly[0].length);
                     var offset = circles[0][0].attributes[4].value-yProgress;
                     for (var i = 0; i < len; i++) {
                         if (i < circles[0].length) {
                             circles[0][i].cy.baseVal.value = circles[0][i].cy.baseVal.value - offset;
+                            if (i === circles[0].length-1) {
+                                self.startstamp = (circles[0][i].attributes[2].value).split("t")[1]; // new startstamp = tSt (timestamp) of last circle
+                            }
                         }
                         if (i < nonpoly[0].length) {
-
+                            nonpoly[0][i].y1.baseVal.value = nonpoly[0][i].y1.baseVal.value - offset;
+                            nonpoly[0][i].y2.baseVal.value = nonpoly[0][i].y2.baseVal.value - offset;
                         }
                         if (i < poly[0].length) {
-
+                            poly[0][i].points[0].y = poly[0][i].points[0].y - offset;
+                            poly[0][i].points[1].y = poly[0][i].points[1].y - offset;
+                            poly[0][i].points[2].y = poly[0][i].points[2].y - offset;
+                            poly[0][i].points[3].y = poly[0][i].points[3].y - offset;
                         }
                     }
-                    */
+
 
 
                     /*out("to high, do shifting!");
