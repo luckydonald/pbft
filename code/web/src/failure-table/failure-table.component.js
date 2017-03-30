@@ -45,13 +45,14 @@ angular.
                     }
                     handleTimelineInput(tlData);
                 });
-            }
+            };
 
             var promise = $interval(pollValues, 10000);
             $scope.$on('$destroy',function(){
                 if(promise)
                     $interval.cancel(promise);
             });
+            pollValues();
 
             self.setupTimeline = (function(data, help) {
                 d3.select("div#timeline").select("*").remove();
