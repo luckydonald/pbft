@@ -249,11 +249,11 @@ input {
   min-height: 30px;
   border-bottom: 1px solid white;
 }
-#failure-table div#switcher {
+#failure-table div#refresher {
   width: 30%;
   margin: 0 auto;
 }
-#failure-table div#switcher button {
+#failure-table div#refresher button {
   color: black;
 }
 #failure-table #symbology {

@@ -1,8 +1,7 @@
 <div id="failure-table" xmlns="http://www.w3.org/1999/html">
     <h3>Timeline for Message Flow of Nodes</h3>
-    <div id="switcher">Switch to
-        <button type="button" ng-click="">LOCAL</button>
-        <button type="button" ng-click="">DATABASE</button>
+    <div id="refresher">
+        <button type="button" ng-click="$ctrl.pollValues();">REFRESH</button>
     </div>
     <!--<span  style="color: black;">
         <button type="button" ng-click="$ctrl.setupTimeline(null,true)">Scale ON</button>

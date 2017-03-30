@@ -34,7 +34,8 @@ angular.
 
             var tlData = null;
 
-            var pollValues = function() {
+            self.pollValues = (function() {
+                
                 //$http.get('../example/api/v2/get_timeline/index.html').success(function(response){
                 $http.get(_API_URL+"/api/v2/get_timeline/").success(function(response){
                     tlData = response;
@@ -45,14 +46,14 @@ angular.
                     }
                     handleTimelineInput(tlData);
                 });
-            };
+            });
 
-            var promise = $interval(pollValues, 10000);
+            /*var promise = $interval(pollValues, 10000);
             $scope.$on('$destroy',function(){
                 if(promise)
                     $interval.cancel(promise);
-            });
-            pollValues();
+            });*/
+            self.pollValues();
 
             self.setupTimeline = (function(data, help) {
                 d3.select("div#timeline").select("*").remove();
@@ -86,10 +87,11 @@ angular.
 
             // removes everything except the defs and arrows ^-^
             function clearSvg() {
-                svg.selectAll("rect").remove();
-                svg.selectAll("text").remove();
+                //svg.selectAll("rect").remove();
+                //svg.selectAll("text").remove();
                 svg.selectAll("circle").remove();
-                svg.selectAll("line").remove();
+                svg.selectAll("line:not(.nodeLine)").remove();
+                svg.selectAll("polyline").remove();
                 svg.selectAll("path:not(.norem)").remove();
             }
 
@@ -195,7 +197,7 @@ angular.
                     circleLog = [];
                 }
                 //printIdLog();
-                deOverflow();
+                //deOverflow();
 
                 var circles = svg.selectAll("circle");
                 eHeight = circles[0][circles[0].length-1].cy.baseVal.value + 28 + 50;
