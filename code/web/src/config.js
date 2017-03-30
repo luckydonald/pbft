@@ -4,7 +4,7 @@
 // If you use docker, to start this
 // this file will be overwritten on startup.
 // This happens in entrypoint.sh,
-// _SECRET_URL is set to $JS_PATH.
+// _API_URL is set to $API_URL.
 // WARNING
 
-var _SECRET_URL = "http://192.168.99.100";
+var _API_URL = "http://192.168.99.100";

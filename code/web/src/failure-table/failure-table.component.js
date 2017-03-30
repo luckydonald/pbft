@@ -9,7 +9,6 @@ angular.
         templateUrl: 'failure-table/failure-table.template.html',
         controller: ['$http','$compile','$scope', '$interval', function FailureTableController($http,$compile,$scope,$interval) {
             var self = this;
-            var url = _SECRET_URL;
             var svg = null;
             var svgWidth = 0;
             var svgHeight = 0;
@@ -37,7 +36,7 @@ angular.
 
             var pollValues = function() {
                 //$http.get('test_timeline.json').success(function(response){
-                $http.get(url+"/api/v2/get_timeline/").success(function(response){
+                $http.get(_API_URL+"/api/v2/get_timeline/").success(function(response){
                     tlData = response;
                     self.startstamp = tlData.timestamps.min.unix;
                     if (!isSetup) {

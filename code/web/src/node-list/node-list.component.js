@@ -18,7 +18,6 @@ angular.
             var self = this;
             self.nodes = [];
             var touched = false;
-            var url = _SECRET_URL; // definiert in secret.js, die absichtlich nicht im Git vorhanden ist
 
             /*
             $scope.intervalFunction = function(){
@@ -32,7 +31,7 @@ angular.
             $scope.intervalFunction();
             */
             var pollValues = function() {
-                $http.get(url+"/get_value/").then(function (json) {
+                $http.get(_API_URL+"/get_value/").then(function (json) {
                     /*self.nodes = response.data;
                      for (var x in self.nodes) {
                      sortNode(x);

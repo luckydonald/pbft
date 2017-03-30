@@ -15,14 +15,15 @@ angular.
             self.nodeData = {};
             var myChart = null;
             self.series = null;
-            var url = _SECRET_URL;
-            if (self.nodeid === 'summary' || self.nodeid == undefined) {
-                url = url+"/get_data/?limit=40";
-            } else {
-                url = url+"/get_data/?limit=10&node="+self.nodeid;
-            }
 
             var pollGraphs = function() {
+                var url;
+                if (self.nodeid === 'summary' || self.nodeid == undefined) {
+                    url = _API_URL + "/get_data/?limit=40";
+                } else {
+                    url = _API_URL + "/get_data/?limit=10&node="+self.nodeid;
+                }
+
                 $http.get(url).then(function (json) {
                     /*var str = "### DATA :: ";
                      for (var i = 0; i < nodeData.length; i++) {

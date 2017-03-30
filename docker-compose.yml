@@ -46,8 +46,8 @@ services:
       service: web
     environment:
       PORT: 8000
-      # API_HOST: "http://192.168.0.42"
-      API_HOST: ${API_HOST}
+      # API_URL: "http://192.168.0.42"
+      API_URL: ${API_HOST}
     ports:
      - "8000:8000"
     entrypoint: ["/entrypoint.sh"]
