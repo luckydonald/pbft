@@ -36,7 +36,7 @@ angular.
             var tlData = null;
 
             var pollValues = function() {
-                //$http.get('test_timeline.json').success(function(response){
+                //$http.get('../example/api/v2/get_timeline/index.html').success(function(response){
                 $http.get(url+"/api/v2/get_timeline/").success(function(response){
                     tlData = response;
                     self.startstamp = tlData.timestamps.min.unix;
@@ -83,10 +83,6 @@ angular.
                 self.setupNodeElements(svgHeight);
                 isSetup = true;
             });
-
-            /*var pollTimeline = function() {
-
-            }*/
 
             // removes everything except the defs and arrows ^-^
             function clearSvg() {
@@ -181,7 +177,6 @@ angular.
                     .attr("stroke",nC).attr("stroke-width",1).attr("stroke-linecap","round").attr("stroke-dasharray","1,5");
             }
             
-            //TODO: Circle-Generierung optimieren; geht sicher auch ohne logInfoStore!
             function handleTimelineInput(data) {
                 for (var i = 0; i < data.events.length; i++) {
                     var event = data.events[i];
@@ -199,7 +194,7 @@ angular.
                     
                     circleLog = [];
                 }
-                printIdLog();
+                //printIdLog();
                 deOverflow();
 
                 var circles = svg.selectAll("circle");
@@ -227,14 +222,16 @@ angular.
             }
 
             function drawStartingCircle(event) {
-                out("new startp circle with id " +event.id.send);
-                if (!(isIn(idLog,"i"+event.id.send))) {
+                var cy = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
+                if (!(isIn(idLog,"i"+event.id.send)) && cy > yProgress) {
+                    out("new startp circle with id " +event.id.send);
+
                     svg.append("circle")
                         .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
                         .attr("cId","i"+event.id.send)
                         .attr("tSt","t"+event.timestamps.send.unix)
                         .attr("cx",tlPositions[event.nodes.send])
-                        .attr("cy",(event.timestamps.send.unix-self.startstamp)*scale+yProgress)
+                        .attr("cy",cy)
                         .attr("r",7);
 
                     idLog.push("i"+event.id.send);
@@ -249,16 +246,16 @@ angular.
 
             function drawEndLine(event) {
                 var arrow = event.type+"Arrow";
-
-                out("new endp circle with id " +event.id.receive);
-                if (!(isIn(idLog,"i"+event.id.receive))) {
+                var cy = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                if (!(isIn(idLog,"i"+event.id.receive)) && cy > yProgress) {
+                    out("new endp circle with id " +event.id.receive);
                     var circle = svg.append("circle")
                             .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
                             .classed("tooltip","true")
                             .attr("cId","i"+event.id.receive)
                             .attr("tSt","t"+event.timestamps.receive.unix)
                             .attr("cx",tlPositions[event.nodes.receive])
-                            .attr("cy",(event.timestamps.receive.unix-self.startstamp)*scale+yProgress)
+                            .attr("cy",cy)
                             .attr("r",7)
                             // end
                             .attr("data-meta", JSON.stringify(event));
@@ -396,22 +393,24 @@ angular.
                     var poly = svg.selectAll("polyline");
                     var len = maxVal(maxVal(circles[0].length,nonpoly[0].length),poly[0].length);
                     var offset = circles[0][0].attributes[4].value-yProgress;
-                    for (var i = 0; i < len; i++) {
-                        if (i < circles[0].length) {
-                            circles[0][i].cy.baseVal.value = circles[0][i].cy.baseVal.value - offset;
-                            if (i === circles[0].length-1) {
-                                self.startstamp = (circles[0][i].attributes[2].value).split("t")[1]; // new startstamp = tSt (timestamp) of last circle
+                    for (var j = 0; j < len; j++) {
+                        if (j < circles[0].length) {
+                            out("---\noffset:"+offset+"\nold circle cy:"+circles[0][j].cy.baseVal.value
+                                +" ; new circle cy:"+(circles[0][j].cy.baseVal.value-offset)+"\ntstmp:"+circles[0][j].attributes[2].value+" ; startstamp:"+self.startstamp+"\n---");
+                            circles[0][j].cy.baseVal.value = circles[0][j].cy.baseVal.value - offset;
+                            if (j === circles[0].length-1) {
+                                self.startstamp = (circles[0][j].attributes[2].value).split("t")[1]; // new startstamp = tSt (timestamp) of last circle
                             }
                         }
-                        if (i < nonpoly[0].length) {
-                            nonpoly[0][i].y1.baseVal.value = nonpoly[0][i].y1.baseVal.value - offset;
-                            nonpoly[0][i].y2.baseVal.value = nonpoly[0][i].y2.baseVal.value - offset;
+                        if (j < nonpoly[0].length) {
+                            nonpoly[0][j].y1.baseVal.value = nonpoly[0][j].y1.baseVal.value - offset;
+                            nonpoly[0][j].y2.baseVal.value = nonpoly[0][j].y2.baseVal.value - offset;
                         }
-                        if (i < poly[0].length) {
-                            poly[0][i].points[0].y = poly[0][i].points[0].y - offset;
-                            poly[0][i].points[1].y = poly[0][i].points[1].y - offset;
-                            poly[0][i].points[2].y = poly[0][i].points[2].y - offset;
-                            poly[0][i].points[3].y = poly[0][i].points[3].y - offset;
+                        if (j < poly[0].length) {
+                            poly[0][j].points[0].y = poly[0][j].points[0].y - offset;
+                            poly[0][j].points[1].y = poly[0][j].points[1].y - offset;
+                            poly[0][j].points[2].y = poly[0][j].points[2].y - offset;
+                            poly[0][j].points[3].y = poly[0][j].points[3].y - offset;
                         }
                     }
 
