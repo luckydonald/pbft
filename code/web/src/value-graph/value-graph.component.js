@@ -25,12 +25,6 @@ angular.
                 }
 
                 $http.get(url).then(function (json) {
-                    /*var str = "### DATA :: ";
-                     for (var i = 0; i < nodeData.length; i++) {
-                     str = str+ "(" +i+ ")->" +nodeData[i]+ " ";
-                     }
-                     out(str);*/
-
                     for (var node in json.data) {
                         if (json.data.hasOwnProperty(node)) {
                             self.nodeData[node] = [];
@@ -42,18 +36,6 @@ angular.
                             }
                         }
                     }
-                    /*
-                     for (var node in json.data) {
-                     if (json.data.hasOwnProperty(node)) {
-                     for (var timestamp in json.data[node]) {
-                     if (json.data[node].hasOwnProperty(timestamp)) {
-                     var value=json.data[node][timestamp];
-                     self.nodeData.push({id:node,timestamp:timestamp,value:value});
-                     }
-                     }
-                     }
-                     }*/
-
                     if (myChart == null) {
                         constructVG(self.nodeData);
                     }
@@ -115,19 +97,6 @@ angular.
                         }
                     },
                     series: chart_data
-                    /*[{
-                        name: 'Node 1',
-                        data: [1, 2.5, 2, 1.5, 2, 3, 2]
-                    }, {
-                        name: 'Node 2',
-                        data: [1.5, 2.5, 2, 1.5, 1, 2, 1.5]
-                    }, {
-                        name: 'Node 3',
-                        data: [1.75, 2.75, 2, 1.5, 3, 2, 1.5]
-                    }, {
-                        name: 'Node 4',
-                        data: [1, 2.5, 2, 1.5, 2, 2, 2.5]
-                    }]*/
                 });
                 d3.select("text.highcharts-credits").remove();
 

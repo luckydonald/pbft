@@ -1,6 +1,6 @@
 <div ng-show="$ctrl.summary && !$ctrl.nodes.length" class="no_data">No recent events</div>
 
-<div ng-show="$ctrl.summary"  class="node summary non-upscaled">
+<div class="node summary non-upscaled">
     <a href="#!/nodes/summary">
         <div class="node-main">
             <h3>Summary</h3>
@@ -16,11 +16,11 @@
 
 <!-- NOTE: for scaling nodes insert: onclick="handleNodeScaling(this)" -->
 <div ng-repeat="node in $ctrl.nodes"
-     class="node non-upscaled {{( node.leader == true) ? 'leader' : ''}}">
+     class="node non-upscaled {{( $ctrl.leader === node.id) ? 'leader' : ''}}">
     <a href="#!/nodes/{{node.id}}">
         <div class="node-main">
             <h3 class="id-label">
-                Node {{node.name}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
+                Node {{node.id}} <span class="leader-label" ng-show="{{$ctrl.leader===node.id}}">Leader</span>
             </h3>
             <div class="overview">
                 <h5 class="value-label">

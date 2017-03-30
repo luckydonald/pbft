@@ -31,7 +31,7 @@ angular.
             $scope.intervalFunction();
             */
             var pollValues = function() {
-                $http.get(_API_URL+"/api/v2/get_value/").then(function (json) {
+                $http.get(_API_URL+"/api/v2/get_value/").success(function (json) {
                     var data = {
                         "summary":  0.5,  // or null
                         "leader": 1,
@@ -44,7 +44,7 @@ angular.
                         ]
                     };
                     console.log("JSON:", json);
-                    data = json.data;
+                    data = json;
                     touched = !touched;  // this is a flag to check if it was updated yet (?)
 
                     self.summary = data.summary;
@@ -52,7 +52,7 @@ angular.
                     for (var i = 0; i < data.nodes.length; i++) {
                         var node = data.nodes[i];
                         var searchedIndex;
-                        searchedIndex = searchIndex(self.nodes,node);  // check if already exists.
+                        searchedIndex = searchIndex(self.nodes,node.node);  // check if already exists.
                         if (searchedIndex == -1) {  // does not exists.
                             self.nodes.push({
                                 id:node.node,
@@ -131,7 +131,7 @@ angular.
                  * @returns Element index of array, or -1 if not found.
                  **/
                 for (var i = 0; i < arr.length; i++) {
-                    if (arr[i].id == id) {
+                    if (arr[i].id === id) {
                         return i;
                     }
                 }

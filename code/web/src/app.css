@@ -145,10 +145,13 @@ input {
   width: 100%;
   text-align: left;
   margin: 0;
-  height: inherit;
+  height: 70vh;
 }
 #nodearea .node.upscaled h3.id-label {
   font-size: 2em;
+}
+#nodearea .node.upscaled div.node-main {
+  height: 100%;
 }
 #nodearea .node.reduced {
   display: none;
