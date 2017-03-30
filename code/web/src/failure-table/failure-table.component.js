@@ -222,18 +222,21 @@ angular.
 
             function drawStartingCircle(event) {
                 var cy = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
-                if (!(isIn(idLog,"i"+event.id.send)) && cy > yProgress) {
+                var id_string = "i"+event.id.send;
+                if (!(isIn(idLog,id_string)) && cy > yProgress) {
                     out("new startp circle with id " +event.id.send);
 
                     svg.append("circle")
-                        .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                        .attr("cId","i"+event.id.send)
+                        .classed("action-"+event.action, "true")
+                        .classed("type-"+event.type, "true")
+                        .classed(id_string, "true")
+                        .attr("cId",id_string)
                         .attr("tSt","t"+event.timestamps.send.unix)
                         .attr("cx",tlPositions[event.nodes.send])
                         .attr("cy",cy)
                         .attr("r",7);
 
-                    idLog.push("i"+event.id.send);
+                    idLog.push(id_string);
                 }
 
                 //var logInfoObj = {id:(""+event.id.send), cx:tlPositions[event.nodes.send], cy:(event.timestamps.send.unix-self.startstamp)*scale+yProgress, timestamp:(""+event.timestamps.send)};
@@ -246,12 +249,13 @@ angular.
             function drawEndLine(event) {
                 var arrow = event.type+"Arrow";
                 var cy = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
-                if (!(isIn(idLog,"i"+event.id.receive)) && cy > yProgress) {
+                var id_receive_string = "i"+event.id.receive;
+                if (!(isIn(idLog,id_receive_string)) && cy > yProgress) {
                     out("new endp circle with id " +event.id.receive);
                     var circle = svg.append("circle")
                             .classed("action-"+event.action, "true").classed("type-"+event.type, "true")
-                            .classed("tooltip","true")
-                            .attr("cId","i"+event.id.receive)
+                            .classed("tooltip","true").classed(id_receive_string, "true")
+                            .attr("cId",id_receive_string)
                             .attr("tSt","t"+event.timestamps.receive.unix)
                             .attr("cx",tlPositions[event.nodes.receive])
                             .attr("cy",cy)
@@ -264,6 +268,7 @@ angular.
                     var x_receive = tlPositions[event.nodes.receive];
                     var y_send = (event.timestamps.send.unix-self.startstamp)*scale+yProgress;
                     var y_receive = (event.timestamps.receive.unix-self.startstamp)*scale+yProgress;
+                    var id_send_string = "i"+event.id.send;
                     if (x_send == x_receive) {
                         // create three lines that act as one line with two 90° angles
                         svg.append("polyline")
@@ -273,19 +278,21 @@ angular.
                                 (x_send+30) +","+ y_receive +" "+
                                 (x_send   ) +","+ y_receive +" "
                             )
-                            .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
+                            .attr("sId",id_send_string).attr("rId",id_receive_string)
                             .classed("arrow", true).classed("type-" + event.type, true)
+                            .classed(id_receive_string, "true").classed(id_send_string, "true")
                             .attr("marker-end",("url(#"+arrow+")"));
                     } else {
                         svg.append("line")
+                            .attr("sId",id_send_string).attr("rId",id_receive_string)
                             .classed("arrow", true).classed("type-" + event.type, true)
-                            .attr("sId","i"+event.id.send).attr("rId","i"+event.id.receive)
+                            .classed(id_receive_string, "true").classed(id_send_string, "true")
                             .attr("x1",x_send).attr("y1",y_send)
                             .attr("x2",x_receive).attr("y2",y_receive)
                             .attr("marker-end",("url(#"+arrow+")"));
                     }
 
-                    idLog.push("i"+event.id.receive);
+                    idLog.push(id_receive_string);
                 }
 
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
@@ -317,8 +324,8 @@ angular.
                             var classes = circle.attributes.class.nodeValue.split(" ");
                             for (var j = 0; j < classes.length; j++) {
                                 if (classes[j][0] === "c") {
-                                    var cid = parseInt(classes[j].split("_")[1]);
-                                    logInfoStore[cid].cx = circle.cx.baseVal.value;
+                                    var cid = parseInt(classes[j].split("_")[1]);  //TODO: is cid not format "i123"?
+                                    logInfoStore[cid].cx = circle.cx.baseVal.value;  //TODO: is logInfoStore undefined?
                                 }
                             }
                         } else if (content[0][i].tagName === "line") {
@@ -374,17 +381,7 @@ angular.
                 } else {
                     do {
                         var delId = idLog.shift();
-                        svg.selectAll("[cId="+delId+"]").remove();
-                        svg.selectAll("[rId="+delId+"]").remove();
-                        var lines = svg.selectAll("[sId="+delId+"]");
-                        if (lines[0].length > 0) {
-                            for (var i = 0; i < lines[0].length; i++) {
-                                var receiver = lines[0][i].attributes[2].value;
-                                svg.selectAll("[cId="+receiver+"]").remove();
-                                lines[0][i].remove();
-                                idLog.splice(idLog.indexOf(receiver),1);
-                            }
-                        }
+                        svg.selectAll("." + delId).remove();
                     } while (idLog.length >= EL_MAX);
 
                     var circles = svg.selectAll("circle");
