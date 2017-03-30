@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 services:
   # # Python node
   # node:
@@ -40,7 +40,6 @@ services:
     #entrypoint: []
     #command: ["ls", "-la"]
 
-
   web:
     extends:
       file: code/web/docker-compose.yml
@@ -59,7 +58,7 @@ services:
       service: web
     environment:
       PORT: 8001
-      API_URL: "http://${VM_HOST:-localhost}:8001/example/"
+      API_URL: "http://localhost:8001/example/"
       # `${VM_HOST:-localhost}` will evaluate to `localhost` if $VM_HOST is unset or empty in the environment.
     ports:
      - "8001:8001"
