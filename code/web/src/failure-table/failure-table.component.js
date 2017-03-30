@@ -24,7 +24,7 @@ angular.
             var arrowOffset = 18;       // offset for drawing arrowheads of lines correctly
             var eHeight = 0;            // height that gets occupied by all elements contained in the svg
             var scale = 1000;
-            var EL_MAX = 100;           // maximum of how many elements can be present in the svg at the same time
+            var EL_MAX = 200;           // maximum of how many elements can be present in the svg at the same time
             var isSetup = false;
 
             //var logInfoStore = [];
@@ -35,8 +35,12 @@ angular.
             var tlData = null;
 
             self.pollValues = (function() {
-                
+                if (isSetup) {
+                    clearSvg();
+                }
                 //$http.get('../example/api/v2/get_timeline/index.html').success(function(response){
+                d3.selectAll("span#refresh-label")[0][0].append("Polling for values ...");
+                out("Polling for values ...");
                 $http.get(_API_URL+"/api/v2/get_timeline/").success(function(response){
                     tlData = response;
                     self.startstamp = tlData.timestamps.min.unix;
@@ -45,15 +49,19 @@ angular.
                         self.setupTimeline(null,false);
                     }
                     handleTimelineInput(tlData);
+                    drawTimeBar();
+                    d3.select("span#refresh-label").html("");
                 });
+
             });
+
+            self.pollValues();
 
             /*var promise = $interval(pollValues, 10000);
             $scope.$on('$destroy',function(){
                 if(promise)
                     $interval.cancel(promise);
             });*/
-            self.pollValues();
 
             self.setupTimeline = (function(data, help) {
                 d3.select("div#timeline").select("*").remove();
@@ -91,6 +99,7 @@ angular.
                 //svg.selectAll("text").remove();
                 svg.selectAll("circle").remove();
                 svg.selectAll("line:not(.nodeLine)").remove();
+                svg.selectAll("text.tbLabel").remove();
                 svg.selectAll("polyline").remove();
                 svg.selectAll("path:not(.norem)").remove();
             }
@@ -180,7 +189,7 @@ angular.
             }
 
             function handleTimelineInput(data) {
-                for (var i = 0; i < data.events.length; i++) {
+                for (var i = 0; i < minVal(data.events.length,EL_MAX); i++) {
                     var event = data.events[i];
                     //var yHeight = 0;
                     if (event.action === "acknowledge") {
@@ -203,7 +212,7 @@ angular.
                 eHeight = circles[0][circles[0].length-1].cy.baseVal.value + 28 + 50;
                 // eHeight + (margin from last phase or nodes) + (span of two circles) + (additional margin)
                 //eHeight = eHeight + ((data.events[data.events.length-1].timestamps.receive.unix-self.startstamp)*scale-eHeight) + 28 + 50;
-                if(eHeight > parseInt(svg.attr("height"),10)) {
+                //if(eHeight > parseInt(svg.attr("height"),10)) {
                     svg.attr("height",(eHeight+"px"));
                     setupBackground(eHeight);
                     var content = svg.selectAll("line.nodeLine");
@@ -211,7 +220,7 @@ angular.
                         var line = content[0][k];
                         line.y2.baseVal.value = eHeight;
                     }
-                }
+                //}
 
                 /*var circles = svg.selectAll("circle.new");
                 for (var j = 0; j < circles[0].length; j++) {
@@ -221,6 +230,32 @@ angular.
                 }
                 circles.classed("new","false");*/
 
+            }
+
+            function drawTimeBar() {
+                svg.append("line")
+                    .attr("x1",svgWidth*0.05).attr("y1",yProgress)
+                    .attr("x2",svgWidth*0.05).attr("y2",eHeight)
+                    .attr("stroke",nC).attr("stroke-width",2);
+                svg.append("text")
+                    .text("ms")
+                    .attr("x",svgWidth*0.04).attr("y",yProgress-5)
+                    .attr("fill","#fff")
+                    .attr("font-family","Verdana")
+                    .attr("font-size","10pt");
+                for (var i = 0; i < eHeight; i+=100) {
+                    svg.append("line")
+                        .attr("x1",svgWidth*0.04).attr("y1",i+yProgress)
+                        .attr("x2",svgWidth*0.05).attr("y2",i+yProgress)
+                        .attr("stroke",nC).attr("stroke-width",1);
+                    svg.append("text")
+                        .classed("tbLabel","true")
+                        .text(i)
+                        .attr("x",svgWidth*0.06).attr("y",i+yProgress+5)
+                        .attr("fill","#fff")
+                        .attr("font-family","Verdana")
+                        .attr("font-size","10pt");
+                }
             }
 
             function drawStartingCircle(event) {
@@ -587,6 +622,10 @@ angular.
                 for (var i = 0; i < idLog.length; i++) {
                     out("[i:"+i+"]-> id:"+idLog[i]+"\n");
                 }
+            }
+
+            function minVal(n1,n2) {
+                return n1 <= n2 ? n1 : n2;
             }
 
             function maxVal(n1,n2) {
