@@ -1,9 +1,12 @@
-<div ng-repeat="node in $ctrl.summary"  class="node summary non-upscaled">
+<div ng-show="$ctrl.summary && !$ctrl.nodes.length" class="no_data">No recent events</div>
+
+<div ng-show="$ctrl.summary"  class="node summary non-upscaled">
     <a href="#!/nodes/summary">
         <div class="node-main">
-            <h3>{{node.id | uppercase}}</h3>
+            <h3>Summary</h3>
             <h5>Agreed value:</h5>
-            <span class="value">{{node.value}}</span>
+            <span class="value" ng-show="$ctrl.summary">{{node.value}}</span>
+            <span class="value no_data" ng-hide="$ctrl.summary">No recent commit.</span>
         </div>
         <div class="click-hint-wrapper">
             <div class="click-hint">click for more details</div>
@@ -17,7 +20,7 @@
     <a href="#!/nodes/{{node.id}}">
         <div class="node-main">
             <h3 class="id-label">
-                Node {{node.id}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
+                Node {{node.name}} <span class="leader-label" ng-show="{{node.leader}}">Leader</span>
             </h3>
             <div class="overview">
                 <h5 class="value-label">

@@ -7,7 +7,7 @@ angular.
     module('core.node').
     factory('Node', ['$resource',
         function($resource) {
-            return $resource('nodes.json'/*'http://http://192.168.99.100/get_value/'*/, {}, {
+            return $resource('nodes.json'/*'http://HOSTNAME/get_value/'*/, {}, {
                 query: {
                     method: 'GET',
                     //params: {nodeId: 'nodes'},

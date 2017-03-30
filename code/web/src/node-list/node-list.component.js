@@ -13,10 +13,10 @@ angular.
             }
         ]*/
         controller: ['$http','$scope','$interval', function NodeListController($http,$scope,$interval) {
-            this.summary = [];
-            this.otherNodes = [];
             var self = this;
+            self.summary = null;
             self.nodes = [];
+            self.leader = -1;
             var touched = false;
 
             /*
@@ -31,71 +31,53 @@ angular.
             $scope.intervalFunction();
             */
             var pollValues = function() {
-                $http.get(_API_URL+"/get_value/").then(function (json) {
-                    /*self.nodes = response.data;
-                     for (var x in self.nodes) {
-                     sortNode(x);
-                     }*/
-                    console.log("JSON DATA:",json.data);
-                    touched = (touched != true);
-                    for (var node in json.data) {
-                        if (json.data.hasOwnProperty(node)) {
-                            /*for (var timestamp in json.data[node]) {
-                                if (json.data[node].hasOwnProperty(timestamp)) {
-                                    var value=json.data[node][timestamp];
-                                    var searchedIndex = searchIndex(node);
-                                    if (searchedIndex == -1) {
-                                        self.nodes.push({id:node,value:value,touched:touched});
-                                    } else {
-                                        self.nodes[searchedIndex].value = value;
-                                        self.nodes[searchedIndex].touched = touched;
-                                        console.log("UPDATED!");
-                                    }
-                                    break;
-                                }
-                            }*/
-                            var value=json.data[node];
-                            if (node === 'summary') {
-                                var searchedIndex = searchIndex(self.summary,node);
-                                if (searchedIndex == -1) {
-                                    self.summary.push({id:node,value:value,touched:touched});
-                                } else {
-                                    self.summary[searchedIndex].value = value;
-                                    self.summary[searchedIndex].touched = touched;
-                                    console.log("UPDATED!");
-                                }
-                            } else {
-                                var searchedIndex = searchIndex(self.nodes,node);
-                                if (searchedIndex == -1) {
-                                    self.nodes.push({id:node,value:value,touched:touched});
-                                } else {
-                                    self.nodes[searchedIndex].value = value;
-                                    self.nodes[searchedIndex].touched = touched;
-                                    console.log("UPDATED!");
-                                }
-                            }
+                $http.get(_API_URL+"/api/v2/get_value/").then(function (json) {
+                    var data = {
+                        "summary":  0.5,  // or null
+                        "leader": 1,
+                        "nodes": [
+                            {"node": "1", "value": 0.5},
+                            {"node": "2", "value": 0.6},
+                            {"node": "5", "value": 0.5},
+                            {"node": "6", "value": 0.5},
+                            {"node": "5", "value": 0.5}
+                        ]
+                    };
+                    console.log("JSON:", json);
+                    data = json.data;
+                    touched = !touched;  // this is a flag to check if it was updated yet (?)
+
+                    self.summary = data.summary;
+                    self.leader = data.leader;
+                    for (var i = 0; i < data.nodes.length; i++) {
+                        var node = data.nodes[i];
+                        var searchedIndex;
+                        searchedIndex = searchIndex(self.nodes,node);  // check if already exists.
+                        if (searchedIndex == -1) {  // does not exists.
+                            self.nodes.push({
+                                id:node.node,
+                                value:node.value,
+                                name:node.id,
+                                touched:touched
+                            });
+                            console.log("Added", node.node);
+                        } else {
+                            self.nodes[searchedIndex].value = node.value;
+                            self.nodes[searchedIndex].touched = touched;
+                            console.log("Updated", node.node);
                         }
                     }
 
-                    if (self.summary[0].touched != touched) {
-                        self.summary.splice(0,1);
-                    }
-
                     for (var i = 0; i < self.nodes.length; i++) {
-                        if (self.nodes[i].touched != touched && self.nodes[i].id != 'summary') {
-                            self.nodes.splice(i,1);
+                        if (self.nodes[i].touched != touched) {
+                            self.nodes.splice(i,1);  // delete 1 element at index i.
+                            console.log("Removed", self.nodes[i].id);
+
                         }
                     }
 
                     console.log(self.nodes.length);
-                    //self.nodes = json[];
-                    //self.summary = [];
-                    //self.otherNodes = [];
                     sortNodes();
-                    /*for (var i = 0; i < self.nodes.length; i++) {
-                        console.log("i:"+i+",id:"+self.nodes[i].id+",value:"+self.nodes[i].value);
-                        sortNode(i);
-                    }*/
                 });
             };
 
@@ -128,19 +110,10 @@ angular.
             }).fail(console.error);*/
 
             function sortNodes() {
-                /*if (self.nodes[x].id == 'summary') {
-                    self.summary.push(self.nodes[x]);
-                } else {
-                    self.otherNodes.push(self.nodes[x]);
-                }*/
+                /**
+                 * Sorts the nodes (in self.nodes) by their ID, ascending.
+                 */
                 for (var i = 0; i < self.nodes.length-1; i++) {
-                    /*if (self.nodes[i].id == 'summary') {
-                        for (var j = i-1; j > 0; j--) {
-                            var temp = self.nodes[j];
-                            self.nodes[j] = self.nodes[j+1];
-                            self.nodes[j+1] = temp;
-                        }
-                    }*/
                     for (var j = 0; j < self.nodes.length-1; j++) {
                         if (self.nodes[j].id > self.nodes[j+1].id) {
                             var temp = self.nodes[j];
@@ -151,9 +124,14 @@ angular.
                 }
             }
 
-            function searchIndex(arr, ele) {
+            function searchIndex(arr, id) {
+                /**
+                 * searches array arr for an element with given (node) id.
+                 *
+                 * @returns Element index of array, or -1 if not found.
+                 **/
                 for (var i = 0; i < arr.length; i++) {
-                    if (arr[i].id == ele) {
+                    if (arr[i].id == id) {
                         return i;
                     }
                 }

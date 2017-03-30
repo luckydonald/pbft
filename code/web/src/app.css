@@ -78,6 +78,11 @@ input {
   padding: 3% 10px;
   background-color: #124;
 }
+#nodearea .no_data {
+  text-align: center;
+  width: 100%;
+  padding-top: 2em;
+}
 #nodearea,
 #nodearea .node-list {
   display: flex;
