@@ -56,6 +56,8 @@ def get_value():
     Gets latest value they decided on, and the most recent measured value of each node.
     Only considers events in the last 10 seconds.
 
+    > {"summary": 3.456, "1": 2.345, "2": 3.456, "3": 4.567, "4": 5.678}}
+
     :return:
     """
     latest_vote = orm.select(m for m in DBVoteMessage if m.date > orm.raw_sql("NOW() - '10 seconds'::INTERVAL")).order_by(orm.desc(DBVoteMessage.date)).first()
@@ -87,13 +89,15 @@ def get_value_v2():
     Gets latest value they decided on, and the most recent measured value of each node.
     Only considers events in the last 10 seconds.
 
+    {
+        "summary": None,
+        "leader": 1,  # done later via observing latest LeaderChange events.
+        "nodes": []
+    }
+
     :return:
     """
     latest_vote = orm.select(m for m in DBVoteMessage if m.date > orm.raw_sql("NOW() - '10 seconds'::INTERVAL")).order_by(orm.desc(DBVoteMessage.date)).first()
-    if not latest_vote:
-        return jsonify({}, allow_all_origin=True)
-    # end if
-    assert isinstance(latest_vote, DBVoteMessage)
     latest_values = DBMessage.select_by_sql("""
     SELECT DISTINCT ON (m.node) * FROM (
       SELECT * FROM DBmessage
@@ -102,10 +106,15 @@ def get_value_v2():
     ) as m ORDER BY m.node, m.date DESC
     """)
     data = {
-        "summary": {"value": latest_vote.value},
+        "summary": None,
         "leader": 1,  # done later via observing latest LeaderChange events.
         "nodes": []
     }
+    if latest_vote:
+        assert isinstance(latest_vote, DBVoteMessage)
+        data["summary"] = {"value": latest_vote.value}
+    # end if
+
     for msg in latest_values:
         assert isinstance(msg, DBInitMessage)
         data["nodes"].append({"node": str(msg.node), "value": msg.value})

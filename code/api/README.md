@@ -31,16 +31,47 @@ Also contains a `"summary"` field, containing the last value they have agreed on
 
 ##### Example
 ```curl
-$ curl http://0.0.0.0/get_value/
+$ curl http://$IP_OR_HOST/get_value/
 ```
 ```python
-{
+{  # if no data is present, the field just does not exist.
     "1": 0.5,
     "2": 0.6,
     "5": 0.5,
     "6": 0.5,
     "7": 0.5,
     "summary": 0.5
+}
+```
+
+
+# `GET /api/v2/get_value/`
+
+Similar to `/get_value/`, but     
+
+##### Returns
+An dictionary.
+Will have an entry for each node with its latest measured value.
+Also contains a `"summary"` field, containing the last value they have agreed on, if any.
+
+##### Note
+ If nothing happened in the last 10 seconds, that node / the summary will be missing. 
+
+##### Example
+```curl
+$ curl http://$IP_OR_HOST/api/v2/get_value/
+```
+```python
+{
+    "summary":  0.5,  # or null
+    "leader": 1, 
+    "nodes": [
+        {"node": "1", "value": 0.5},
+        {"node": "2", "value": 0.6},
+        {"node": "5", "value": 0.5},
+        {"node": "6", "value": 0.5},
+        {"node": "5", "value": 0.5}
+    ]
 }
 ```
 
@@ -61,7 +92,7 @@ An dictionary with nodes as keys and a subdictionary, with timestaps as keys for
 
 ##### Example
 ```curl
-$ curl http://0.0.0.0/get_data/
+$ curl http://$IP_OR_HOST/get_data/
 ```
 ```python
 
@@ -87,7 +118,7 @@ $ curl http://0.0.0.0/get_data/
 ##### Example 2
 
 ```curl
-$ curl http://0.0.0.0/get_data/?node=1&node=2
+$ curl http://$IP_OR_HOST/get_data/?node=1&node=2
 ```
 ```python
 
@@ -107,4 +138,5 @@ $ curl http://0.0.0.0/get_data/?node=1&node=2
 
 # `PUT /dump`
 
-Sent an json encoded `Message` (same as used internally between the nodes) into the database.
+Sent an json encoded `Message` into the database.
+The json to be send is exactly the same as used internally between the nodes.
