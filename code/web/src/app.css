@@ -249,6 +249,13 @@ input {
   min-height: 30px;
   border-bottom: 1px solid white;
 }
+#failure-table div#switcher {
+  width: 30%;
+  margin: 0 auto;
+}
+#failure-table div#switcher button {
+  color: black;
+}
 #failure-table #symbology {
   float: left;
   width: 8%;
