@@ -27,11 +27,12 @@ You can also get insight which messages get send by which node to which node.
 ## Starting everything
 You need Docker installed.
 
+
 ```shell
-$ docker-compose up --build
+$ docker-compose build
 ```
  
-However, because some services need longer to start it is best to start them in the following order:
+Because some services need longer to start it is best to start them in the following order:
  
 1. Database and Database browser
     ```shell
