@@ -24,6 +24,12 @@ You can also get insight which messages get send by which node to which node.
 [![Build Status](https://travis-ci.org/luckydonald/pbft.svg?branch=master)](https://travis-ci.org/luckydonald/pbft) [![Coverage Status](https://coveralls.io/repos/github/luckydonald/pbft/badge.svg?branch=master)](https://coveralls.io/github/luckydonald/pbft?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b83d3a038892446881d75a2dfcb590aa)](https://www.codacy.com/app/luckydonald/pbft?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=luckydonald/pbft&amp;utm_campaign=Badge_Grade)
 
 
+## Get the Code
+```bash
+git clone --recursive https://github.com/luckydonald/pbft.git
+```
+If you forget `--recursive`, the `phppgadmin` container won't be available.
+
 ## Starting everything
 You need Docker installed.
 
