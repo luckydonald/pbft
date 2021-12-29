@@ -60,10 +60,15 @@ Because some services need longer to start it is best to start them in the follo
     $ docker-compose up -d web
     ```
 
-4. Scale the nodes to use 4 instances
-    ```shell
-    $ docker-compose scale node=4
-    ```
+4. Scale the nodes to use e.g. `4` instances
+  - a) Older compose syntax
+      ```shell
+      $ docker-compose scale node=4
+      ```
+  - b) Newer compose syntax
+      ```shell
+      docker-compose up --scale node=4
+      ```
 
 5. Start the nodes
     ```shell
