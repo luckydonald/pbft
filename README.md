@@ -79,7 +79,7 @@ Because some services need longer to start it is best to start them in the follo
     ```shell
     $ docker-compose down
     ```
-    - [Remove unused containers](http://stackoverflow14.com/a/32723127):
+    - [Remove unused containers](http://stackoverflow.com/a/32723127):
         ```shell
         $ docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
         ```
